@@ -523,11 +523,11 @@ export default function Home() {
               </h1>
               <div className="space-y-4 text-lg text-muted-foreground">
                 <p>
-                  4년전 "Hello World"를 출력하며 개발자로서의 첫 발자취를
-                  남겼습니다.
+                  4년전 {"'"}Hello World{"'"}를 출력하며 개발자로서의 첫
+                  발자취를 남겼습니다.
                 </p>
                 <p>
-                  "부딪힐거 같으면 더 쌔게 밟아라" 라는 말을 좋아합니다.
+                  {"'"}부딪힐거 같으면 더 쌔게 밟아라{"'"} 라는 말을 좋아합니다.
                   <br /> 도전과 실패를 두려워하지 않고, <br />
                   오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
                 </p>
@@ -1053,10 +1053,10 @@ export default function Home() {
         <div className="container py-24">
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl header-underline">
-              Let's Connect
+              Let{"'"}s Connect
             </h2>
             <p className="text-muted-foreground">
-              I'm always open to new opportunities and interesting projects
+              I{"'"}m always open to new opportunities and interesting projects
             </p>
             <div className="flex justify-center gap-4">
               <Button className="min-w-[200px]">

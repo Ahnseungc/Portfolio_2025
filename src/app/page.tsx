@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Mail, Linkedin, Trophy } from "lucide-react";
+import { Github, Mail, Linkedin, Trophy, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, X } from "lucide-react";
@@ -26,7 +26,10 @@ interface Experience {
   description: string;
   achievements: {
     title: string;
-    description: string[];
+    description: Array<{
+      text: string;
+      link?: string;
+    }>;
   }[];
   skills: string[];
 }
@@ -159,41 +162,50 @@ const experiences: Experience[] = [
       {
         title: "CareFlow Web 개발",
         description: [
-          "로그인 구조 및 로직 개발",
-          "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축",
-          "Stomp 기반 채팅 구현",
-          "SSE 기반 웹 알림 구현",
+          { text: "로그인 구조 및 로직 개발" },
+          { text: "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축", link: "https://example.com/pipeline" },
+          { text: "Stomp 기반 채팅 구현" },
+          { text: "SSE 기반 웹 알림 구현" },
+        ],
+      },
+      {
+        title: "CareFlow Web Next.js 마이그레이션",
+        description: [
+          { text: "Next.js 마이그레이션" },          
         ],
       },
       {
         title: "CareFlow Electron WebApp 개발",
         description: [
-          "Electron 기반 웹앱 패키징",
-          "윈도우 코드 서명 등록",
-          "github release 통한 배포 구축 및 자동 업데이트",
-          "네이티브 커스텀 알림 구현",
+          { text: "Electron 기반 웹앱 패키징" },
+          { text: "윈도우 코드 서명 등록" },
+          { text: "github release 통한 배포 구축 및 자동 업데이트", link: "https://example.com/pipeline" },
+          { text: "네이티브 커스텀 알림 구현" },
         ],
       },
       {
         title: "CareFlow Tablet App 개발",
         description: [
-          "시니어를 위한 시니어 모드 개발",
-          "react-native-tts를 이용한 음성 텍스트 변환 개발",
-          "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발",
-          "SSE를 통한 원격 로그 아웃 구현",
+          { text: "시니어를 위한 시니어 모드 개발" },
+          { text: "react-native-tts를 이용한 음성 텍스트 변환 개발", link: "https://example.com/pipeline" },
+          { text: "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발", link: "https://example.com/pipeline" },
+          { text: "SSE를 통한 원격 로그 아웃 구현", link: "https://example.com/pipeline" },
         ],
       },
+      
       {
         title: "MonoRepo 도입",
         description: [
-          "React 프로젝트들과 ReactNative 프로젝트를 pnpm과 turbopack를 통해 하나의 레포지토리로 관리",
-          "Jenkins와 docker를 통한 CI/CD 파이프라인 구축",
-          "기존 프로젝트 번등사이즈 25%감소 및 종속성 충돌 방지",
+          { text: "React 프로젝트들과 ReactNative 프로젝트를 pnpm과 turbopack를 통해 하나의 레포지토리로 관리", link: "https://example.com/pipeline" },
+          { text: "Jenkins와 docker를 통한 CI/CD 파이프라인 구축", link: "https://example.com/pipeline" },
+          { text: "기존 프로젝트 번등사이즈 25%감소 및 종속성 충돌 방지", link: "https://example.com/pipeline" },
         ],
       },
       {
         title: "디자인 시스템 개발(CDS)",
-        description: ["mui 기반 Storybook 개발"],
+        description: [
+          { text: "mui 기반 Storybook 개발", link: "https://example.com/pipeline" },
+        ],
       },
     ],
     skills: [
@@ -216,37 +228,37 @@ const experiences: Experience[] = [
     description: "간병인 매칭 플랫폼",
     achievements: [
       {
-        title: "Next.js 기반 React Native 웹뷰 어플 개선",
-        description: [
-          "매칭 현황 그래프 신규 기능 추가",
-          "홈 화면 UI 개선 및 신규 기능",
-          "CSR --> ISR 전환으로 페이지 로드 속도 향상",
-          "공통 훅 개발",
-          "스택 라우터 도입",
-          "스켈레톤 UI 도입",
+        title: "플랫폼 내 상품 수집 및 등록 페이지 제작",
+        description: [          
+          { text: "홈 화면 UI 개선 및 매칭 현황 그래프  신규 기능", link: "https://velog.io/@omnipo/%ED%99%88-%ED%99%94%EB%A9%B4-UIUX-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0" },
+          { text: "CSR --> ISR 전환으로 페이지 로드 속도 향상", link: "https://velog.io/@omnipo/%EB%A0%8C%EB%8D%94%EB%A7%81-%EB%B0%A9%EC%8B%9D%EC%9D%98-%EC%84%A0%ED%83%9D%EA%B3%BC-%EB%8F%84%EC%9E%85" },
+          { text: "공통 훅 개발" },
+          { text: "스택 라우터 개발", link: "https://velog.io/@omnipo/%EC%9B%B9%EB%B7%B0-%EC%8A%A4%ED%83%9D-%EA%B5%AC%ED%98%84%EA%B8%B0" },
+          { text: "스켈레톤 UI 개발", link: "https://velog.io/@omnipo/%EC%8A%A4%EC%BC%88%EB%A0%88%ED%86%A4-%EB%A1%9C%EB%94%A9-UI" },
         ],
       },
       {
         title: "포인트 기능 개발",
         description: [
-          "유저 포인트 출금 및 충전 테이블 개발",
-          "어드민 포인트 관리 UI 개발",
+          { text: "유저 포인트 출금 및 충전 테이블 개발" },
+          { text: "어드민 페이지 포인트 관리 UI 개발" },
         ],
       },
       {
         title: "랜딩 페이지 개발",
         description: [
-          "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성",
+          { text: "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성", link: "https://www.carenine.co.kr/" },
         ],
       },
     ],
-    skills: [
-      "React",
+    skills: [      
       "TypeScript",
       "Next.js",
-      "Zustand",
-      "Mui",
-      "Webpack",
+      "ReactNative",
+      "Supabase",      
+      "Zustand/Zod",      
+      "Swr",      
+      "TailwindCSS",      
       "Jest",
     ],
   },
@@ -258,44 +270,30 @@ const experiences: Experience[] = [
     description: "해외 배송 대행 플랫폼",
     achievements: [
       {
-        title: "플랫폼 내 상품 수집 및 등록 페이지 제작",
-        description: [
-          "매칭 현황 그래프 신규 기능 추가",
-          "홈 화면 UI 개선 및 신규 기능",
-          "CSR --> ISR 전환으로 페이지 로드 속도 향상",
-          "공통 훅 개발",
-          "스택 라우터 도입",
-          "스켈레톤 UI 도입",
+        title: "올땀 플랫폼 내 상품 수집 및 등록 페이지 제작",
+        description: [          
+          { text: "올땀 상품 수집 및 등록 페이지 개발"},          
         ],
       },
       {
         title: "어드민 페이지 개발",
         description: [
-          "유저 포인트 출금 및 충전 테이블 개발",
-          "어드민 포인트 관리 UI 개발",
+          { text: "올땀 플랫폼 관리자 페이지 제작"},          
         ],
-      },
+      },    
       {
-        title: "FCM 웹 푸시 알림 개발",
+        title: "올땀 PWA 개발",
         description: [
-          "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성",
-        ],
-      },
-      {
-        title: "PWA 개발",
-        description: [
-          "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성",
+          { text: "올땀 플랫폼 PWA를 통한 웹앱 프로그램 개발" },
         ],
       },
     ],
     skills: [
       "React",
-      "TypeScript",
-      "Next.js",
-      "Recoil",
-      "Mui",
-      "Webpack",
-      "Jest",
+      "TypeScript",      
+      "Recoil",            
+      "Emotion",
+      "Jest",      
     ],
   },
 ];
@@ -842,16 +840,28 @@ export default function Home() {
                         </h4>
 
                         <ul className="list-disc list-inside pl-6 space-y-2">
-                          {achievement.description.map((desc) => {
-                            return (
-                              <li
-                                className="text-sm text-muted-foreground"
-                                key={desc}
-                              >
-                                {desc}
-                              </li>
-                            );
-                          })}
+                          {achievement.description.map((desc) => (
+                            <li
+                              className="text-sm text-muted-foreground"
+                              key={desc.text}
+                            >
+                              {desc.link ? (
+                                <span className="flex items-center gap-1 inline-flex">
+                                  <a 
+                                    href={desc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary hover:underline inline-flex items-center gap-1"
+                                  >
+                                    {desc.text}
+                                    <ExternalLink className="h-3 w-3" />
+                                  </a>
+                                </span>
+                              ) : (
+                                desc.text
+                              )}
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     ))}

@@ -390,12 +390,12 @@ const handleExternalLink = (url: string) => {
 export default function Home() {
   // const router = useRouter();
   const searchParams = useSearchParams();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  // const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   // const [expandPosition, setExpandPosition] = useState({ x: "50%", y: "50%" });
   // const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   // const [isScrolling, setIsScrolling] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const [currentMobilePage, setCurrentMobilePage] = useState(0);  
   // const [pageTransition, setPageTransition] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
@@ -457,18 +457,18 @@ export default function Home() {
   ];
 
   // 모바일 여부 감지
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  // useEffect(() => {
+  //   const checkIfMobile = () => {
+  //     setIsMobile(window.innerWidth < 768);
+  //   };
     
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
+  //   checkIfMobile();
+  //   window.addEventListener('resize', checkIfMobile);
     
-    return () => {
-      window.removeEventListener('resize', checkIfMobile);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', checkIfMobile);
+  //   };
+  // }, []);
 
   // 다음 모바일 페이지로 이동
   const goToNextMobilePage = () => {
@@ -486,20 +486,20 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    if (selectedProject) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.setProperty(
-        "--scrollbar-width",
-        `${scrollbarWidth}px`
-      );
-      document.body.classList.add("scroll-lock");
-    } else {
-      document.body.classList.remove("scroll-lock");
-      document.body.style.removeProperty("--scrollbar-width");
-    }
-  }, [selectedProject]);
+  // useEffect(() => {
+  //   if (selectedProject) {
+  //     const scrollbarWidth =
+  //       window.innerWidth - document.documentElement.clientWidth;
+  //     document.body.style.setProperty(
+  //       "--scrollbar-width",
+  //       `${scrollbarWidth}px`
+  //     );
+  //     document.body.classList.add("scroll-lock");
+  //   } else {
+  //     document.body.classList.remove("scroll-lock");
+  //     document.body.style.removeProperty("--scrollbar-width");
+  //   }
+  // }, [selectedProject]);
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
@@ -547,25 +547,16 @@ export default function Home() {
     };
   }, [lastScrollY]);
 
-  const handleProjectClick = (project: Project) => {
-    if (isMobile) {
-      setSelectedMobileProject(project);
-      setIsProjectFunnel(true);
-      setCurrentProjectPage(0);
-      // setPageTransition(true);
-      // setTimeout(() => {
-      //   setPageTransition(false);
-      // }, 300);
-    } else {
-      // const rect = (e.target as Element).getBoundingClientRect();
-      // const x = rect.left + rect.width / 2;
-      // const y = rect.top + rect.height / 2;
-      // setExpandPosition({
-      //   x: `${x}px`,
-      //   y: `${y}px`,
-      // });
-      setSelectedProject(project);
-    }
+  // const handleProjectClick = (project: Project, e: React.MouseEvent) => {
+  //   setSelectedMobileProject(project);
+  //   setIsProjectFunnel(true);
+  //   setCurrentProjectPage(0);
+  // };
+  const handleProjectClick = (project: Project, e: React.MouseEvent<HTMLDivElement>) => {
+    console.debug(e);
+    setSelectedMobileProject(project);
+    setIsProjectFunnel(true);
+    setCurrentProjectPage(0);
   };
 
   // const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -663,7 +654,7 @@ export default function Home() {
                   {selectedMobileProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
+                      className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
                     >
                       {tag}
                     </span>
@@ -677,7 +668,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold">Links</h3>
                 <div className="space-y-4">
                   <Button
-                    className="w-full"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-transform"
                     onClick={() => handleExternalLink(selectedMobileProject.demoUrl)}
                   >
                     View Live Demo
@@ -685,7 +676,7 @@ export default function Home() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full"
+                    className="w-full bg-blue-500/10 hover:bg-blue-600 text-blue-600 py-3 rounded-lg transition-transform"
                     onClick={() => handleExternalLink(selectedMobileProject.githubUrl)}
                   >
                     <Github className="mr-2 h-4 w-4" />
@@ -733,7 +724,7 @@ export default function Home() {
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-10 shadow-lg"
+                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mb-10 shadow-lg"
                 >
                   <motion.span 
                     className="text-4xl"
@@ -757,7 +748,7 @@ export default function Home() {
                     {introSteps[currentMobilePage % introSteps.length].title}
                   </motion.h1>
                   <motion.p 
-                    className="text-gray-600 text-lg"
+                    className="text-lg text-blue-600 font-mono"
                     layout
                   >
                     {introSteps[currentMobilePage % introSteps.length].description}
@@ -790,7 +781,7 @@ export default function Home() {
                 {currentPage.id === "about-1" && (
                   <div className="space-y-6">
                     <div className="space-y-4">
-                      <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
+                      <p className="text-lg text-blue-600 font-mono">안녕하세요.</p>
                       <h1 className="text-3xl font-bold tracking-tight">
                         개발자 안승찬 입니다.
                       </h1>
@@ -817,7 +808,7 @@ export default function Home() {
                       {["TypeScript", "React", "Next.js", "Vue", "ReactNative", "Electron"].map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
+                          className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
                         >
                           {tech}
                         </span>
@@ -900,7 +891,7 @@ export default function Home() {
                             {exp.skills.slice(0, 4).map((skill) => (
                               <span
                                 key={skill}
-                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                                className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
                               >
                                 {skill}
                               </span>
@@ -952,7 +943,7 @@ export default function Home() {
                             {exp.skills.slice(0, 4).map((skill) => (
                               <span
                                 key={skill}
-                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                                className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
                               >
                                 {skill}
                               </span>
@@ -1004,7 +995,7 @@ export default function Home() {
                             {exp.skills.slice(0, 4).map((skill) => (
                               <span
                                 key={skill}
-                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                                className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
                               >
                                 {skill}
                               </span>
@@ -1025,8 +1016,8 @@ export default function Home() {
                   {currentPage.id === "projects-1" && projects.slice(0, 2).map((project) => (
                     <div 
                       key={project.id} 
-                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
-                      onClick={() => handleProjectClick(project)}
+                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
                     >
                       <div className="relative w-full h-36 overflow-hidden">
                         <Image
@@ -1042,13 +1033,13 @@ export default function Home() {
                         )}
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-bold">{project.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
                         <div className="flex flex-wrap gap-1 mt-3">
                           {project.tags.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
                             >
                               {tag}
                             </span>
@@ -1061,8 +1052,8 @@ export default function Home() {
                   {currentPage.id === "projects-2" && projects.slice(2, 4).map((project) => (
                     <div 
                       key={project.id} 
-                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
-                      onClick={() => handleProjectClick(project)}
+                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
                     >
                       <div className="relative w-full h-36 overflow-hidden">
                         <Image
@@ -1078,13 +1069,13 @@ export default function Home() {
                         )}
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-bold">{project.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
                         <div className="flex flex-wrap gap-1 mt-3">
                           {project.tags.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
                             >
                               {tag}
                             </span>
@@ -1097,8 +1088,8 @@ export default function Home() {
                   {currentPage.id === "projects-3" && projects.slice(4, 6).map((project) => (
                     <div 
                       key={project.id} 
-                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
-                      onClick={() => handleProjectClick(project)}
+                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
                     >
                       <div className="relative w-full h-36 overflow-hidden">
                         <Image
@@ -1114,13 +1105,13 @@ export default function Home() {
                         )}
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-bold">{project.title}</h3>
-                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
                         <div className="flex flex-wrap gap-1 mt-3">
                           {project.tags.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
                             >
                               {tag}
                             </span>
@@ -1165,33 +1156,72 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col mx-auto" style={{ maxWidth: '600px' }}>
-      {/* 모바일 퍼널 구조 */}
-      <div className="mobile-funnel relative">
-        {/* 뒤로가기 버튼 */}
-        {(currentMobilePage > 0 || isProjectFunnel) && (
-          <button 
-            onClick={isProjectFunnel ? goToPrevProjectPage : goToPrevMobilePage}
-            className="absolute top-6 left-4 z-10 p-2 rounded-full bg-white/80 shadow-md active:scale-95 transition-transform"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-        )}
-        
+    <main className="flex min-h-screen flex-col mx-auto bg-[#F8F9FA]" style={{ maxWidth: '600px' }}>
+      {/* 상단 헤더 */}
+      <div className="fixed top-0 left-0 right-0 z-20 bg-[#F8F9FA]" style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div className="flex items-center px-4 h-[52px]">
+          {(currentMobilePage > 0 || isProjectFunnel) && (
+            <button 
+              onClick={isProjectFunnel ? goToPrevProjectPage : goToPrevMobilePage}
+              className="p-2 -ml-2 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors"
+            >
+              <ChevronLeft className="h-6 w-6 text-gray-800" />
+            </button>
+          )}
+          <span className="ml-3 text-lg font-semibold text-gray-800">
+            {isProjectFunnel ? "프로젝트 상세" : "포트폴리오"}
+          </span>
+        </div>
+        <div className="h-[1px] bg-gray-200" />
+      </div>
+
+      {/* 메인 컨텐츠 */}
+      <div className="mobile-funnel relative mt-[52px]">
         {/* 현재 페이지 */}
-        {isProjectFunnel ? renderProjectFunnelPage() : renderMobilePage()}
-        
-        {/* 다음 버튼 */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]" style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <div className="px-5">
+          {isProjectFunnel ? renderProjectFunnelPage() : renderMobilePage()}
+        </div>
+
+        {/* 하단 버튼 */}
+        <div 
+          className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200" 
+          style={{ maxWidth: '600px', margin: '0 auto' }}
+        >
           <Button 
-            className={`w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-transform ${buttonPressed ? 'scale-95' : 'scale-100'}`}
+            className={`w-full h-[52px] bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-all
+              ${buttonPressed ? 'scale-[0.98]' : 'scale-100'}
+              disabled:bg-gray-200 disabled:text-gray-400`}
             onClick={isProjectFunnel ? goToNextProjectPage : goToNextMobilePage}
             disabled={isProjectFunnel ? currentProjectPage >= 3 : currentMobilePage >= mobilePages.length - 1}
           >
-            {isProjectFunnel ? (currentProjectPage === 3 ? "완료" : "다음") : (currentMobilePage === 0 ? "확인" : "다음")}
+            {isProjectFunnel ? (currentProjectPage === 3 ? "완료" : "다음") : (currentMobilePage === 0 ? "시작하기" : "다음")}
           </Button>
         </div>
       </div>
     </main>
   );
 }
+
+// 리스트 아이템 컴포넌트 스타일 수정
+// const ListItem = ({ icon, title, subtitle, onClick }: any) => (
+//   <div 
+//     onClick={onClick}
+//     className="flex items-center p-4 bg-white rounded-2xl mb-3 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors"
+//   >
+//     <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+//       {icon}
+//     </div>
+//     <div className="ml-4 flex-1">
+//       <h3 className="text-base font-medium text-gray-900">{title}</h3>
+//       {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
+//     </div>
+//     <ChevronRight className="w-5 h-5 text-gray-400" />
+//   </div>
+// );
+
+// 섹션 타이틀 스타일 수정
+// const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+//   <h2 className="text-lg font-semibold text-gray-800 mb-4 px-1">
+//     {children}
+//   </h2>
+// );

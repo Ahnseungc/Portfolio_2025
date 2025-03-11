@@ -5,7 +5,7 @@ import { Github, Mail, Linkedin, Trophy, ExternalLink, ArrowRight, X, ChevronLef
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
   id: number;
@@ -397,7 +397,7 @@ export default function Home() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [currentMobilePage, setCurrentMobilePage] = useState(0);
+  const [currentMobilePage, setCurrentMobilePage] = useState(0);  
   const [pageTransition, setPageTransition] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
   const [isProjectFunnel, setIsProjectFunnel] = useState(false);
@@ -444,11 +444,17 @@ export default function Home() {
   // 모바일 퍼널 페이지 정의
   const mobilePages = [
     { id: "intro", title: "대출이 어려워요", description: "다가구 주택으로 대출 받을 수 있는 상품이 없어요." },
-    // { id: "intro", title: "대출이 어려워요", description: "다가구 주택으로 대출 받을 수 있는 상품이 없어요." },
-    { id: "about", title: "About", component: "about", description: "" },
-    { id: "experience", title: "Experience", component: "experience", description: "" },
-    { id: "projects", title: "Projects", component: "projects", description: "" },
-    { id: "contact", title: "Contact", component: "contact", description: "" },
+    { id: "about-1", title: "About", component: "about", description: "소개" },
+    { id: "about-2", title: "About", component: "about", description: "기술 스택" },
+    { id: "about-3", title: "About", component: "about", description: "교육" },
+    { id: "about-4", title: "About", component: "about", description: "활동" },
+    { id: "experience-1", title: "Experience", component: "experience", description: "케어마인더" },
+    { id: "experience-2", title: "Experience", component: "experience", description: "ReCarelab" },
+    { id: "experience-3", title: "Experience", component: "experience", description: "이들" },
+    { id: "projects-1", title: "Projects", component: "projects", description: "프로젝트 1-2" },
+    { id: "projects-2", title: "Projects", component: "projects", description: "프로젝트 3-4" },
+    { id: "projects-3", title: "Projects", component: "projects", description: "프로젝트 5-6" },
+    { id: "contact", title: "Contact", component: "contact", description: "연락처" },
   ];
 
   // 모바일 여부 감지
@@ -470,27 +476,14 @@ export default function Home() {
     if (currentMobilePage < mobilePages.length - 1) {
       setButtonPressed(true);
       setTimeout(() => setButtonPressed(false), 150);
-      
-      setPageTransition(true);
-      setTimeout(() => {
-        setCurrentMobilePage((prev) => prev + 1);
-        setTimeout(() => {
-          setPageTransition(false);
-        }, 50);
-      }, 300);
+      setCurrentMobilePage((prev) => prev + 1);
     }
   };
 
   // 이전 모바일 페이지로 이동
   const goToPrevMobilePage = () => {
     if (currentMobilePage > 0) {
-      setPageTransition(true);
-      setTimeout(() => {
-        setCurrentMobilePage((prev) => prev - 1);
-        setTimeout(() => {
-          setPageTransition(false);
-        }, 50);
-      }, 300);
+      setCurrentMobilePage((prev) => prev - 1);
     }
   };
 
@@ -596,14 +589,7 @@ export default function Home() {
     if (currentProjectPage < 3) {
       setButtonPressed(true);
       setTimeout(() => setButtonPressed(false), 150);
-      
-      setPageTransition(true);
-      setTimeout(() => {
-        setCurrentProjectPage((prev) => prev + 1);
-        setTimeout(() => {
-          setPageTransition(false);
-        }, 50);
-      }, 300);
+      setCurrentProjectPage((prev) => prev + 1);
     } else {
       setIsProjectFunnel(false);
       setSelectedMobileProject(null);
@@ -613,13 +599,7 @@ export default function Home() {
 
   const goToPrevProjectPage = () => {
     if (currentProjectPage > 0) {
-      setPageTransition(true);
-      setTimeout(() => {
-        setCurrentProjectPage((prev) => prev - 1);
-        setTimeout(() => {
-          setPageTransition(false);
-        }, 50);
-      }, 300);
+      setCurrentProjectPage((prev) => prev - 1);
     } else {
       setIsProjectFunnel(false);
       setSelectedMobileProject(null);
@@ -630,79 +610,93 @@ export default function Home() {
   const renderProjectFunnelPage = () => {
     if (!selectedMobileProject) return null;
 
-    const renderPage = () => {
-      switch (currentProjectPage) {
-        case 0:
-          return (
-            <div className="space-y-6 text-center">
-              <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-                <Image
-                  src={selectedMobileProject.image}
-                  alt={selectedMobileProject.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h2 className="text-2xl font-bold">{selectedMobileProject.title}</h2>
-              <p className="text-muted-foreground">{selectedMobileProject.description}</p>
-            </div>
-          );
-        case 1:
-          return (
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold">Overview</h3>
-              <p className="text-muted-foreground whitespace-pre-line">
-                {selectedMobileProject.fullDescription}
-              </p>
-            </div>
-          );
-        case 2:
-          return (
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold">Technologies</h3>
-              <div className="flex flex-wrap gap-2">
-                {selectedMobileProject.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          );
-        case 3:
-          return (
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold">Links</h3>
-              <div className="space-y-4">
-                <Button
-                  className="w-full"
-                  onClick={() => handleExternalLink(selectedMobileProject.demoUrl)}
-                >
-                  View Live Demo
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => handleExternalLink(selectedMobileProject.githubUrl)}
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  View Source
-                </Button>
-              </div>
-            </div>
-          );
-        default:
-          return null;
-      }
+    const pageVariants = {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -20 }
+    };
+
+    const pageTransition = {
+      type: "tween",
+      duration: 0.3
     };
 
     return (
-      <div className={`min-h-[calc(100vh-80px)] px-6 pt-20 transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
-        {renderPage()}
+      <div className="min-h-[calc(100vh-80px)] px-6 pt-20">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentProjectPage}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+            className="space-y-6"
+          >
+            {currentProjectPage === 0 && (
+              <div>
+                <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+                  <Image
+                    src={selectedMobileProject.image}
+                    alt={selectedMobileProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h2 className="text-2xl font-bold">{selectedMobileProject.title}</h2>
+                <p className="text-muted-foreground">{selectedMobileProject.description}</p>
+              </div>
+            )}
+
+            {currentProjectPage === 1 && (
+              <div>
+                <h3 className="text-xl font-bold">Overview</h3>
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {selectedMobileProject.fullDescription}
+                </p>
+              </div>
+            )}
+
+            {currentProjectPage === 2 && (
+              <div>
+                <h3 className="text-xl font-bold">Technologies</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedMobileProject.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {currentProjectPage === 3 && (
+              <div>
+                <h3 className="text-xl font-bold">Links</h3>
+                <div className="space-y-4">
+                  <Button
+                    className="w-full"
+                    onClick={() => handleExternalLink(selectedMobileProject.demoUrl)}
+                  >
+                    View Live Demo
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => handleExternalLink(selectedMobileProject.githubUrl)}
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    View Source
+                  </Button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   };
@@ -711,262 +705,462 @@ export default function Home() {
   const renderMobilePage = () => {
     const currentPage = mobilePages[currentMobilePage];
     
-    if (currentPage.id === "intro") {
-      return (
-        <div className={`flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6 text-center transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-10 shadow-lg"
-          >
-            <motion.span 
-              className="text-4xl"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-            >
-              {introSteps[currentMobilePage % introSteps.length].icon}
-            </motion.span>
-          </motion.div>
-          
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            <motion.h1 
-              className="text-3xl font-bold mb-4"
-              layout
-            >
-              {introSteps[currentMobilePage % introSteps.length].title}
-            </motion.h1>
-            <motion.p 
-              className="text-gray-600 text-lg"
-              layout
-            >
-              {introSteps[currentMobilePage % introSteps.length].description}
-            </motion.p>
-          </motion.div>
-          
-          <motion.div
-            className="flex gap-2 mt-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            {introSteps.map((_, index) => (
-              <div
-                key={index}
-                className={`w-2 h-2 rounded-full ${
-                  index === currentMobilePage % introSteps.length
-                    ? "bg-blue-500"
-                    : "bg-gray-300"
-                }`}
-              />
-            ))}
-          </motion.div>
-        </div>
-      );
-    }
+    const pageVariants = {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -20 }
+    };
+
+    const pageTransition = {
+      type: "tween",
+      duration: 0.3
+    };
     
-    // 각 섹션 컴포넌트 렌더링
     return (
-      <div id={currentPage.id} className={`mobile-section transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
-        {currentPage.id === "about" && (
-          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
-                <h1 className="text-3xl font-bold tracking-tight">
-                  개발자 안승찬 입니다.
-                </h1>
-              </div>
-              
-              <div className="space-y-4 text-base text-muted-foreground">
-                <p>
-                  4년전 &quot;Hello World&quot;를 출력하며 개발자로서의 첫
-                  발자취를 남겼습니다.
-                </p>
-                <p>
-                  &quot;부딪힐거 같으면 더 쌔게 밟아라&quot; 라는 말을 좋아합니다.
-                  <br /> 도전과 실패를 두려워하지 않고, <br />
-                  오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
-                </p>
-                <div className="pl-4 border-l-2 border-primary/20 my-4 space-y-2">
-                  <p className="text-sm">
-                    새로운 기술을 배우는 것을 두려워하지 않습니다.
-                  </p>
-                  <p className="text-sm">
-                    문제에 직면했을 때 회피하지 않고 정면으로 도전합니다.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="space-y-3 mt-8">
-                <p className="text-sm text-muted-foreground">Most Tech Stack</p>
-                <div className="flex flex-wrap gap-2">
-                  {["TypeScript", "React", "Next.js", "Vue"].map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
-                    >
-                      {tech}
-                    </span>
+      <div className="relative">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage.id}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+            className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6"
+          >
+            {currentPage.id === "intro" && (
+              <div className="flex flex-col items-center text-center">
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-10 shadow-lg"
+                >
+                  <motion.span 
+                    className="text-4xl"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                  >
+                    {introSteps[currentMobilePage % introSteps.length].icon}
+                  </motion.span>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  <motion.h1 
+                    className="text-3xl font-bold mb-4"
+                    layout
+                  >
+                    {introSteps[currentMobilePage % introSteps.length].title}
+                  </motion.h1>
+                  <motion.p 
+                    className="text-gray-600 text-lg"
+                    layout
+                  >
+                    {introSteps[currentMobilePage % introSteps.length].description}
+                  </motion.p>
+                </motion.div>
+                
+                <motion.div
+                  className="flex gap-2 mt-12"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  {introSteps.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`w-2 h-2 rounded-full ${
+                        index === currentMobilePage % introSteps.length
+                          ? "bg-blue-500"
+                          : "bg-gray-300"
+                      }`}
+                    />
                   ))}
-                </div>
+                </motion.div>
               </div>
-              
-              <div className="space-y-4 pt-8 border-t border-primary/10">
-                <div className="flex items-center gap-2">
-                  <div className="text-primary/80 text-lg">📚</div>
-                  <p className="text-base font-medium">Education</p>
-                </div>
-                <div className="space-y-3">
-                  <div className="px-4 py-3 bg-secondary/20 rounded-lg">
-                    <h3 className="font-medium">한림대학교 소프트웨어융합</h3>
-                    <p className="text-xs text-primary/70 mt-1">2018.02 ~ 2025.06(졸업예정)</p>
+            )}
+            
+            {currentPage.id.startsWith("about") && (
+              <div>
+                <h2 className="text-2xl font-bold mb-8">About</h2>
+                {currentPage.id === "about-1" && (
+                  <div className="space-y-6">
+                    <div className="space-y-4">
+                      <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
+                      <h1 className="text-3xl font-bold tracking-tight">
+                        개발자 안승찬 입니다.
+                      </h1>
+                    </div>
+                    
+                    <div className="space-y-4 text-base text-muted-foreground">
+                      <p>
+                        4년전 &quot;Hello World&quot;를 출력하며 개발자로서의 첫
+                        발자취를 남겼습니다.
+                      </p>
+                      <p>
+                        &quot;부딪힐거 같으면 더 쌔게 밟아라&quot; 라는 말을 좋아합니다.
+                        도전과 실패를 두려워하지 않고, 
+                        오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
+                      </p>
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {currentPage.id === "about-2" && (
+                  <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Tech Stack</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {["TypeScript", "React", "Next.js", "Vue", "ReactNative", "Electron"].map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {currentPage.id === "about-3" && (
+                  <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Education</h2>
+                    <div className="space-y-4">
+                      <div className="px-4 py-3 bg-secondary/20 rounded-lg">
+                        <h3 className="font-medium">한림대학교 소프트웨어융합</h3>
+                        <p className="text-xs text-primary/70 mt-1">2018.02 ~ 2025.06(졸업예정)</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {currentPage.id === "about-4" && (
+                  <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Activities</h2>
+                    <div className="space-y-4">
+                      {[
+                        { name: "씨애랑", type: "학술 동아리" },
+                        { name: "DAWN", type: "창업동아리" },
+                        { name: "Fanespo", type: "창업팀" },
+                        { name: "Edubill", type: "창업팀" }
+                      ].map((activity) => (
+                        <div key={activity.name} className="px-4 py-3 bg-secondary/20 rounded-lg">
+                          <h3 className="font-medium">{activity.name}</h3>
+                          <p className="text-xs text-primary/70 mt-1">{activity.type}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          </section>
-        )}
-        
-        {currentPage.id === "experience" && (
-          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
-            <h2 className="text-2xl font-bold mb-8">Work Experience</h2>
-            <div className="space-y-10">
-              {experiences.slice(0, 2).map((exp) => (
-                <div key={exp.id} className="space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
-                    <h3 className="text-xl font-semibold">{exp.role}</h3>
-                    <p className="text-primary/80 italic">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground mt-2">{exp.description}</p>
-                  </div>
-                  
-                  <div className="space-y-4 mt-6">
-                    {exp.achievements.slice(0, 2).map((achievement) => (
-                      <div
-                        key={achievement.title}
-                        className="p-4 rounded-lg bg-secondary/30"
-                      >
-                        <h4 className="font-medium mb-3">{achievement.title}</h4>
-                        <ul className="list-disc list-inside pl-2 space-y-2">
-                          {achievement.description.slice(0, 2).map((desc) => (
-                            <li
-                              className="text-sm text-muted-foreground"
-                              key={desc.text}
+            )}
+
+            {currentPage.id.startsWith("experience") && (
+              <div>
+                <h2 className="text-2xl font-bold mb-8">Work Experience</h2>
+                {currentPage.id === "experience-1" && (
+                  <div className="space-y-6">
+                    {experiences.slice(0, 1).map((exp) => (
+                      <div key={exp.id} className="space-y-4">
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <h3 className="text-xl font-semibold">{exp.role}</h3>
+                          <p className="text-primary/80 italic">{exp.company}</p>
+                          <p className="text-sm text-muted-foreground mt-2">{exp.description}</p>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          {exp.achievements.slice(0, 1).map((achievement) => (
+                            <div
+                              key={achievement.title}
+                              className="p-4 rounded-lg bg-secondary/30"
                             >
-                              {desc.text}
-                            </li>
+                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <ul className="list-disc list-inside pl-2 space-y-2">
+                                {achievement.description.slice(0, 2).map((desc) => (
+                                  <li
+                                    className="text-sm text-muted-foreground"
+                                    key={desc.text}
+                                  >
+                                    {desc.text}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           ))}
-                        </ul>
+                        </div>
+                        
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {exp.skills.slice(0, 4).map((skill) => (
+                              <span
+                                key={skill}
+                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  
-                  <div className="mt-4">
-                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {exp.skills.slice(0, 4).map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-        
-        {currentPage.id === "projects" && (
-          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
-            <h2 className="text-2xl font-bold mb-8">Projects</h2>
-            <div className="space-y-8">
-              {projects.slice(0, 3).map((project) => (
-                <div 
-                  key={project.id} 
-                  className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
-                  onClick={(e) => handleProjectClick(project, e)}
-                >
-                  <div className="relative w-full h-48 overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                    />
-                    {project.isAward && (
-                      <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
-                        <Trophy className="w-4 h-4 text-white" />
+                )}
+
+                {currentPage.id === "experience-2" && (
+                  <div className="space-y-6">
+                    {experiences.slice(1, 2).map((exp) => (
+                      <div key={exp.id} className="space-y-4">
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <h3 className="text-xl font-semibold">{exp.role}</h3>
+                          <p className="text-primary/80 italic">{exp.company}</p>
+                          <p className="text-sm text-muted-foreground mt-4">
+                            {exp.description}
+                          </p>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          {exp.achievements.slice(0, 1).map((achievement) => (
+                            <div
+                              key={achievement.title}
+                              className="p-4 rounded-lg bg-secondary/30"
+                            >
+                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <ul className="list-disc list-inside pl-2 space-y-2">
+                                {achievement.description.slice(0, 2).map((desc) => (
+                                  <li
+                                    className="text-sm text-muted-foreground"
+                                    key={desc.text}
+                                  >
+                                    {desc.text}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {exp.skills.slice(0, 4).map((skill) => (
+                              <span
+                                key={skill}
+                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                    )}
+                    ))}
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
-                    <div className="flex flex-wrap gap-1 mt-3">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                )}
+
+                {currentPage.id === "experience-3" && (
+                  <div className="space-y-6">
+                    {experiences.slice(2, 3).map((exp) => (
+                      <div key={exp.id} className="space-y-4">
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <h3 className="text-xl font-semibold">{exp.role}</h3>
+                          <p className="text-primary/80 italic">{exp.company}</p>
+                          <p className="text-sm text-muted-foreground mt-4">
+                            {exp.description}
+                          </p>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          {exp.achievements.slice(0, 1).map((achievement) => (
+                            <div
+                              key={achievement.title}
+                              className="p-4 rounded-lg bg-secondary/30"
+                            >
+                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <ul className="list-disc list-inside pl-2 space-y-2">
+                                {achievement.description.slice(0, 2).map((desc) => (
+                                  <li
+                                    className="text-sm text-muted-foreground"
+                                    key={desc.text}
+                                  >
+                                    {desc.text}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {exp.skills.slice(0, 4).map((skill) => (
+                              <span
+                                key={skill}
+                                className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {currentPage.id.startsWith("projects") && (
+              <div>
+                <h2 className="text-2xl font-bold mb-8">Projects</h2>
+                <div className="space-y-6">
+                  {currentPage.id === "projects-1" && projects.slice(0, 2).map((project) => (
+                    <div 
+                      key={project.id} 
+                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
+                    >
+                      <div className="relative w-full h-36 overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                        {project.isAward && (
+                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                            <Trophy className="w-4 h-4 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold">{project.title}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
+                  ))}
+                  
+                  {currentPage.id === "projects-2" && projects.slice(2, 4).map((project) => (
+                    <div 
+                      key={project.id} 
+                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
+                    >
+                      <div className="relative w-full h-36 overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                        {project.isAward && (
+                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                            <Trophy className="w-4 h-4 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold">{project.title}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {currentPage.id === "projects-3" && projects.slice(4, 6).map((project) => (
+                    <div 
+                      key={project.id} 
+                      className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
+                      onClick={(e) => handleProjectClick(project, e)}
+                    >
+                      <div className="relative w-full h-36 overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                        {project.isAward && (
+                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                            <Trophy className="w-4 h-4 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold">{project.title}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {currentPage.id === "contact" && (
+              <div>
+                <div className="text-center space-y-8">
+                  <h2 className="text-2xl font-bold">Let&apos;s Connect</h2>
+                  <p className="text-muted-foreground">
+                    I&apos;m always open to new opportunities and interesting projects
+                  </p>
+                  <Button className="w-full">
+                    <Mail className="mr-2 h-4 w-4" />
+                    Send Message
+                  </Button>
+                  <div className="flex justify-center gap-6 pt-8">
+                    <Button variant="ghost" size="icon">
+                      <Github className="h-5 w-5" />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <Linkedin className="h-5 w-5" />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <Mail className="h-5 w-5" />
+                    </Button>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
-        
-        {currentPage.id === "contact" && (
-          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20 flex flex-col items-center justify-center">
-            <div className="text-center space-y-8 max-w-sm mx-auto">
-              <h2 className="text-2xl font-bold">Let&apos;s Connect</h2>
-              <p className="text-muted-foreground">
-                I&apos;m always open to new opportunities and interesting projects
-              </p>
-              <Button className="w-full">
-                <Mail className="mr-2 h-4 w-4" />
-                Send Message
-              </Button>
-              <div className="flex justify-center gap-6 pt-6">
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="hover:bg-primary/10 transition-all"
-                  onClick={() => handleExternalLink("https://github.com/Ahnseungc")}
-                >
-                  <Github className="h-6 w-6" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="hover:bg-primary/10 transition-all"
-                >
-                  <Linkedin className="h-6 w-6" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="hover:bg-primary/10 transition-all"
-                >
-                  <Mail className="h-6 w-6" />
-                </Button>
               </div>
-            </div>
-          </section>
-        )}
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   };
@@ -1077,9 +1271,6 @@ export default function Home() {
                       </p>
                       <p className="text-base">
                         문제에 직면했을 때 회피하지 않고 정면으로 도전합니다.
-                      </p>
-                      <p className="text-base">
-                        실패를 경험으로 여기고, 더 나은 해결책을 찾아냅니다.
                       </p>
                     </div>
                     <p>개발과 함께한 동료, 그리고 JS를 사랑합니다.</p>

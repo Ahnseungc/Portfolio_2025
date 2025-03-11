@@ -397,8 +397,8 @@ export default function Home() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [currentMobilePage, setCurrentMobilePage] = useState(0);  
-  const [pageTransition, setPageTransition] = useState(false);
+  const [currentMobilePage, setCurrentMobilePage] = useState(0);    
+  // const [pageTransition, setPageTransition] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
   const [isProjectFunnel, setIsProjectFunnel] = useState(false);
   const [currentProjectPage, setCurrentProjectPage] = useState(0);
@@ -553,9 +553,9 @@ export default function Home() {
       setSelectedMobileProject(project);
       setIsProjectFunnel(true);
       setCurrentProjectPage(0);
-      setPageTransition(true);
+      // setPageTransition(true);
       setTimeout(() => {
-        setPageTransition(false);
+        // setPageTransition(false);
       }, 300);
     } else {
       const rect = (e.target as Element).getBoundingClientRect();

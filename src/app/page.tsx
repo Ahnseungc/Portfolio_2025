@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Mail, Linkedin, Trophy, ExternalLink } from "lucide-react";
+import { Github, Mail, Linkedin, Trophy, ExternalLink, ArrowRight, X, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, X } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 interface Project {
   id: number;
@@ -191,8 +191,7 @@ const experiences: Experience[] = [
           { text: "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발", link: "https://example.com/pipeline" },
           { text: "SSE를 통한 원격 로그 아웃 구현", link: "https://example.com/pipeline" },
         ],
-      },
-      
+      },    
       {
         title: "MonoRepo 도입",
         description: [
@@ -365,11 +364,110 @@ const handleExternalLink = (url: string) => {
 };
 
 export default function Home() {
+  // const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [expandPosition, setExpandPosition] = useState({ x: "50%", y: "50%" });
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentMobilePage, setCurrentMobilePage] = useState(0);
+  const [pageTransition, setPageTransition] = useState(false);
+  const [buttonPressed, setButtonPressed] = useState(false);
+  const [isProjectFunnel, setIsProjectFunnel] = useState(false);
+  const [currentProjectPage, setCurrentProjectPage] = useState(0);
+  const [selectedMobileProject, setSelectedMobileProject] = useState<Project | null>(null);
+
+  // Initialize state from URL parameters
+  useEffect(() => {
+    const page = searchParams.get('page');
+    const projectId = searchParams.get('projectId');
+    const projectPage = searchParams.get('projectPage');
+
+    if (page) {
+      setCurrentMobilePage(Number(page));
+    }
+
+    if (projectId) {
+      const project = projects.find(p => p.id === Number(projectId));
+      if (project) {
+        setSelectedMobileProject(project);
+        setIsProjectFunnel(true);
+        if (projectPage) {
+          setCurrentProjectPage(Number(projectPage));
+        }
+      }
+    }
+  }, [searchParams]);
+
+  // Update URL when funnel state changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    
+    if (isProjectFunnel && selectedMobileProject) {
+      params.set('projectId', selectedMobileProject.id.toString());
+      params.set('projectPage', currentProjectPage.toString());
+    } else {
+      params.set('page', currentMobilePage.toString());
+    }
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, '', newUrl);
+  }, [currentMobilePage, isProjectFunnel, selectedMobileProject, currentProjectPage]);
+
+  // 모바일 퍼널 페이지 정의
+  const mobilePages = [
+    { id: "intro", title: "대출이 어려워요", description: "다가구 주택으로 대출 받을 수 있는 상품이 없어요." },
+    // { id: "intro", title: "대출이 어려워요", description: "다가구 주택으로 대출 받을 수 있는 상품이 없어요." },
+    { id: "about", title: "About", component: "about", description: "" },
+    { id: "experience", title: "Experience", component: "experience", description: "" },
+    { id: "projects", title: "Projects", component: "projects", description: "" },
+    { id: "contact", title: "Contact", component: "contact", description: "" },
+  ];
+
+  // 모바일 여부 감지
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  // 다음 모바일 페이지로 이동
+  const goToNextMobilePage = () => {
+    if (currentMobilePage < mobilePages.length - 1) {
+      setButtonPressed(true);
+      setTimeout(() => setButtonPressed(false), 150);
+      
+      setPageTransition(true);
+      setTimeout(() => {
+        setCurrentMobilePage((prev) => prev + 1);
+        setTimeout(() => {
+          setPageTransition(false);
+        }, 50);
+      }, 300);
+    }
+  };
+
+  // 이전 모바일 페이지로 이동
+  const goToPrevMobilePage = () => {
+    if (currentMobilePage > 0) {
+      setPageTransition(true);
+      setTimeout(() => {
+        setCurrentMobilePage((prev) => prev - 1);
+        setTimeout(() => {
+          setPageTransition(false);
+        }, 50);
+      }, 300);
+    }
+  };
 
   useEffect(() => {
     if (selectedProject) {
@@ -433,14 +531,24 @@ export default function Home() {
   }, [lastScrollY]);
 
   const handleProjectClick = (project: Project, e: React.MouseEvent) => {
-    const rect = (e.target as Element).getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    setExpandPosition({
-      x: `${x}px`,
-      y: `${y}px`,
-    });
-    setSelectedProject(project);
+    if (isMobile) {
+      setSelectedMobileProject(project);
+      setIsProjectFunnel(true);
+      setCurrentProjectPage(0);
+      setPageTransition(true);
+      setTimeout(() => {
+        setPageTransition(false);
+      }, 300);
+    } else {
+      const rect = (e.target as Element).getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      setExpandPosition({
+        x: `${x}px`,
+        y: `${y}px`,
+      });
+      setSelectedProject(project);
+    }
   };
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -459,425 +567,241 @@ export default function Home() {
     }
   };
 
-  return (
-    <main className="flex min-h-screen flex-col">
-      <div className="aurora-bg" />
+  const goToNextProjectPage = () => {
+    if (currentProjectPage < 3) {
+      setButtonPressed(true);
+      setTimeout(() => setButtonPressed(false), 150);
+      
+      setPageTransition(true);
+      setTimeout(() => {
+        setCurrentProjectPage((prev) => prev + 1);
+        setTimeout(() => {
+          setPageTransition(false);
+        }, 50);
+      }, 300);
+    } else {
+      setIsProjectFunnel(false);
+      setSelectedMobileProject(null);
+      setCurrentProjectPage(0);
+    }
+  };
 
-      {/* Navigation */}
-      <nav
-        className={`fixed w-full border-b border-primary/10 nav-blur transition-transform duration-500 ${
-          isNavVisible && !isScrolling ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <div className="container flex h-16 items-center justify-between">
-          <Link className="text-lg font-semibold" href="/">
-            <span>Portfolio</span>
-          </Link>
-          <nav className="flex items-center space-x-8 text-sm font-medium">
-            <Link
-              href="#about"
-              className="nav-link"
-              onClick={(e) => handleScroll(e, "about")}
-            >
-              About
-            </Link>
-            <Link
-              href="#experience"
-              className="nav-link"
-              onClick={(e) => handleScroll(e, "experience")}
-            >
-              Experience
-            </Link>
-            <Link
-              href="#projects"
-              className="nav-link"
-              onClick={(e) => handleScroll(e, "projects")}
-            >
-              Projects
-            </Link>
-            <Link
-              href="#contact"
-              className="nav-link"
-              onClick={(e) => handleScroll(e, "contact")}
-            >
-              Contact
-            </Link>
-          </nav>
-        </div>
-      </nav>
+  const goToPrevProjectPage = () => {
+    if (currentProjectPage > 0) {
+      setPageTransition(true);
+      setTimeout(() => {
+        setCurrentProjectPage((prev) => prev - 1);
+        setTimeout(() => {
+          setPageTransition(false);
+        }, 50);
+      }, 300);
+    } else {
+      setIsProjectFunnel(false);
+      setSelectedMobileProject(null);
+    }
+  };
 
-      {/* Hero Section */}
-      <section
-        id="about"
-        className="relative min-h-screen w-full bg-background overflow-hidden"
-      >
-        <div className="hero-gradient" />
-        <div className="container flex items-center">
-          <div className="flex flex-col gap-8 max-w-3xl pt-24">
-            <div className="space-y-6">
-              <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
-              <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-                개발자 안승찬 입니다.
-              </h1>
-              <div className="space-y-4 text-lg text-muted-foreground">
-                <p>
-                  4년전 {"'"}Hello World{"'"}를 출력하며 개발자로서의 첫
-                  발자취를 남겼습니다.
-                </p>
-                <p>
-                  {"'"}부딪힐거 같으면 더 쌔게 밟아라{"'"} 라는 말을 좋아합니다.
-                  <br /> 도전과 실패를 두려워하지 않고, <br />
-                  오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
-                </p>
-                <div className="pl-4 border-l-2 border-primary/20 my-4 space-y-2">
-                  <p className="text-base">
-                    새로운 기술을 배우는 것을 두려워하지 않습니다.
-                  </p>
-                  <p className="text-base">
-                    문제에 직면했을 때 회피하지 않고 정면으로 도전합니다.
-                  </p>
-                  <p className="text-base">
-                    실패를 경험으로 여기고, 더 나은 해결책을 찾아냅니다.
-                  </p>
-                </div>
-                <p>개발과 함께한 동료, 그리고 JS를 사랑합니다.</p>
+  // Render project funnel pages
+  const renderProjectFunnelPage = () => {
+    if (!selectedMobileProject) return null;
+
+    const renderPage = () => {
+      switch (currentProjectPage) {
+        case 0:
+          return (
+            <div className="space-y-6 text-center">
+              <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+                <Image
+                  src={selectedMobileProject.image}
+                  alt={selectedMobileProject.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <div className="section-divider ml-0" />
+              <h2 className="text-2xl font-bold">{selectedMobileProject.title}</h2>
+              <p className="text-muted-foreground">{selectedMobileProject.description}</p>
             </div>
-
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">Most Tech Stack</p>
+          );
+        case 1:
+          return (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold">Overview</h3>
+              <p className="text-muted-foreground whitespace-pre-line">
+                {selectedMobileProject.fullDescription}
+              </p>
+            </div>
+          );
+        case 2:
+          return (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold">Technologies</h3>
               <div className="flex flex-wrap gap-2">
-                {[
-                  "TypeScript",
-                  "React",
-                  "ReactNative",
-                  "Next.js",
-                  "Vue",
-                  "Electron",
-                ].map((tech) => (
+                {selectedMobileProject.tags.map((tag) => (
                   <span
-                    key={tech}
-                    className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full
-                      hover:bg-primary/10 transition-colors cursor-default"
+                    key={tag}
+                    className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
                   >
-                    {tech}
+                    {tag}
                   </span>
                 ))}
               </div>
             </div>
-
-            <div className="space-y-4 pt-8 border-t border-primary/10">
+          );
+        case 3:
+          return (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold">Links</h3>
               <div className="space-y-4">
+                <Button
+                  className="w-full"
+                  onClick={() => handleExternalLink(selectedMobileProject.demoUrl)}
+                >
+                  View Live Demo
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => handleExternalLink(selectedMobileProject.githubUrl)}
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  View Source
+                </Button>
+              </div>
+            </div>
+          );
+        default:
+          return null;
+      }
+    };
+
+    return (
+      <div className={`min-h-[calc(100vh-80px)] px-6 pt-20 transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
+        {renderPage()}
+      </div>
+    );
+  };
+
+  // 모바일 퍼널 페이지 렌더링
+  const renderMobilePage = () => {
+    const currentPage = mobilePages[currentMobilePage];
+    
+    if (currentPage.id === "intro") {
+      return (
+        <div className={`flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6 text-center transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
+          <div className="w-24 h-24 bg-yellow-200 rounded-full flex items-center justify-center mb-10">
+            <span className="text-3xl font-bold">!</span>
+          </div>
+          <h1 className="text-2xl font-bold mb-6">{currentPage.title}</h1>
+          <p className="text-gray-600 mb-8">{currentPage.description}</p>
+        </div>
+      );
+    }
+    
+    // 각 섹션 컴포넌트 렌더링
+    return (
+      <div id={currentPage.id} className={`mobile-section transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
+        {currentPage.id === "about" && (
+          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
+                <h1 className="text-3xl font-bold tracking-tight">
+                  개발자 안승찬 입니다.
+                </h1>
+              </div>
+              
+              <div className="space-y-4 text-base text-muted-foreground">
+                <p>
+                  4년전 &quot;Hello World&quot;를 출력하며 개발자로서의 첫
+                  발자취를 남겼습니다.
+                </p>
+                <p>
+                  &quot;부딪힐거 같으면 더 쌔게 밟아라&quot; 라는 말을 좋아합니다.
+                  <br /> 도전과 실패를 두려워하지 않고, <br />
+                  오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
+                </p>
+                <div className="pl-4 border-l-2 border-primary/20 my-4 space-y-2">
+                  <p className="text-sm">
+                    새로운 기술을 배우는 것을 두려워하지 않습니다.
+                  </p>
+                  <p className="text-sm">
+                    문제에 직면했을 때 회피하지 않고 정면으로 도전합니다.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="space-y-3 mt-8">
+                <p className="text-sm text-muted-foreground">Most Tech Stack</p>
+                <div className="flex flex-wrap gap-2">
+                  {["TypeScript", "React", "Next.js", "Vue"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="space-y-4 pt-8 border-t border-primary/10">
                 <div className="flex items-center gap-2">
                   <div className="text-primary/80 text-lg">📚</div>
                   <p className="text-base font-medium">Education</p>
                 </div>
                 <div className="space-y-3">
-                  <div
-                    className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="px-4 py-2 flex items-center gap-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-medium group-hover:text-primary transition-colors">
-                          한림대학교 소프트웨어융합
-                        </h3>
-                      </div>
-                      <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
-                        2018.02 ~ 2025.06(졸업예정)
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="text-primary/80 text-lg">🏃‍♂️</div>
-                  <p className="text-base font-medium">Activities</p>
-                </div>
-                <div className="space-y-3">
-                  <div
-                    className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="px-4 py-2 flex items-center gap-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-medium group-hover:text-primary transition-colors">
-                          씨애랑
-                        </h3>
-                      </div>
-                      <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
-                        학술 동아리
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="px-4 py-2 flex items-center gap-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-medium group-hover:text-primary transition-colors">
-                          DAWN
-                        </h3>
-                      </div>
-                      <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
-                        창업동아리
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="px-4 py-2 flex items-center gap-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-medium group-hover:text-primary transition-colors">
-                          Fanespo
-                        </h3>
-                      </div>
-                      <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
-                        창업팀
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="px-4 py-2 flex items-center gap-4">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-medium group-hover:text-primary transition-colors">
-                          Edubill
-                        </h3>
-                      </div>
-                      <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
-                        창업팀
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-primary/10">
-                {/* Awards */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <Trophy className="h-5 w-5 text-primary/80" />
-                    <p className="text-base font-medium">
-                      Awards & Achievements
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    {awards.map((award) => (
-                      <div
-                        key={award.id}
-                        className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300 px-3 py-2"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="mt-1 text-primary/60">🏆</div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between">
-                              <h3 className="font-medium group-hover:text-primary transition-colors truncate">
-                                {award.title}
-                              </h3>
-                              <span className="text-sm text-muted-foreground shrink-0 ml-2">
-                                {award.date}
-                              </span>
-                            </div>
-                            <p className="text-primary/70 text-sm mt-1 truncate">
-                              {award.organization}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Libraries */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <div className="text-primary/80 text-lg">📦</div>
-                    <p className="text-base font-medium">
-                      Libraries & Custom Hooks
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    {libraries.map((lib) => (
-                      <div
-                        key={lib.id}
-                        className="group card-dark rounded-lg 
-                          hover:bg-secondary/50 transition-all duration-300"
-                        onClick={() => handleExternalLink(lib.url)}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        <div className="space-y-2">
-                          <div className="flex items-start justify-between">
-                            <h3 className="font-medium group-hover:text-primary transition-colors">
-                              {lib.name}
-                            </h3>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              {lib.stars && (
-                                <span className="flex items-center gap-1">
-                                  ⭐ {lib.stars}
-                                </span>
-                              )}
-                              {lib.downloads && (
-                                <span className="flex items-center gap-1">
-                                  ⬇️ {lib.downloads.toLocaleString()}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <p className="text-sm text-muted-foreground line-clamp-1">
-                            {lib.description}
-                          </p>
-                          <div className="flex flex-wrap gap-1">
-                            {lib.techStack.map((tech) => (
-                              <span
-                                key={tech}
-                                className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="px-4 py-3 bg-secondary/20 rounded-lg">
+                    <h3 className="font-medium">한림대학교 소프트웨어융합</h3>
+                    <p className="text-xs text-primary/70 mt-1">2018.02 ~ 2025.06(졸업예정)</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className="flex gap-4 pt-4 pb-4">
-              <Button
-                variant="default"
-                size="lg"
-                className="bg-primary hover:bg-primary/90"
-                onClick={() =>
-                  handleExternalLink("https://github.com/Ahnseungc")
-                }
-              >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-primary/20 hover:border-primary/40"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Contact
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Profile Image */}
-        <div className="absolute top-24 right-0 w-[500px] h-[700px] hidden lg:block profile-container">
-          <div className="relative w-full h-full overflow-hidden">
-            <Image
-              src="/profile-placeholder.jpg"
-              alt="Profile"
-              fill
-              className="object-cover object-top profile-image"
-              priority
-              sizes="(max-width: 768px) 100vw, 500px"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="w-full dark-section">
-        <div className="container py-24">
-          <h2 className="text-3xl font-bold mb-12 accent-text">
-            Work Experience
-          </h2>
-          <div className="space-y-20">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="grid gap-8 md:grid-cols-[1fr,2fr]">
-                {/* 왼쪽: 기간 및 회사 정보 */}
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground font-mono">
-                    {exp.period}
-                  </p>
-                  <h3 className="text-xl font-semibold">{exp.role}</h3>
-                  <p className="text-primary/80 italic">{exp.company}</p>
-                  <p className="text-sm text-muted-foreground mt-4">
-                    {exp.description}
-                  </p>
-                </div>
-
-                {/* 오른쪽: 성과 및 스킬 */}
-                <div className="space-y-8">
-                  {/* 주요 성과 */}
-                  <div className="space-y-4">
-                    {exp.achievements.map((achievement, achievementIndex) => (
+          </section>
+        )}
+        
+        {currentPage.id === "experience" && (
+          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
+            <h2 className="text-2xl font-bold mb-8">Work Experience</h2>
+            <div className="space-y-10">
+              {experiences.slice(0, 2).map((exp) => (
+                <div key={exp.id} className="space-y-4">
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                    <h3 className="text-xl font-semibold">{exp.role}</h3>
+                    <p className="text-primary/80 italic">{exp.company}</p>
+                    <p className="text-sm text-muted-foreground mt-2">{exp.description}</p>
+                  </div>
+                  
+                  <div className="space-y-4 mt-6">
+                    {exp.achievements.slice(0, 2).map((achievement) => (
                       <div
                         key={achievement.title}
-                        className="p-4 rounded-lg bg-secondary/50 hover:bg-secondary/80 transition-colors"
+                        className="p-4 rounded-lg bg-secondary/30"
                       >
-                        <h4 className="font-medium mb-2 flex items-center gap-2">
-                          <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm">
-                            {achievementIndex + 1}
-                          </span>
-                          {achievement.title}
-                        </h4>
-
-                        <ul className="list-disc list-inside pl-6 space-y-2">
-                          {achievement.description.map((desc) => (
+                        <h4 className="font-medium mb-3">{achievement.title}</h4>
+                        <ul className="list-disc list-inside pl-2 space-y-2">
+                          {achievement.description.slice(0, 2).map((desc) => (
                             <li
                               className="text-sm text-muted-foreground"
                               key={desc.text}
                             >
-                              {desc.link ? (
-                                <span className="flex items-center gap-1 inline-flex">
-                                  <a 
-                                    href={desc.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-primary hover:underline inline-flex items-center gap-1"
-                                  >
-                                    {desc.text}
-                                    <ExternalLink className="h-3 w-3" />
-                                  </a>
-                                </span>
-                              ) : (
-                                desc.text
-                              )}
+                              {desc.text}
                             </li>
                           ))}
                         </ul>
                       </div>
                     ))}
                   </div>
-
-                  {/* 기술 스택 */}
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground mb-3">
-                      Technologies
-                    </h4>
+                  
+                  <div className="mt-4">
+                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
                     <div className="flex flex-wrap gap-2">
-                      {exp.skills.map((skill) => (
+                      {exp.skills.slice(0, 4).map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full
-                            hover:bg-primary/10 transition-colors cursor-default"
+                          className="px-2 py-1 text-xs bg-primary/5 text-primary/80 rounded-full"
                         >
                           {skill}
                         </span>
@@ -885,162 +809,628 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="w-full dark-section">
-        <div className="container py-24 space-y-8">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent header-underline">
-              Side Projects
-            </h2>
-          </div>
-          <div className="album-grid">
-            {/* {projects.map((project) => (
-              <div
-                key={project.id}
-                className="album-card"
-                onClick={(e) => handleProjectClick(project, e)}
-              >
-                <div className="album-spine" />
-                <div className="album-content">
-                  <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
+              ))}
+            </div>
+          </section>
+        )}
+        
+        {currentPage.id === "projects" && (
+          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20">
+            <h2 className="text-2xl font-bold mb-8">Projects</h2>
+            <div className="space-y-8">
+              {projects.slice(0, 3).map((project) => (
+                <div 
+                  key={project.id} 
+                  className="rounded-lg overflow-hidden bg-secondary/10 active:scale-95 transition-transform cursor-pointer"
+                  onClick={(e) => handleProjectClick(project, e)}
+                >
+                  <div className="relative w-full h-48 overflow-hidden">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
                       className="object-cover"
                     />
+                    {project.isAward && (
+                      <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                        <Trophy className="w-4 h-4 text-white" />
+                      </div>
+                    )}
                   </div>
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <p className="text-muted-foreground">{project.description}</p>
-                  <div className="album-tags">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="album-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))} */}
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="album-card relative"
-                onClick={(e) => handleProjectClick(project, e)}
-              >
-                {project.isAward && (
-                  <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
-                    <Trophy className="w-5 h-5 text-white" />
-                  </div>
-                )}
-                <div className="album-spine" />
-                <div className="album-content">
-                  <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <p className="text-muted-foreground">{project.description}</p>
-                  <div className="album-tags">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="album-tag">
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold">{project.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                    <div className="flex flex-wrap gap-1 mt-3">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </section>
+        )}
+        
+        {currentPage.id === "contact" && (
+          <section className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6 overflow-y-auto pb-20 flex flex-col items-center justify-center">
+            <div className="text-center space-y-8 max-w-sm mx-auto">
+              <h2 className="text-2xl font-bold">Let&apos;s Connect</h2>
+              <p className="text-muted-foreground">
+                I&apos;m always open to new opportunities and interesting projects
+              </p>
+              <Button className="w-full">
+                <Mail className="mr-2 h-4 w-4" />
+                Send Message
+              </Button>
+              <div className="flex justify-center gap-6 pt-6">
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="hover:bg-primary/10 transition-all"
+                  onClick={() => handleExternalLink("https://github.com/Ahnseungc")}
+                >
+                  <Github className="h-6 w-6" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="hover:bg-primary/10 transition-all"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="hover:bg-primary/10 transition-all"
+                >
+                  <Mail className="h-6 w-6" />
+                </Button>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        )}
+      </div>
+    );
+  };
 
-      {/* Project Expand Modal */}
-      <div className={`project-expand ${selectedProject ? "open" : ""}`}>
-        <div
-          className="expand-background"
-          style={
-            {
-              "--x": expandPosition.x,
-              "--y": expandPosition.y,
-            } as React.CSSProperties
-          }
-          onClick={() => setSelectedProject(null)}
-        />
-        {selectedProject && (
-          <div className="expand-content">
-            <button
-              className="expand-close"
-              onClick={() => setSelectedProject(null)}
+  return (
+    <main className="flex min-h-screen flex-col">
+      {isMobile ? (
+        // 모바일 퍼널 구조
+        <div className="mobile-funnel relative">
+          {/* 뒤로가기 버튼 */}
+          {(currentMobilePage > 0 || isProjectFunnel) && (
+            <button 
+              onClick={isProjectFunnel ? goToPrevProjectPage : goToPrevMobilePage}
+              className="absolute top-6 left-4 z-10 p-2 rounded-full bg-white/80 shadow-md active:scale-95 transition-transform"
             >
-              <X className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
             </button>
+          )}
+          
+          {/* 현재 페이지 */}
+          {isProjectFunnel ? renderProjectFunnelPage() : renderMobilePage()}
+          
+          {/* 다음 버튼 */}
+          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+            <Button 
+              className={`w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-transform ${buttonPressed ? 'scale-95' : 'scale-100'}`}
+              onClick={isProjectFunnel ? goToNextProjectPage : goToNextMobilePage}
+              disabled={isProjectFunnel ? currentProjectPage >= 3 : currentMobilePage >= mobilePages.length - 1}
+            >
+              {isProjectFunnel ? (currentProjectPage === 3 ? "완료" : "다음") : (currentMobilePage === 0 ? "확인" : "다음")}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        // 기존 데스크톱 레이아웃
+        <>
+          <div className="aurora-bg" />
 
-            <div className="project-detail">
-              <div className="project-header">
-                <h2 className="text-4xl font-bold">{selectedProject.title}</h2>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProject.tags.map((tag) => (
-                    <span key={tag} className="album-tag">
-                      {tag}
-                    </span>
-                  ))}
+          {/* Navigation */}
+          <nav
+            className={`fixed w-full border-b border-primary/10 nav-blur transition-transform duration-500 ${
+              isNavVisible && !isScrolling ? "translate-y-0" : "-translate-y-full"
+            }`}
+          >
+            <div className="container flex h-16 items-center justify-between">
+              <Link className="text-lg font-semibold" href="/">
+                <span>Portfolio</span>
+              </Link>
+              <nav className="flex items-center space-x-8 text-sm font-medium">
+                <Link
+                  href="#about"
+                  className="nav-link"
+                  onClick={(e) => handleScroll(e, "about")}
+                >
+                  About
+                </Link>
+                <Link
+                  href="#experience"
+                  className="nav-link"
+                  onClick={(e) => handleScroll(e, "experience")}
+                >
+                  Experience
+                </Link>
+                <Link
+                  href="#projects"
+                  className="nav-link"
+                  onClick={(e) => handleScroll(e, "projects")}
+                >
+                  Projects
+                </Link>
+                <Link
+                  href="#contact"
+                  className="nav-link"
+                  onClick={(e) => handleScroll(e, "contact")}
+                >
+                  Contact
+                </Link>
+              </nav>
+            </div>
+          </nav>
+
+          {/* Hero Section */}
+          <section
+            id="about"
+            className="relative min-h-screen w-full bg-background overflow-hidden"
+          >
+            <div className="hero-gradient" />
+            <div className="container flex items-center">
+              <div className="flex flex-col gap-8 max-w-3xl pt-24">
+                <div className="space-y-6">
+                  <p className="text-lg text-primary/80 font-mono">안녕하세요.</p>
+                  <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                    개발자 안승찬 입니다.
+                  </h1>
+                  <div className="space-y-4 text-lg text-muted-foreground">
+                    <p>
+                      4년전 &quot;Hello World&quot;를 출력하며 개발자로서의 첫
+                      발자취를 남겼습니다.
+                    </p>
+                    <p>
+                      &quot;부딪힐거 같으면 더 쌔게 밟아라&quot; 라는 말을 좋아합니다.
+                      <br /> 도전과 실패를 두려워하지 않고, <br />
+                      오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
+                    </p>
+                    <div className="pl-4 border-l-2 border-primary/20 my-4 space-y-2">
+                      <p className="text-base">
+                        새로운 기술을 배우는 것을 두려워하지 않습니다.
+                      </p>
+                      <p className="text-base">
+                        문제에 직면했을 때 회피하지 않고 정면으로 도전합니다.
+                      </p>
+                      <p className="text-base">
+                        실패를 경험으로 여기고, 더 나은 해결책을 찾아냅니다.
+                      </p>
+                    </div>
+                    <p>개발과 함께한 동료, 그리고 JS를 사랑합니다.</p>
+                  </div>
+                  <div className="section-divider ml-0" />
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Most Tech Stack</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      "TypeScript",
+                      "React",
+                      "ReactNative",
+                      "Next.js",
+                      "Vue",
+                      "Electron",
+                    ].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full
+                          hover:bg-primary/10 transition-colors cursor-default"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-8 border-t border-primary/10">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-primary/80 text-lg">📚</div>
+                      <p className="text-base font-medium">Education</p>
+                    </div>
+                    <div className="space-y-3">
+                      <div
+                        className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="px-4 py-2 flex items-center gap-4">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-medium group-hover:text-primary transition-colors">
+                              한림대학교 소프트웨어융합
+                            </h3>
+                          </div>
+                          <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
+                            2018.02 ~ 2025.06(졸업예정)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-primary/80 text-lg">🏃‍♂️</div>
+                      <p className="text-base font-medium">Activities</p>
+                    </div>
+                    <div className="space-y-3">
+                      <div
+                        className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="px-4 py-2 flex items-center gap-4">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-medium group-hover:text-primary transition-colors">
+                             씨애랑
+                            </h3>
+                          </div>
+                          <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
+                            학술 동아리
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="px-4 py-2 flex items-center gap-4">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-medium group-hover:text-primary transition-colors">
+                              DAWN
+                            </h3>
+                          </div>
+                          <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
+                            창업동아리
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="px-4 py-2 flex items-center gap-4">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-medium group-hover:text-primary transition-colors">
+                              Fanespo
+                            </h3>
+                          </div>
+                          <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
+                            창업팀
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <div className="px-4 py-2 flex items-center gap-4">
+                          <div className="flex items-start justify-between">
+                            <h3 className="font-medium group-hover:text-primary transition-colors">
+                              Edubill
+                            </h3>
+                          </div>
+                          <p className="px-2 text-xs bg-primary/5 text-primary/70 rounded-full mt-[0px]">
+                            창업팀
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-primary/10">
+                    {/* Awards */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="h-5 w-5 text-primary/80" />
+                        <p className="text-base font-medium">
+                          Awards & Achievements
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        {awards.map((award) => (
+                          <div
+                            key={award.id}
+                            className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300 px-3 py-2"
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="mt-1 text-primary/60">🏆</div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-start justify-between">
+                                  <h3 className="font-medium group-hover:text-primary transition-colors truncate">
+                                    {award.title}
+                                  </h3>
+                                  <span className="text-sm text-muted-foreground shrink-0 ml-2">
+                                    {award.date}
+                                  </span>
+                                </div>
+                                <p className="text-primary/70 text-sm mt-1 truncate">
+                                  {award.organization}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Libraries */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <div className="text-primary/80 text-lg">📦</div>
+                        <p className="text-base font-medium">
+                          Libraries & Custom Hooks
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        {libraries.map((lib) => (
+                          <div
+                            key={lib.id}
+                            className="group card-dark rounded-lg 
+                              hover:bg-secondary/50 transition-all duration-300"
+                            onClick={() => handleExternalLink(lib.url)}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            <div className="space-y-2">
+                              <div className="flex items-start justify-between">
+                                <h3 className="font-medium group-hover:text-primary transition-colors">
+                                  {lib.name}
+                                </h3>
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  {lib.stars && (
+                                    <span className="flex items-center gap-1">
+                                      ⭐ {lib.stars}
+                                    </span>
+                                  )}
+                                  {lib.downloads && (
+                                    <span className="flex items-center gap-1">
+                                      ⬇️ {lib.downloads.toLocaleString()}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <p className="text-sm text-muted-foreground line-clamp-1">
+                                {lib.description}
+                              </p>
+                              <div className="flex flex-wrap gap-1">
+                                {lib.techStack.map((tech) => (
+                                  <span
+                                    key={tech}
+                                    className="px-2 py-0.5 text-xs bg-primary/5 text-primary/70 rounded-full"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 pt-4 pb-4">
+                  <Button
+                    variant="default"
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90"
+                    onClick={() =>
+                      handleExternalLink("https://github.com/Ahnseungc")
+                    }
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-primary/20 hover:border-primary/40"
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Contact
+                  </Button>
                 </div>
               </div>
+            </div>
 
-              <div className="project-image-container mb-12">
+            {/* Profile Image */}
+            <div className="absolute top-24 right-0 w-[500px] h-[700px] hidden lg:block profile-container">
+              <div className="relative w-full h-full overflow-hidden">
                 <Image
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
+                  src="/profile-placeholder.jpg"
+                  alt="Profile"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top profile-image"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 500px"
                 />
               </div>
+            </div>
+          </section>
 
-              <div className="project-info">
-                <div className="project-description">
-                  <h3 className="text-2xl font-semibold mb-4">Overview</h3>
-                  <p className="text-muted-foreground whitespace-pre-line">
-                    {selectedProject.fullDescription}
-                  </p>
-                  <div className="flex gap-4 mt-8">
-                    <Button
-                      variant="default"
-                      size="lg"
-                      className="bg-primary hover:bg-primary/90"
-                      onClick={() =>
-                        handleExternalLink(selectedProject.demoUrl)
-                      }
-                    >
-                      View Live Demo
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() =>
-                        handleExternalLink(selectedProject.githubUrl)
-                      }
-                    >
-                      <Github className="mr-2 h-4 w-4" />
-                      View Source
-                    </Button>
+          {/* Experience Section */}
+          <section id="experience" className="w-full dark-section">
+            <div className="container py-24">
+              <h2 className="text-3xl font-bold mb-12 accent-text">
+                Work Experience
+              </h2>
+              <div className="space-y-20">
+                {experiences.map((exp) => (
+                  <div key={exp.id} className="grid gap-8 md:grid-cols-[1fr,2fr]">
+                    {/* 왼쪽: 기간 및 회사 정보 */}
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground font-mono">
+                        {exp.period}
+                      </p>
+                      <h3 className="text-xl font-semibold">{exp.role}</h3>
+                      <p className="text-primary/80 italic">{exp.company}</p>
+                      <p className="text-sm text-muted-foreground mt-4">
+                        {exp.description}
+                      </p>
+                    </div>
+
+                    {/* 오른쪽: 성과 및 스킬 */}
+                    <div className="space-y-8">
+                      {/* 주요 성과 */}
+                      <div className="space-y-4">
+                        {exp.achievements.map((achievement, achievementIndex) => (
+                          <div
+                            key={achievement.title}
+                            className="p-4 rounded-lg bg-secondary/50 hover:bg-secondary/80 transition-colors"
+                          >
+                            <h4 className="font-medium mb-2 flex items-center gap-2">
+                              <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm">
+                                {achievementIndex + 1}
+                              </span>
+                              {achievement.title}
+                            </h4>
+
+                            <ul className="list-disc list-inside pl-6 space-y-2">
+                              {achievement.description.map((desc) => (
+                                <li
+                                  className="text-sm text-muted-foreground"
+                                  key={desc.text}
+                                >
+                                  {desc.link ? (
+                                    <span className="flex items-center gap-1 inline-flex">
+                                      <a 
+                                        href={desc.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-primary hover:underline inline-flex items-center gap-1"
+                                      >
+                                        {desc.text}
+                                        <ExternalLink className="h-3 w-3" />
+                                      </a>
+                                    </span>
+                                  ) : (
+                                    desc.text
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* 기술 스택 */}
+                      <div>
+                        <h4 className="text-sm font-medium text-muted-foreground mb-3">
+                          Technologies
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {exp.skills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-3 py-1 text-sm bg-primary/5 text-primary/80 rounded-full
+                                hover:bg-primary/10 transition-colors cursor-default"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-                <div className="project-meta">
-                  <div className="meta-section">
-                    <h4 className="meta-title">Technologies</h4>
+          {/* Projects Section */}
+          <section id="projects" className="w-full dark-section">
+            <div className="container py-24 space-y-8">
+              <div className="text-center space-y-4">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent header-underline">
+                  Side Projects
+                </h2>
+              </div>
+              <div className="album-grid">
+                {projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="album-card relative"
+                    onClick={(e) => handleProjectClick(project, e)}
+                  >
+                    {project.isAward && (
+                      <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                        <Trophy className="w-5 h-5 text-white" />
+                      </div>
+                    )}
+                    <div className="album-spine" />
+                    <div className="album-content">
+                      <div className="relative w-full h-48 mb-4 rounded overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <h3 className="text-xl font-bold">{project.title}</h3>
+                      <p className="text-muted-foreground">{project.description}</p>
+                      <div className="album-tags">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="album-tag">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Project Expand Modal */}
+          <div className={`project-expand ${selectedProject ? "open" : ""}`}>
+            <div
+              className="expand-background"
+              style={
+                {
+                  "--x": expandPosition.x,
+                  "--y": expandPosition.y,
+                } as React.CSSProperties
+              }
+              onClick={() => setSelectedProject(null)}
+            />
+            {selectedProject && (
+              <div className="expand-content">
+                <button
+                  className="expand-close"
+                  onClick={() => setSelectedProject(null)}
+                >
+                  <X className="h-6 w-6" />
+                </button>
+
+                <div className="project-detail">
+                  <div className="project-header">
+                    <h2 className="text-4xl font-bold">{selectedProject.title}</h2>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.tags.map((tag) => (
                         <span key={tag} className="album-tag">
@@ -1049,45 +1439,99 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
-                  {/* Add more meta sections as needed */}
+
+                  <div className="project-image-container mb-12">
+                    <Image
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="project-info">
+                    <div className="project-description">
+                      <h3 className="text-2xl font-semibold mb-4">Overview</h3>
+                      <p className="text-muted-foreground whitespace-pre-line">
+                        {selectedProject.fullDescription}
+                      </p>
+                      <div className="flex gap-4 mt-8">
+                        <Button
+                          variant="default"
+                          size="lg"
+                          className="bg-primary hover:bg-primary/90"
+                          onClick={() =>
+                            handleExternalLink(selectedProject.demoUrl)
+                          }
+                        >
+                          View Live Demo
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          onClick={() =>
+                            handleExternalLink(selectedProject.githubUrl)
+                          }
+                        >
+                          <Github className="mr-2 h-4 w-4" />
+                          View Source
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="project-meta">
+                      <div className="meta-section">
+                        <h4 className="meta-title">Technologies</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedProject.tags.map((tag) => (
+                            <span key={tag} className="album-tag">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Add more meta sections as needed */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Contact Section */}
+          <section id="contact" className="w-full relative">
+            <div className="hero-gradient opacity-50" />
+            <div className="container py-24">
+              <div className="max-w-2xl mx-auto text-center space-y-8">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl header-underline">
+                  Let&apos;s Connect
+                </h2>
+                <p className="text-muted-foreground">
+                  I&apos;m always open to new opportunities and interesting projects
+                </p>
+                <div className="flex justify-center gap-4">
+                  <Button className="min-w-[200px]">
+                    <Mail className="mr-2 h-4 w-4" />
+                    Send Message
+                  </Button>
+                </div>
+                <div className="flex justify-center gap-4 pt-8">
+                  <Button variant="ghost" size="icon">
+                    <Github className="h-5 w-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Linkedin className="h-5 w-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Mail className="h-5 w-5" />
+                  </Button>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Contact Section */}
-      <section id="contact" className="w-full relative">
-        <div className="hero-gradient opacity-50" />
-        <div className="container py-24">
-          <div className="max-w-2xl mx-auto text-center space-y-8">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl header-underline">
-              Let{"'"}s Connect
-            </h2>
-            <p className="text-muted-foreground">
-              I{"'"}m always open to new opportunities and interesting projects
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button className="min-w-[200px]">
-                <Mail className="mr-2 h-4 w-4" />
-                Send Message
-              </Button>
-            </div>
-            <div className="flex justify-center gap-4 pt-8">
-              <Button variant="ghost" size="icon">
-                <Github className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Linkedin className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Mail className="h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        </>
+      )}
     </main>
   );
 }

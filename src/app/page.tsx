@@ -5,6 +5,7 @@ import { Github, Mail, Linkedin, Trophy, ExternalLink, ArrowRight, X, ChevronLef
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface Project {
   id: number;
@@ -50,6 +51,12 @@ interface Library {
   stars?: number;
   downloads?: number;
   url: string;
+}
+
+interface IntroStep {
+  icon: string;
+  title: string;
+  description: string;
 }
 
 const projects: Project[] = [
@@ -355,6 +362,24 @@ const libraries: Library[] = [
     downloads: 3200,
     url: "https://github.com/yourusername/use-intersection",
   },
+];
+
+const introSteps: IntroStep[] = [
+  {
+    icon: "👋",
+    title: "안녕하세요",
+    description: "포트폴리오에 오신 것을 환영합니다"
+  },
+  {
+    icon: "💻",
+    title: "개발자 안승찬입니다",
+    description: "프론트엔드 개발자로 일하고 있습니다"
+  },
+  {
+    icon: "🚀",
+    title: "함께 성장하고 싶습니다",
+    description: "새로운 도전을 두려워하지 않습니다"
+  }
 ];
 
 const handleExternalLink = (url: string) => {
@@ -689,11 +714,58 @@ export default function Home() {
     if (currentPage.id === "intro") {
       return (
         <div className={`flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6 text-center transition-opacity duration-300 ${pageTransition ? 'opacity-0' : 'opacity-100'}`}>
-          <div className="w-24 h-24 bg-yellow-200 rounded-full flex items-center justify-center mb-10">
-            <span className="text-3xl font-bold">!</span>
-          </div>
-          <h1 className="text-2xl font-bold mb-6">{currentPage.title}</h1>
-          <p className="text-gray-600 mb-8">{currentPage.description}</p>
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-10 shadow-lg"
+          >
+            <motion.span 
+              className="text-4xl"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            >
+              {introSteps[currentMobilePage % introSteps.length].icon}
+            </motion.span>
+          </motion.div>
+          
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <motion.h1 
+              className="text-3xl font-bold mb-4"
+              layout
+            >
+              {introSteps[currentMobilePage % introSteps.length].title}
+            </motion.h1>
+            <motion.p 
+              className="text-gray-600 text-lg"
+              layout
+            >
+              {introSteps[currentMobilePage % introSteps.length].description}
+            </motion.p>
+          </motion.div>
+          
+          <motion.div
+            className="flex gap-2 mt-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            {introSteps.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full ${
+                  index === currentMobilePage % introSteps.length
+                    ? "bg-blue-500"
+                    : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </motion.div>
         </div>
       );
     }

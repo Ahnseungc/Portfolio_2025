@@ -52,11 +52,11 @@ interface Award {
 //   url: string;
 // }
 
-interface IntroStep {
-  icon: string;
-  title: string;
-  description: string;
-}
+// interface IntroStep {
+//   icon: string;
+//   title: string;
+//   description: string;
+// }
 
 const projects: Project[] = [
   {
@@ -363,23 +363,23 @@ const awards: Award[] = [
 //   },
 // ];
 
-const introSteps: IntroStep[] = [
-  {
-    icon: "💻",
-    title: "안녕하세요",
-    description: "개발자 안승찬입니다."
-  },
-  {
-    icon: "🚀",
-    title: "",
-    description: "프론트엔드 개발자로 일하고 있습니다"
-  },
-  {
-    icon: "",
-    title: "함께 성장하고 싶습니다",
-    description: "새로운 도전을 두려워하지 않습니다"
-  }
-];
+// const introSteps: IntroStep[] = [
+//   {
+//     icon: "💻",
+//     title: "안녕하세요",
+//     description: "개발자 안승찬입니다."
+//   },
+//   {
+//     icon: "🚀",
+//     title: "",
+//     description: "프론트엔드 개발자로 일하고 있습니다"
+//   },
+//   {
+//     icon: "",
+//     title: "함께 성장하고 싶습니다",
+//     description: "새로운 도전을 두려워하지 않습니다"
+//   }
+// ];
 
 const handleExternalLink = (url: string) => {
   if (typeof window !== "undefined") {
@@ -453,21 +453,7 @@ export default function Home() {
     { id: "projects-2", title: "Projects", component: "projects", description: "프로젝트" },
     { id: "projects-3", title: "Projects", component: "projects", description: "프로젝트" },
     { id: "contact", title: "Contact", component: "contact", description: "연락처" },
-  ];
-
-  // 모바일 여부 감지
-  // useEffect(() => {
-  //   const checkIfMobile = () => {
-  //     setIsMobile(window.innerWidth < 768);
-  //   };
-    
-  //   checkIfMobile();
-  //   window.addEventListener('resize', checkIfMobile);
-    
-  //   return () => {
-  //     window.removeEventListener('resize', checkIfMobile);
-  //   };
-  // }, []);
+  ];  
 
   // 다음 모바일 페이지로 이동
   const goToNextMobilePage = () => {
@@ -485,20 +471,6 @@ export default function Home() {
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedProject) {
-  //     const scrollbarWidth =
-  //       window.innerWidth - document.documentElement.clientWidth;
-  //     document.body.style.setProperty(
-  //       "--scrollbar-width",
-  //       `${scrollbarWidth}px`
-  //     );
-  //     document.body.classList.add("scroll-lock");
-  //   } else {
-  //     document.body.classList.remove("scroll-lock");
-  //     document.body.style.removeProperty("--scrollbar-width");
-  //   }
-  // }, [selectedProject]);
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
@@ -717,7 +689,7 @@ export default function Home() {
             transition={pageTransition}
             className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6"
           >
-            {currentPage.id === "intro" && (
+            {/* {currentPage.id === "intro" && (
               <div className="flex flex-col items-center text-center">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}
@@ -772,7 +744,7 @@ export default function Home() {
                   ))}
                 </motion.div>
               </div>
-            )}
+            )} */}
             
             {currentPage.id.startsWith("about") && (
               <div>
@@ -889,7 +861,7 @@ export default function Home() {
                         </div>
                         
                         <div className="space-y-4">
-                          {exp.achievements.slice(0, 1).map((achievement) => (
+                          {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
@@ -912,7 +884,7 @@ export default function Home() {
                         <div className="mt-4">
                           <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
                           <div className="flex flex-wrap gap-2">
-                            {exp.skills.slice(0, 4).map((skill) => (
+                            {exp.skills.map((skill) => (
                               <span
                                 key={skill}
                                 className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
@@ -941,7 +913,7 @@ export default function Home() {
                         </div>
                         
                         <div className="space-y-4">
-                          {exp.achievements.slice(0, 1).map((achievement) => (
+                          {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
@@ -964,7 +936,7 @@ export default function Home() {
                         <div className="mt-4">
                           <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
                           <div className="flex flex-wrap gap-2">
-                            {exp.skills.slice(0, 4).map((skill) => (
+                            {exp.skills.map((skill) => (
                               <span
                                 key={skill}
                                 className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
@@ -993,7 +965,7 @@ export default function Home() {
                         </div>
                         
                         <div className="space-y-4">
-                          {exp.achievements.slice(0, 1).map((achievement) => (
+                          {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
@@ -1016,7 +988,7 @@ export default function Home() {
                         <div className="mt-4">
                           <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
                           <div className="flex flex-wrap gap-2">
-                            {exp.skills.slice(0, 4).map((skill) => (
+                            {exp.skills.map((skill) => (
                               <span
                                 key={skill}
                                 className="px-2 py-1 text-xs bg-blue-500/5 text-blue-600 rounded-full"
@@ -1178,8 +1150,7 @@ export default function Home() {
     );
   };
   
-
-  console.log(currentMobilePage);
+  
 
   return (
     <main className="flex min-h-screen flex-col mx-auto bg-[#F8F9FA]" style={{ maxWidth: '600px' }}>

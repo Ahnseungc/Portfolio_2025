@@ -34,13 +34,13 @@ interface Experience {
   skills: string[];
 }
 
-// interface Award {
-//   id: number;
-//   title: string;
-//   organization: string;
-//   date: string;
-//   description?: string;
-// }
+interface Award {
+  id: number;
+  title: string;
+  organization: string;
+  date: string;
+  description?: string;
+}
 
 // interface Library {
 //   id: number;
@@ -303,44 +303,44 @@ const experiences: Experience[] = [
   },
 ];
 
-// const awards: Award[] = [
-//   {
-//     id: 1,
-//     title: "ESG공모전 장려상",
-//     organization: "KBSC 국민은행",
-//     date: "2021",
-//     description: "ESG 가치 실현을 위한 혁신적인 금융 서비스 제안",
-//   },
-//   {
-//     id: 4,
-//     title: "아이디어 해커톤 장려상",
-//     organization: "한림대학교",
-//     date: "2021",
-//     description: "창의적인 문제 해결 방안 제시",
-//   },
-//   {
-//     id: 3,
-//     title: "캡스톤 디자인 입상",
-//     organization: "한림대학교",
-//     date: "2022",
-//     description: "실무 중심의 프로젝트 개발 및 발표",
-//   },
-//   {
-//     id: 2,
-//     title: "오픈소스SW웹 해커톤 금상",
-//     organization: "한림대학교",
-//     date: "2023",
-//     description: "오픈소스 기술을 활용한 혁신적인 웹 서비스 개발",
-//   },
+const awards: Award[] = [
+  {
+    id: 1,
+    title: "ESG공모전 장려상",
+    organization: "KBSC 국민은행",
+    date: "2021.10.01",
+    description: "ESG 가치 실현을 위한 혁신적인 금융 서비스 제안",
+  },
+  {
+    id: 4,
+    title: "아이디어 해커톤 장려상",
+    organization: "한림대학교",
+    date: "2021.04.10",
+    description: "창의적인 문제 해결 방안 제시",
+  },
+  {
+    id: 3,
+    title: "캡스톤 디자인 입상",
+    organization: "한림대학교",
+    date: "2022.06.10",
+    description: "실무 중심의 프로젝트 개발 및 발표",
+  },
+  {
+    id: 2,
+    title: "오픈소스SW웹 해커톤 금상",
+    organization: "한림대학교",
+    date: "2023.09.18",
+    description: "오픈소스 기술을 활용한 혁신적인 웹 서비스 개발",
+  },
 
-//   {
-//     id: 5,
-//     title: "정주영 창업경진대회 우수상 / 인기상",
-//     organization: "현대자동차그룹",
-//     date: "2024",
-//     description: "혁신적인 비즈니스 모델 제안",
-//   },
-// ];
+  {
+    id: 5,
+    title: "정주영 창업경진대회 우수상 / 인기상",
+    organization: "현대자동차그룹",
+    date: "2024.11.20",
+    description: "혁신적인 비즈니스 모델 제안",
+  },
+];
 
 // const libraries: Library[] = [
 //   {
@@ -365,17 +365,17 @@ const experiences: Experience[] = [
 
 const introSteps: IntroStep[] = [
   {
-    icon: "👋",
-    title: "안녕하세요",
-    description: "포트폴리오에 오신 것을 환영합니다"
-  },
-  {
     icon: "💻",
-    title: "개발자 안승찬입니다",
-    description: "프론트엔드 개발자로 일하고 있습니다"
+    title: "안녕하세요",
+    description: "개발자 안승찬입니다."
   },
   {
     icon: "🚀",
+    title: "",
+    description: "프론트엔드 개발자로 일하고 있습니다"
+  },
+  {
+    icon: "",
     title: "함께 성장하고 싶습니다",
     description: "새로운 도전을 두려워하지 않습니다"
   }
@@ -441,12 +441,11 @@ export default function Home() {
   }, [currentMobilePage, isProjectFunnel, selectedMobileProject, currentProjectPage]);
 
   // 모바일 퍼널 페이지 정의
-  const mobilePages = [
-    { id: "intro", title: "대출이 어려워요", description: "다가구 주택으로 대출 받을 수 있는 상품이 없어요." },
+  const mobilePages = [    
     { id: "about-1", title: "About", component: "about", description: "소개" },
     { id: "about-2", title: "About", component: "about", description: "기술 스택" },
-    { id: "about-3", title: "About", component: "about", description: "교육" },
-    { id: "about-4", title: "About", component: "about", description: "활동" },
+    { id: "about-3", title: "About", component: "about", description: "교육 및 활동" },
+    { id: "about-4", title: "About", component: "about", description: "수상" },
     { id: "experience-1", title: "Experience", component: "experience", description: "케어마인더" },
     { id: "experience-2", title: "Experience", component: "experience", description: "ReCarelab" },
     { id: "experience-3", title: "Experience", component: "experience", description: "이들" },
@@ -632,7 +631,7 @@ export default function Home() {
                     fill
                     className="object-cover"
                   />
-                </div>
+                </div>                
                 <h2 className="text-2xl font-bold">{selectedMobileProject.title}</h2>
                 <p className="text-muted-foreground">{selectedMobileProject.description}</p>
               </div>
@@ -716,7 +715,7 @@ export default function Home() {
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            className="min-h-[calc(100vh-80px)] w-full bg-background pt-20 px-6"
+            className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6"
           >
             {currentPage.id === "intro" && (
               <div className="flex flex-col items-center text-center">
@@ -777,7 +776,6 @@ export default function Home() {
             
             {currentPage.id.startsWith("about") && (
               <div>
-                <h2 className="text-2xl font-bold mb-8">About</h2>
                 {currentPage.id === "about-1" && (
                   <div className="space-y-6">
                     <div className="space-y-4">
@@ -801,37 +799,46 @@ export default function Home() {
                   </div>
                 )}
 
+
                 {currentPage.id === "about-2" && (
                   <div className="space-y-6">
-                    <h2 className="text-2xl font-bold">Tech Stack</h2>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
+                      <h3 className="text-xl font-bold text-blue-500">Most Frameworks</h3>
+                      <div className="flex flex-wrap gap-2">                        
                       {["TypeScript", "React", "Next.js", "Vue", "ReactNative", "Electron"].map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
+                          className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
                         >
                           {tech}
                         </span>
                       ))}
+                      </div>
                     </div>
+                    <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
+                      <h3 className="text-xl font-bold text-blue-500">Interested Technology</h3>
+                      <div className="flex flex-wrap gap-2">                        
+                      {["Webview","WebApp","MonoRepo","Infra","BFF","MFA","TDD","UI/UX"].map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      </div>
+                    </div>                    
                   </div>
                 )}
 
                 {currentPage.id === "about-3" && (
                   <div className="space-y-6">
-                    <h2 className="text-2xl font-bold">Education</h2>
                     <div className="space-y-4">
-                      <div className="px-4 py-3 bg-secondary/20 rounded-lg">
+                      <div className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
                         <h3 className="font-medium">한림대학교 소프트웨어융합</h3>
                         <p className="text-xs text-primary/70 mt-1">2018.02 ~ 2025.06(졸업예정)</p>
                       </div>
                     </div>
-                  </div>
-                )}
-
-                {currentPage.id === "about-4" && (
-                  <div className="space-y-6">
-                    <h2 className="text-2xl font-bold">Activities</h2>
                     <div className="space-y-4">
                       {[
                         { name: "씨애랑", type: "학술 동아리" },
@@ -839,7 +846,7 @@ export default function Home() {
                         { name: "Fanespo", type: "창업팀" },
                         { name: "Edubill", type: "창업팀" }
                       ].map((activity) => (
-                        <div key={activity.name} className="px-4 py-3 bg-secondary/20 rounded-lg">
+                        <div key={activity.name} className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
                           <h3 className="font-medium">{activity.name}</h3>
                           <p className="text-xs text-primary/70 mt-1">{activity.type}</p>
                         </div>
@@ -847,12 +854,29 @@ export default function Home() {
                     </div>
                   </div>
                 )}
+                {currentPage.id === "about-4" && (
+                  <div className="space-y-6">                    
+                    <div className="space-y-4">
+                      {awards.map((award) => (
+                        <div key={award.title} className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer flex justify-between">
+                          <div>
+                          <h3 className="font-medium">{award.title}</h3>
+                          <p className="text-xs text-primary/70 mt-1">{award.organization}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-primary/70 mt-1">{award.date}</p>
+                          </div>                          
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
               </div>
             )}
 
             {currentPage.id.startsWith("experience") && (
               <div>
-                <h2 className="text-2xl font-bold mb-8">Work Experience</h2>
                 {currentPage.id === "experience-1" && (
                   <div className="space-y-6">
                     {experiences.slice(0, 1).map((exp) => (
@@ -1011,7 +1035,6 @@ export default function Home() {
 
             {currentPage.id.startsWith("projects") && (
               <div>
-                <h2 className="text-2xl font-bold mb-8">Projects</h2>
                 <div className="space-y-6">
                   {currentPage.id === "projects-1" && projects.slice(0, 2).map((project) => (
                     <div 
@@ -1154,6 +1177,9 @@ export default function Home() {
       </div>
     );
   };
+  
+
+  console.log(currentMobilePage);
 
   return (
     <main className="flex min-h-screen flex-col mx-auto bg-[#F8F9FA]" style={{ maxWidth: '600px' }}>
@@ -1169,7 +1195,8 @@ export default function Home() {
             </button>
           )}
           <span className="ml-3 text-lg font-semibold text-gray-800">
-            {isProjectFunnel ? "프로젝트 상세" : "포트폴리오"}
+            {/* {isProjectFunnel ? "프로젝트 상세" : "포트폴리오"} */}
+            {mobilePages[currentMobilePage].description}
           </span>
         </div>
         <div className="h-[1px] bg-gray-200" />

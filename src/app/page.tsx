@@ -446,12 +446,12 @@ export default function Home() {
     { id: "about-2", title: "About", component: "about", description: "기술 스택" },
     { id: "about-3", title: "About", component: "about", description: "교육 및 활동" },
     { id: "about-4", title: "About", component: "about", description: "수상" },
-    { id: "experience-1", title: "Experience", component: "experience", description: "케어마인더" },
-    { id: "experience-2", title: "Experience", component: "experience", description: "ReCarelab" },
-    { id: "experience-3", title: "Experience", component: "experience", description: "이들" },
-    { id: "projects-1", title: "Projects", component: "projects", description: "프로젝트 1-2" },
-    { id: "projects-2", title: "Projects", component: "projects", description: "프로젝트 3-4" },
-    { id: "projects-3", title: "Projects", component: "projects", description: "프로젝트 5-6" },
+    { id: "experience-1", title: "Experience", component: "experience", description: "경력" },
+    { id: "experience-2", title: "Experience", component: "experience", description: "경력" },
+    { id: "experience-3", title: "Experience", component: "experience", description: "경력" },
+    { id: "projects-1", title: "Projects", component: "projects", description: "프로젝트" },
+    { id: "projects-2", title: "Projects", component: "projects", description: "프로젝트" },
+    { id: "projects-3", title: "Projects", component: "projects", description: "프로젝트" },
     { id: "contact", title: "Contact", component: "contact", description: "연락처" },
   ];
 

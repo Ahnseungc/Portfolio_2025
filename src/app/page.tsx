@@ -1,7 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Mail, Linkedin, Trophy, ArrowRight, ChevronLeft } from "lucide-react";
+import {
+  Github,
+  Mail,
+  Linkedin,
+  Trophy,
+  ArrowRight,
+  ChevronLeft,
+} from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -169,23 +176,27 @@ const experiences: Experience[] = [
         title: "CareFlow Web 개발",
         description: [
           { text: "로그인 구조 및 로직 개발" },
-          { text: "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축", link: "https://example.com/pipeline" },
+          {
+            text: "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축",
+            link: "https://example.com/pipeline",
+          },
           { text: "Stomp 기반 채팅 구현" },
           { text: "SSE 기반 웹 알림 구현" },
         ],
       },
       {
         title: "CareFlow Web Next.js 마이그레이션",
-        description: [
-          { text: "Next.js 마이그레이션" },          
-        ],
+        description: [{ text: "Next.js 마이그레이션" }],
       },
       {
         title: "CareFlow Electron WebApp 개발",
         description: [
           { text: "Electron 기반 웹앱 패키징" },
           { text: "윈도우 코드 서명 등록" },
-          { text: "github release 통한 배포 구축 및 자동 업데이트", link: "https://example.com/pipeline" },
+          {
+            text: "github release 통한 배포 구축 및 자동 업데이트",
+            link: "https://example.com/pipeline",
+          },
           { text: "네이티브 커스텀 알림 구현" },
         ],
       },
@@ -193,23 +204,44 @@ const experiences: Experience[] = [
         title: "CareFlow Tablet App 개발",
         description: [
           { text: "시니어를 위한 시니어 모드 개발" },
-          { text: "react-native-tts를 이용한 음성 텍스트 변환 개발", link: "https://example.com/pipeline" },
-          { text: "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발", link: "https://example.com/pipeline" },
-          { text: "SSE를 통한 원격 로그 아웃 구현", link: "https://example.com/pipeline" },
+          {
+            text: "react-native-tts를 이용한 음성 텍스트 변환 개발",
+            link: "https://example.com/pipeline",
+          },
+          {
+            text: "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발",
+            link: "https://example.com/pipeline",
+          },
+          {
+            text: "SSE를 통한 원격 로그 아웃 구현",
+            link: "https://example.com/pipeline",
+          },
         ],
-      },    
+      },
       {
         title: "MonoRepo 도입",
         description: [
-          { text: "React 프로젝트들과 ReactNative 프로젝트를 pnpm과 turbopack를 통해 하나의 레포지토리로 관리", link: "https://example.com/pipeline" },
-          { text: "Jenkins와 docker를 통한 CI/CD 파이프라인 구축", link: "https://example.com/pipeline" },
-          { text: "기존 프로젝트 번등사이즈 25%감소 및 종속성 충돌 방지", link: "https://example.com/pipeline" },
+          {
+            text: "React 프로젝트들과 ReactNative 프로젝트를 pnpm과 turbopack를 통해 하나의 레포지토리로 관리",
+            link: "https://example.com/pipeline",
+          },
+          {
+            text: "Jenkins와 docker를 통한 CI/CD 파이프라인 구축",
+            link: "https://example.com/pipeline",
+          },
+          {
+            text: "기존 프로젝트 번등사이즈 25%감소 및 종속성 충돌 방지",
+            link: "https://example.com/pipeline",
+          },
         ],
       },
       {
         title: "디자인 시스템 개발(CDS)",
         description: [
-          { text: "mui 기반 Storybook 개발", link: "https://example.com/pipeline" },
+          {
+            text: "mui 기반 Storybook 개발",
+            link: "https://example.com/pipeline",
+          },
         ],
       },
     ],
@@ -234,12 +266,24 @@ const experiences: Experience[] = [
     achievements: [
       {
         title: "플랫폼 내 상품 수집 및 등록 페이지 제작",
-        description: [          
-          { text: "홈 화면 UI 개선 및 매칭 현황 그래프  신규 기능", link: "https://velog.io/@omnipo/%ED%99%88-%ED%99%94%EB%A9%B4-UIUX-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0" },
-          { text: "CSR --> ISR 전환으로 페이지 로드 속도 향상", link: "https://velog.io/@omnipo/%EB%A0%8C%EB%8D%94%EB%A7%81-%EB%B0%A9%EC%8B%9D%EC%9D%98-%EC%84%A0%ED%83%9D%EA%B3%BC-%EB%8F%84%EC%9E%85" },
+        description: [
+          {
+            text: "홈 화면 UI 개선 및 매칭 현황 그래프  신규 기능",
+            link: "https://velog.io/@omnipo/%ED%99%88-%ED%99%94%EB%A9%B4-UIUX-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0",
+          },
+          {
+            text: "CSR --> ISR 전환으로 페이지 로드 속도 향상",
+            link: "https://velog.io/@omnipo/%EB%A0%8C%EB%8D%94%EB%A7%81-%EB%B0%A9%EC%8B%9D%EC%9D%98-%EC%84%A0%ED%83%9D%EA%B3%BC-%EB%8F%84%EC%9E%85",
+          },
           { text: "공통 훅 개발" },
-          { text: "스택 라우터 개발", link: "https://velog.io/@omnipo/%EC%9B%B9%EB%B7%B0-%EC%8A%A4%ED%83%9D-%EA%B5%AC%ED%98%84%EA%B8%B0" },
-          { text: "스켈레톤 UI 개발", link: "https://velog.io/@omnipo/%EC%8A%A4%EC%BC%88%EB%A0%88%ED%86%A4-%EB%A1%9C%EB%94%A9-UI" },
+          {
+            text: "스택 라우터 개발",
+            link: "https://velog.io/@omnipo/%EC%9B%B9%EB%B7%B0-%EC%8A%A4%ED%83%9D-%EA%B5%AC%ED%98%84%EA%B8%B0",
+          },
+          {
+            text: "스켈레톤 UI 개발",
+            link: "https://velog.io/@omnipo/%EC%8A%A4%EC%BC%88%EB%A0%88%ED%86%A4-%EB%A1%9C%EB%94%A9-UI",
+          },
         ],
       },
       {
@@ -252,18 +296,21 @@ const experiences: Experience[] = [
       {
         title: "랜딩 페이지 개발",
         description: [
-          { text: "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성", link: "https://www.carenine.co.kr/" },
+          {
+            text: "Code Splitting, 이미지 최적화, 캐싱 전략 수립으로 LCP 2초 이내 달성",
+            link: "https://www.carenine.co.kr/",
+          },
         ],
       },
     ],
-    skills: [      
+    skills: [
       "TypeScript",
       "Next.js",
       "ReactNative",
-      "Supabase",      
-      "Zustand/Zod",      
-      "Swr",      
-      "TailwindCSS",      
+      "Supabase",
+      "Zustand/Zod",
+      "Swr",
+      "TailwindCSS",
       "Jest",
     ],
   },
@@ -276,30 +323,18 @@ const experiences: Experience[] = [
     achievements: [
       {
         title: "올땀 플랫폼 내 상품 수집 및 등록 페이지 제작",
-        description: [          
-          { text: "올땀 상품 수집 및 등록 페이지 개발"},          
-        ],
+        description: [{ text: "올땀 상품 수집 및 등록 페이지 개발" }],
       },
       {
         title: "어드민 페이지 개발",
-        description: [
-          { text: "올땀 플랫폼 관리자 페이지 제작"},          
-        ],
-      },    
+        description: [{ text: "올땀 플랫폼 관리자 페이지 제작" }],
+      },
       {
         title: "올땀 PWA 개발",
-        description: [
-          { text: "올땀 플랫폼 PWA를 통한 웹앱 프로그램 개발" },
-        ],
+        description: [{ text: "올땀 플랫폼 PWA를 통한 웹앱 프로그램 개발" }],
       },
     ],
-    skills: [
-      "React",
-      "TypeScript",      
-      "Recoil",            
-      "Emotion",
-      "Jest",      
-    ],
+    skills: ["React", "TypeScript", "Recoil", "Emotion", "Jest"],
   },
 ];
 
@@ -396,25 +431,26 @@ export default function Home() {
   const [lastScrollY, setLastScrollY] = useState(0);
   // const [isScrolling, setIsScrolling] = useState(false);
   // const [isMobile, setIsMobile] = useState(false);
-  const [currentMobilePage, setCurrentMobilePage] = useState(0);  
+  const [currentMobilePage, setCurrentMobilePage] = useState(0);
   // const [pageTransition, setPageTransition] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
   const [isProjectFunnel, setIsProjectFunnel] = useState(false);
   const [currentProjectPage, setCurrentProjectPage] = useState(0);
-  const [selectedMobileProject, setSelectedMobileProject] = useState<Project | null>(null);
+  const [selectedMobileProject, setSelectedMobileProject] =
+    useState<Project | null>(null);
 
   // Initialize state from URL parameters
   useEffect(() => {
-    const page = searchParams.get('page');
-    const projectId = searchParams.get('projectId');
-    const projectPage = searchParams.get('projectPage');
+    const page = searchParams.get("page");
+    const projectId = searchParams.get("projectId");
+    const projectPage = searchParams.get("projectPage");
 
     if (page) {
       setCurrentMobilePage(Number(page));
     }
 
     if (projectId) {
-      const project = projects.find(p => p.id === Number(projectId));
+      const project = projects.find((p) => p.id === Number(projectId));
       if (project) {
         setSelectedMobileProject(project);
         setIsProjectFunnel(true);
@@ -428,32 +464,82 @@ export default function Home() {
   // Update URL when funnel state changes
   useEffect(() => {
     const params = new URLSearchParams();
-    
+
     if (isProjectFunnel && selectedMobileProject) {
-      params.set('projectId', selectedMobileProject.id.toString());
-      params.set('projectPage', currentProjectPage.toString());
+      params.set("projectId", selectedMobileProject.id.toString());
+      params.set("projectPage", currentProjectPage.toString());
     } else {
-      params.set('page', currentMobilePage.toString());
+      params.set("page", currentMobilePage.toString());
     }
 
     const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState({}, '', newUrl);
-  }, [currentMobilePage, isProjectFunnel, selectedMobileProject, currentProjectPage]);
+    window.history.replaceState({}, "", newUrl);
+  }, [
+    currentMobilePage,
+    isProjectFunnel,
+    selectedMobileProject,
+    currentProjectPage,
+  ]);
 
   // 모바일 퍼널 페이지 정의
-  const mobilePages = [    
+  const mobilePages = [
     { id: "about-1", title: "About", component: "about", description: "소개" },
-    { id: "about-2", title: "About", component: "about", description: "기술 스택" },
-    { id: "about-3", title: "About", component: "about", description: "교육 및 활동" },
+    {
+      id: "about-2",
+      title: "About",
+      component: "about",
+      description: "기술 스택",
+    },
+    {
+      id: "about-3",
+      title: "About",
+      component: "about",
+      description: "교육 및 활동",
+    },
     { id: "about-4", title: "About", component: "about", description: "수상" },
-    { id: "experience-1", title: "Experience", component: "experience", description: "경력" },
-    { id: "experience-2", title: "Experience", component: "experience", description: "경력" },
-    { id: "experience-3", title: "Experience", component: "experience", description: "경력" },
-    { id: "projects-1", title: "Projects", component: "projects", description: "프로젝트" },
-    { id: "projects-2", title: "Projects", component: "projects", description: "프로젝트" },
-    { id: "projects-3", title: "Projects", component: "projects", description: "프로젝트" },
-    { id: "contact", title: "Contact", component: "contact", description: "연락처" },
-  ];  
+    {
+      id: "experience-1",
+      title: "Experience",
+      component: "experience",
+      description: "경력",
+    },
+    {
+      id: "experience-2",
+      title: "Experience",
+      component: "experience",
+      description: "경력",
+    },
+    {
+      id: "experience-3",
+      title: "Experience",
+      component: "experience",
+      description: "경력",
+    },
+    {
+      id: "projects-1",
+      title: "Projects",
+      component: "projects",
+      description: "프로젝트",
+    },
+    {
+      id: "projects-2",
+      title: "Projects",
+      component: "projects",
+      description: "프로젝트",
+    },
+    {
+      id: "projects-3",
+      title: "Projects",
+      component: "projects",
+      description: "프로젝트",
+    },
+    {
+      id: "contact",
+      title: "Contact",
+      component: "contact",
+      description: "연락처",
+    },
+  ];
 
   // 다음 모바일 페이지로 이동
   const goToNextMobilePage = () => {
@@ -470,7 +556,6 @@ export default function Home() {
       setCurrentMobilePage((prev) => prev - 1);
     }
   };
-
 
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
@@ -523,7 +608,10 @@ export default function Home() {
   //   setIsProjectFunnel(true);
   //   setCurrentProjectPage(0);
   // };
-  const handleProjectClick = (project: Project, e: React.MouseEvent<HTMLDivElement>) => {
+  const handleProjectClick = (
+    project: Project,
+    e: React.MouseEvent<HTMLDivElement>
+  ) => {
     console.debug(e);
     setSelectedMobileProject(project);
     setIsProjectFunnel(true);
@@ -574,16 +662,16 @@ export default function Home() {
     const pageVariants = {
       initial: { opacity: 0, y: 20 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -20 }
+      exit: { opacity: 0, y: -20 },
     };
 
     const pageTransition = {
       type: "tween",
-      duration: 0.3
+      duration: 0.3,
     };
 
     return (
-      <div className="min-h-[calc(100vh-80px)] px-6 pt-20">
+      <div className="min-h-[calc(100vh-80px)] px-6 pt-20 overflow-y-scroll">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentProjectPage}
@@ -603,9 +691,13 @@ export default function Home() {
                     fill
                     className="object-cover"
                   />
-                </div>                
-                <h2 className="text-2xl font-bold">{selectedMobileProject.title}</h2>
-                <p className="text-muted-foreground">{selectedMobileProject.description}</p>
+                </div>
+                <h2 className="text-2xl font-bold">
+                  {selectedMobileProject.title}
+                </h2>
+                <p className="text-muted-foreground">
+                  {selectedMobileProject.description}
+                </p>
               </div>
             )}
 
@@ -640,7 +732,9 @@ export default function Home() {
                 <div className="space-y-4">
                   <Button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-transform"
-                    onClick={() => handleExternalLink(selectedMobileProject.demoUrl)}
+                    onClick={() =>
+                      handleExternalLink(selectedMobileProject.demoUrl)
+                    }
                   >
                     View Live Demo
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -648,7 +742,9 @@ export default function Home() {
                   <Button
                     variant="outline"
                     className="w-full bg-blue-500/10 hover:bg-blue-600 text-blue-600 py-3 rounded-lg transition-transform"
-                    onClick={() => handleExternalLink(selectedMobileProject.githubUrl)}
+                    onClick={() =>
+                      handleExternalLink(selectedMobileProject.githubUrl)
+                    }
                   >
                     <Github className="mr-2 h-4 w-4" />
                     View Source
@@ -665,18 +761,18 @@ export default function Home() {
   // 모바일 퍼널 페이지 렌더링
   const renderMobilePage = () => {
     const currentPage = mobilePages[currentMobilePage];
-    
+
     const pageVariants = {
       initial: { opacity: 0, y: 20 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -20 }
+      exit: { opacity: 0, y: -20 },
     };
 
     const pageTransition = {
       type: "tween",
-      duration: 0.3
+      duration: 0.3,
     };
-    
+
     return (
       <div className="relative">
         <AnimatePresence mode="wait">
@@ -687,7 +783,7 @@ export default function Home() {
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6"
+            className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6 overflow-y-scroll"
           >
             {/* {currentPage.id === "intro" && (
               <div className="flex flex-col items-center text-center">
@@ -745,61 +841,97 @@ export default function Home() {
                 </motion.div>
               </div>
             )} */}
-            
+
             {currentPage.id.startsWith("about") && (
               <div>
                 {currentPage.id === "about-1" && (
                   <div className="space-y-6">
                     <div className="space-y-4">
-                      <p className="text-lg text-blue-600 font-mono">안녕하세요.</p>
+                      <p className="text-lg text-blue-600 font-mono">
+                        🙋‍♂️ 소개드립니다.
+                      </p>
                       <h1 className="text-3xl font-bold tracking-tight">
-                        개발자 안승찬 입니다.
+                        안녕하세요,
+                        <br />
+                        <br />
+                        &quot;기술을 넘어 맥락을 이해하는 개발자&quot;
+                        <br />
+                        <br />
+                        안승찬입니다.
                       </h1>
                     </div>
-                    
+
                     <div className="space-y-4 text-base text-muted-foreground">
                       <p>
-                        4년전 &quot;Hello World&quot;를 출력하며 개발자로서의 첫
-                        발자취를 남겼습니다.
+                        저는 단순히 화면을 구현하는 데에 그치지 않고, 사용자의
+                        흐름과 비즈니스 요구, 팀의 협업 구조까지 함께 고려하는
+                        제품 중심의 개발자입니다.
                       </p>
+
                       <p>
-                        &quot;부딪힐거 같으면 더 쌔게 밟아라&quot; 라는 말을 좋아합니다.
-                        도전과 실패를 두려워하지 않고, 
-                        오히려 더 강하게 부딪혀 성장하는 것이 제 개발 철학입니다.
+                        Next.js, TypeScript, React, Zustand, React Query,
+                        Supabase 등 현대적인 기술 스택을 기반으로 개발하고
+                        있으며, Storybook 기반의 디자인 시스템 구축부터 테스팅
+                        자동화(Cypress), CI/CD 환경 세팅(Jenkins, Docker 등),
+                        에러 핸들링 전략 설계까지 다양한 프로젝트 경험을 통해
+                        <br />
+                        <span className="text-lg text-blue-600 font-mono">
+                          ‘지속 가능한 제품 개발’
+                        </span>
+                        의 전 과정을 이해하고 실천해왔습니다.
                       </p>
                     </div>
                   </div>
                 )}
 
-
                 {currentPage.id === "about-2" && (
                   <div className="space-y-6">
                     <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
-                      <h3 className="text-xl font-bold text-blue-500">Most Frameworks</h3>
-                      <div className="flex flex-wrap gap-2">                        
-                      {["TypeScript", "React", "Next.js", "Vue", "ReactNative", "Electron"].map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                      <h3 className="text-xl font-bold text-blue-500">
+                        Most Frameworks
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          "TypeScript",
+                          "React",
+                          "Next.js",
+                          "Vue",
+                          "ReactNative",
+                          "Electron",
+                        ].map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
                       </div>
                     </div>
                     <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
-                      <h3 className="text-xl font-bold text-blue-500">Interested Technology</h3>
-                      <div className="flex flex-wrap gap-2">                        
-                      {["Webview","WebApp","MonoRepo","Infra","BFF","MFA","TDD","UI/UX"].map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                      <h3 className="text-xl font-bold text-blue-500">
+                        Interested Technology
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          "Webview",
+                          "WebApp",
+                          "MonoRepo",
+                          "Infra",
+                          "BFF",
+                          "MFA",
+                          "TDD",
+                          "UI/UX",
+                        ].map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 w-fit text-sm bg-blue-500/5 text-blue-600 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
                       </div>
-                    </div>                    
+                    </div>
                   </div>
                 )}
 
@@ -807,8 +939,12 @@ export default function Home() {
                   <div className="space-y-6">
                     <div className="space-y-4">
                       <div className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
-                        <h3 className="font-medium">한림대학교 소프트웨어융합</h3>
-                        <p className="text-xs text-primary/70 mt-1">2018.02 ~ 2025.06(졸업예정)</p>
+                        <h3 className="font-medium">
+                          한림대학교 소프트웨어융합
+                        </h3>
+                        <p className="text-xs text-primary/70 mt-1">
+                          2018.02 ~ 2025.06(졸업예정)
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-4">
@@ -816,34 +952,45 @@ export default function Home() {
                         { name: "씨애랑", type: "학술 동아리" },
                         { name: "DAWN", type: "창업동아리" },
                         { name: "Fanespo", type: "창업팀" },
-                        { name: "Edubill", type: "창업팀" }
+                        { name: "Edubill", type: "창업팀" },
                       ].map((activity) => (
-                        <div key={activity.name} className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
+                        <div
+                          key={activity.name}
+                          className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        >
                           <h3 className="font-medium">{activity.name}</h3>
-                          <p className="text-xs text-primary/70 mt-1">{activity.type}</p>
+                          <p className="text-xs text-primary/70 mt-1">
+                            {activity.type}
+                          </p>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
                 {currentPage.id === "about-4" && (
-                  <div className="space-y-6">                    
+                  <div className="space-y-6">
                     <div className="space-y-4">
                       {awards.map((award) => (
-                        <div key={award.title} className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer flex justify-between">
+                        <div
+                          key={award.title}
+                          className="px-4 py-3 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer flex justify-between"
+                        >
                           <div>
-                          <h3 className="font-medium">{award.title}</h3>
-                          <p className="text-xs text-primary/70 mt-1">{award.organization}</p>
+                            <h3 className="font-medium">{award.title}</h3>
+                            <p className="text-xs text-primary/70 mt-1">
+                              {award.organization}
+                            </p>
                           </div>
                           <div>
-                            <p className="text-xs text-primary/70 mt-1">{award.date}</p>
-                          </div>                          
+                            <p className="text-xs text-primary/70 mt-1">
+                              {award.date}
+                            </p>
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
-                
               </div>
             )}
 
@@ -854,35 +1001,47 @@ export default function Home() {
                     {experiences.slice(0, 1).map((exp) => (
                       <div key={exp.id} className="space-y-4">
                         <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <p className="text-sm text-muted-foreground font-mono">
+                            {exp.period}
+                          </p>
                           <h3 className="text-xl font-semibold">{exp.role}</h3>
-                          <p className="text-primary/80 italic">{exp.company}</p>
-                          <p className="text-sm text-muted-foreground mt-2">{exp.description}</p>
+                          <p className="text-primary/80 italic">
+                            {exp.company}
+                          </p>
+                          <p className="text-sm text-muted-foreground mt-2">
+                            {exp.description}
+                          </p>
                         </div>
-                        
+
                         <div className="space-y-4">
                           {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
                             >
-                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <h4 className="font-medium mb-3">
+                                {achievement.title}
+                              </h4>
                               <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description.slice(0, 2).map((desc) => (
-                                  <li
-                                    className="text-sm text-muted-foreground"
-                                    key={desc.text}
-                                  >
-                                    {desc.text}
-                                  </li>
-                                ))}
+                                {achievement.description
+                                  .slice(0, 2)
+                                  .map((desc) => (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      {desc.text}
+                                    </li>
+                                  ))}
                               </ul>
                             </div>
                           ))}
                         </div>
-                        
+
                         <div className="mt-4">
-                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">
+                            Technologies
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {exp.skills.map((skill) => (
                               <span
@@ -904,37 +1063,47 @@ export default function Home() {
                     {experiences.slice(1, 2).map((exp) => (
                       <div key={exp.id} className="space-y-4">
                         <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <p className="text-sm text-muted-foreground font-mono">
+                            {exp.period}
+                          </p>
                           <h3 className="text-xl font-semibold">{exp.role}</h3>
-                          <p className="text-primary/80 italic">{exp.company}</p>
+                          <p className="text-primary/80 italic">
+                            {exp.company}
+                          </p>
                           <p className="text-sm text-muted-foreground mt-4">
                             {exp.description}
                           </p>
                         </div>
-                        
+
                         <div className="space-y-4">
                           {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
                             >
-                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <h4 className="font-medium mb-3">
+                                {achievement.title}
+                              </h4>
                               <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description.slice(0, 2).map((desc) => (
-                                  <li
-                                    className="text-sm text-muted-foreground"
-                                    key={desc.text}
-                                  >
-                                    {desc.text}
-                                  </li>
-                                ))}
+                                {achievement.description
+                                  .slice(0, 2)
+                                  .map((desc) => (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      {desc.text}
+                                    </li>
+                                  ))}
                               </ul>
                             </div>
                           ))}
                         </div>
-                        
+
                         <div className="mt-4">
-                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">
+                            Technologies
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {exp.skills.map((skill) => (
                               <span
@@ -956,37 +1125,47 @@ export default function Home() {
                     {experiences.slice(2, 3).map((exp) => (
                       <div key={exp.id} className="space-y-4">
                         <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground font-mono">{exp.period}</p>
+                          <p className="text-sm text-muted-foreground font-mono">
+                            {exp.period}
+                          </p>
                           <h3 className="text-xl font-semibold">{exp.role}</h3>
-                          <p className="text-primary/80 italic">{exp.company}</p>
+                          <p className="text-primary/80 italic">
+                            {exp.company}
+                          </p>
                           <p className="text-sm text-muted-foreground mt-4">
                             {exp.description}
                           </p>
                         </div>
-                        
+
                         <div className="space-y-4">
                           {exp.achievements.map((achievement) => (
                             <div
                               key={achievement.title}
                               className="p-4 rounded-lg bg-secondary/30"
                             >
-                              <h4 className="font-medium mb-3">{achievement.title}</h4>
+                              <h4 className="font-medium mb-3">
+                                {achievement.title}
+                              </h4>
                               <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description.slice(0, 2).map((desc) => (
-                                  <li
-                                    className="text-sm text-muted-foreground"
-                                    key={desc.text}
-                                  >
-                                    {desc.text}
-                                  </li>
-                                ))}
+                                {achievement.description
+                                  .slice(0, 2)
+                                  .map((desc) => (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      {desc.text}
+                                    </li>
+                                  ))}
                               </ul>
                             </div>
                           ))}
                         </div>
-                        
+
                         <div className="mt-4">
-                          <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
+                          <h4 className="text-sm font-medium text-muted-foreground mb-2">
+                            Technologies
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {exp.skills.map((skill) => (
                               <span
@@ -1008,113 +1187,128 @@ export default function Home() {
             {currentPage.id.startsWith("projects") && (
               <div>
                 <div className="space-y-6">
-                  {currentPage.id === "projects-1" && projects.slice(0, 2).map((project) => (
-                    <div 
-                      key={project.id} 
-                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                      onClick={(e) => handleProjectClick(project, e)}
-                    >
-                      <div className="relative w-full h-36 overflow-hidden">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                        {project.isAward && (
-                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
-                            <Trophy className="w-4 h-4 text-white" />
+                  {currentPage.id === "projects-1" &&
+                    projects.slice(0, 2).map((project) => (
+                      <div
+                        key={project.id}
+                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        onClick={(e) => handleProjectClick(project, e)}
+                      >
+                        <div className="relative w-full h-36 overflow-hidden">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                          {project.isAward && (
+                            <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                              <Trophy className="w-4 h-4 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <h3 className="text-lg font-medium text-gray-900">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-1 mt-3">
+                            {project.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
                           </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
-                        <div className="flex flex-wrap gap-1 mt-3">
-                          {project.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
                         </div>
                       </div>
-                    </div>
-                  ))}
-                  
-                  {currentPage.id === "projects-2" && projects.slice(2, 4).map((project) => (
-                    <div 
-                      key={project.id} 
-                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                      onClick={(e) => handleProjectClick(project, e)}
-                    >
-                      <div className="relative w-full h-36 overflow-hidden">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                        {project.isAward && (
-                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
-                            <Trophy className="w-4 h-4 text-white" />
+                    ))}
+
+                  {currentPage.id === "projects-2" &&
+                    projects.slice(2, 4).map((project) => (
+                      <div
+                        key={project.id}
+                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        onClick={(e) => handleProjectClick(project, e)}
+                      >
+                        <div className="relative w-full h-36 overflow-hidden">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                          {project.isAward && (
+                            <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                              <Trophy className="w-4 h-4 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <h3 className="text-lg font-medium text-gray-900">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-1 mt-3">
+                            {project.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
                           </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
-                        <div className="flex flex-wrap gap-1 mt-3">
-                          {project.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
                         </div>
                       </div>
-                    </div>
-                  ))}
-                  
-                  {currentPage.id === "projects-3" && projects.slice(4, 6).map((project) => (
-                    <div 
-                      key={project.id} 
-                      className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                      onClick={(e) => handleProjectClick(project, e)}
-                    >
-                      <div className="relative w-full h-36 overflow-hidden">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                        {project.isAward && (
-                          <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
-                            <Trophy className="w-4 h-4 text-white" />
+                    ))}
+
+                  {currentPage.id === "projects-3" &&
+                    projects.slice(4, 6).map((project) => (
+                      <div
+                        key={project.id}
+                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        onClick={(e) => handleProjectClick(project, e)}
+                      >
+                        <div className="relative w-full h-36 overflow-hidden">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                          />
+                          {project.isAward && (
+                            <div className="absolute top-2 right-2 bg-yellow-500 p-2 rounded-full shadow-md z-[100]">
+                              <Trophy className="w-4 h-4 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="p-4">
+                          <h3 className="text-lg font-medium text-gray-900">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-1 mt-3">
+                            {project.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
                           </div>
-                        )}
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-lg font-medium text-gray-900">{project.title}</h3>
-                        <p className="text-sm text-gray-500 mt-1">{project.description}</p>
-                        <div className="flex flex-wrap gap-1 mt-3">
-                          {project.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             )}
@@ -1124,7 +1318,8 @@ export default function Home() {
                 <div className="text-center space-y-8">
                   <h2 className="text-2xl font-bold">Let&apos;s Connect</h2>
                   <p className="text-muted-foreground">
-                    I&apos;m always open to new opportunities and interesting projects
+                    I&apos;m always open to new opportunities and interesting
+                    projects
                   </p>
                   <Button className="w-full">
                     <Mail className="mr-2 h-4 w-4" />
@@ -1149,17 +1344,23 @@ export default function Home() {
       </div>
     );
   };
-  
-  
 
   return (
-    <main className="flex min-h-screen flex-col mx-auto bg-[#F8F9FA]" style={{ maxWidth: '600px' }}>
+    <main
+      className="flex min-h-screen flex-col mx-auto bg-[#F8F9FA]"
+      style={{ maxWidth: "600px" }}
+    >
       {/* 상단 헤더 */}
-      <div className="fixed top-0 left-0 right-0 z-20 bg-[#F8F9FA]" style={{ maxWidth: '600px', margin: '0 auto' }}>
+      <div
+        className="fixed top-0 left-0 right-0 z-20 bg-[#F8F9FA]"
+        style={{ maxWidth: "600px", margin: "0 auto" }}
+      >
         <div className="flex items-center px-4 h-[52px]">
           {(currentMobilePage > 0 || isProjectFunnel) && (
-            <button 
-              onClick={isProjectFunnel ? goToPrevProjectPage : goToPrevMobilePage}
+            <button
+              onClick={
+                isProjectFunnel ? goToPrevProjectPage : goToPrevMobilePage
+              }
               className="p-2 -ml-2 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors"
             >
               <ChevronLeft className="h-6 w-6 text-gray-800" />
@@ -1174,25 +1375,35 @@ export default function Home() {
       </div>
 
       {/* 메인 컨텐츠 */}
-      <div className="mobile-funnel relative mt-[52px]">
+      <div className="mobile-funnel relative mt-[52px] overflow-y-scroll pb-24">
         {/* 현재 페이지 */}
         <div className="px-5">
           {isProjectFunnel ? renderProjectFunnelPage() : renderMobilePage()}
         </div>
 
         {/* 하단 버튼 */}
-        <div 
-          className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200" 
-          style={{ maxWidth: '600px', margin: '0 auto' }}
+        <div
+          className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200"
+          style={{ maxWidth: "600px", margin: "0 auto" }}
         >
-          <Button 
+          <Button
             className={`w-full h-[52px] bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-all
-              ${buttonPressed ? 'scale-[0.98]' : 'scale-100'}
+              ${buttonPressed ? "scale-[0.98]" : "scale-100"}
               disabled:bg-gray-200 disabled:text-gray-400`}
             onClick={isProjectFunnel ? goToNextProjectPage : goToNextMobilePage}
-            disabled={isProjectFunnel ? currentProjectPage >= 3 : currentMobilePage >= mobilePages.length - 1}
+            disabled={
+              isProjectFunnel
+                ? currentProjectPage >= 3
+                : currentMobilePage >= mobilePages.length - 1
+            }
           >
-            {isProjectFunnel ? (currentProjectPage === 3 ? "완료" : "다음") : (currentMobilePage === 0 ? "시작하기" : "다음")}
+            {isProjectFunnel
+              ? currentProjectPage === 3
+                ? "완료"
+                : "다음"
+              : currentMobilePage === 0
+              ? "시작하기"
+              : "다음"}
           </Button>
         </div>
       </div>
@@ -1202,7 +1413,7 @@ export default function Home() {
 
 // 리스트 아이템 컴포넌트 스타일 수정
 // const ListItem = ({ icon, title, subtitle, onClick }: any) => (
-//   <div 
+//   <div
 //     onClick={onClick}
 //     className="flex items-center p-4 bg-white rounded-2xl mb-3 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors"
 //   >

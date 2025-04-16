@@ -8,6 +8,8 @@ import {
   Trophy,
   ArrowRight,
   ChevronLeft,
+  Link,
+  ExternalLink,
 } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -173,24 +175,16 @@ const experiences: Experience[] = [
     description: "간호사를 위한 케어 플랫폼",
     achievements: [
       {
-        title: "CareFlow Web 개발",
+        title: "CareFlow Electron Web App 개발",
         description: [
-          { text: "로그인 구조 및 로직 개발" },
           {
             text: "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축",
             link: "https://example.com/pipeline",
           },
-          { text: "Stomp 기반 채팅 구현" },
+          { text: "JWT Token 기반 로그인 개발" },
+          { text: "웹 소켓 기반 채팅 구현" },
           { text: "SSE 기반 웹 알림 구현" },
-        ],
-      },
-      {
-        title: "CareFlow Web Next.js 마이그레이션",
-        description: [{ text: "Next.js 마이그레이션" }],
-      },
-      {
-        title: "CareFlow Electron WebApp 개발",
-        description: [
+          { text: "웹뷰 기반 electron 앱 개발" },
           { text: "Electron 기반 웹앱 패키징" },
           { text: "윈도우 코드 서명 등록" },
           {
@@ -199,6 +193,10 @@ const experiences: Experience[] = [
           },
           { text: "네이티브 커스텀 알림 구현" },
         ],
+      },
+      {
+        title: "CareFlow Next.js 마이그레이션",
+        description: [{ text: "Next.js 마이그레이션" }],
       },
       {
         title: "CareFlow Tablet App 개발",
@@ -222,7 +220,7 @@ const experiences: Experience[] = [
         title: "MonoRepo 도입",
         description: [
           {
-            text: "React 프로젝트들과 ReactNative 프로젝트를 pnpm과 turbopack를 통해 하나의 레포지토리로 관리",
+            text: "기존 프로젝트들을 pnpm과 turbopack를 통해 하나의 레포지토리로 관리",
             link: "https://example.com/pipeline",
           },
           {
@@ -239,7 +237,7 @@ const experiences: Experience[] = [
         title: "디자인 시스템 개발(CDS)",
         description: [
           {
-            text: "mui 기반 Storybook 개발",
+            text: "AtomicDesign,Storybook을 통한 디자인 시스템 개발",
             link: "https://example.com/pipeline",
           },
         ],
@@ -249,7 +247,8 @@ const experiences: Experience[] = [
       "React",
       "React Native",
       "Electron",
-      "Mui",
+      "Shadcn",
+      "Next",
       "MonoRepo",
       "TypeScript",
       "Storybook",
@@ -265,7 +264,7 @@ const experiences: Experience[] = [
     description: "간병인 매칭 플랫폼",
     achievements: [
       {
-        title: "플랫폼 내 상품 수집 및 등록 페이지 제작",
+        title: "케어나인 앱 리빌딩",
         description: [
           {
             text: "홈 화면 UI 개선 및 매칭 현황 그래프  신규 기능",
@@ -275,7 +274,6 @@ const experiences: Experience[] = [
             text: "CSR --> ISR 전환으로 페이지 로드 속도 향상",
             link: "https://velog.io/@omnipo/%EB%A0%8C%EB%8D%94%EB%A7%81-%EB%B0%A9%EC%8B%9D%EC%9D%98-%EC%84%A0%ED%83%9D%EA%B3%BC-%EB%8F%84%EC%9E%85",
           },
-          { text: "공통 훅 개발" },
           {
             text: "스택 라우터 개발",
             link: "https://velog.io/@omnipo/%EC%9B%B9%EB%B7%B0-%EC%8A%A4%ED%83%9D-%EA%B5%AC%ED%98%84%EA%B8%B0",
@@ -290,7 +288,7 @@ const experiences: Experience[] = [
         title: "포인트 기능 개발",
         description: [
           { text: "유저 포인트 출금 및 충전 테이블 개발" },
-          { text: "어드민 페이지 포인트 관리 UI 개발" },
+          { text: "어드민 페이지 포인트 관리 및 설계사 포인트 출금 개발" },
         ],
       },
       {
@@ -876,7 +874,7 @@ export default function Home() {
                         에러 핸들링 전략 설계까지 다양한 프로젝트 경험을 통해
                         <br />
                         <span className="text-lg text-blue-600 font-mono">
-                          ‘지속 가능한 제품 개발’
+                          '지속 가능한 제품 개발'
                         </span>
                         의 전 과정을 이해하고 실천해왔습니다.
                       </p>
@@ -888,7 +886,7 @@ export default function Home() {
                   <div className="space-y-6">
                     <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
                       <h3 className="text-xl font-bold text-blue-500">
-                        Most Frameworks
+                        선호 프레임 워크
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {[
@@ -910,7 +908,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col gap-5 rounded-2xl overflow-hidden p-5 bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer">
                       <h3 className="text-xl font-bold text-blue-500">
-                        Interested Technology
+                        선호 기술
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {[
@@ -1022,17 +1020,30 @@ export default function Home() {
                               <h4 className="font-medium mb-3">
                                 {achievement.title}
                               </h4>
-                              <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description
-                                  .slice(0, 2)
-                                  .map((desc) => (
+                              <ul className="list-disc pl-2 space-y-2">
+                                {achievement.description.map((desc) =>
+                                  desc.link ? (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      <a
+                                        href={desc.link}
+                                        className="text-blue-500 hover:text-blue-700 hover:underline flex items-center gap-1"
+                                      >
+                                        {desc.text}
+                                        <ExternalLink className="w-3 h-3" />
+                                      </a>
+                                    </li>
+                                  ) : (
                                     <li
                                       className="text-sm text-muted-foreground"
                                       key={desc.text}
                                     >
                                       {desc.text}
                                     </li>
-                                  ))}
+                                  )
+                                )}
                               </ul>
                             </div>
                           ))}
@@ -1084,17 +1095,30 @@ export default function Home() {
                               <h4 className="font-medium mb-3">
                                 {achievement.title}
                               </h4>
-                              <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description
-                                  .slice(0, 2)
-                                  .map((desc) => (
+                              <ul className="list-disc pl-2 space-y-2">
+                                {achievement.description.map((desc) =>
+                                  desc.link ? (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      <a
+                                        href={desc.link}
+                                        className="text-blue-500 hover:text-blue-700 hover:underline flex items-center gap-1"
+                                      >
+                                        {desc.text}
+                                        <ExternalLink className="w-3 h-3" />
+                                      </a>
+                                    </li>
+                                  ) : (
                                     <li
                                       className="text-sm text-muted-foreground"
                                       key={desc.text}
                                     >
                                       {desc.text}
                                     </li>
-                                  ))}
+                                  )
+                                )}
                               </ul>
                             </div>
                           ))}
@@ -1146,17 +1170,30 @@ export default function Home() {
                               <h4 className="font-medium mb-3">
                                 {achievement.title}
                               </h4>
-                              <ul className="list-disc list-inside pl-2 space-y-2">
-                                {achievement.description
-                                  .slice(0, 2)
-                                  .map((desc) => (
+                              <ul className="list-disc pl-2 space-y-2">
+                                {achievement.description.map((desc) =>
+                                  desc.link ? (
+                                    <li
+                                      className="text-sm text-muted-foreground"
+                                      key={desc.text}
+                                    >
+                                      <a
+                                        href={desc.link}
+                                        className="text-blue-500 hover:text-blue-700 hover:underline flex items-center gap-1"
+                                      >
+                                        {desc.text}
+                                        <ExternalLink className="w-3 h-3" />
+                                      </a>
+                                    </li>
+                                  ) : (
                                     <li
                                       className="text-sm text-muted-foreground"
                                       key={desc.text}
                                     >
                                       {desc.text}
                                     </li>
-                                  ))}
+                                  )
+                                )}
                               </ul>
                             </div>
                           ))}

@@ -8,7 +8,6 @@ import {
   Trophy,
   ArrowRight,
   ChevronLeft,
-  Link,
   ExternalLink,
 } from "lucide-react";
 import Image from "next/image";
@@ -874,7 +873,7 @@ export default function Home() {
                         에러 핸들링 전략 설계까지 다양한 프로젝트 경험을 통해
                         <br />
                         <span className="text-lg text-blue-600 font-mono">
-                          '지속 가능한 제품 개발'
+                          &apos;지속 가능한 제품 개발&apos;
                         </span>
                         의 전 과정을 이해하고 실천해왔습니다.
                       </p>

@@ -71,28 +71,50 @@ const projects: Project[] = [
     id: 1,
     title: "Edubill",
     description: "똑똑한 학원비 관리 어플",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `학원비 관리를 위한 모바일 애플리케이션입니다.
+
+주요 기능:
+• 학원비 자동 계산 및 관리
+• 결제 내역 실시간 추적
+• 학부모-학원 간 원활한 소통
+• 결제 알림 및 리마인더
+
+기술적 도전:
+• Flutter를 활용한 크로스 플랫폼 개발
+• 실시간 데이터 동기화 구현
+• 보안이 강화된 결제 시스템 구축
+
+성과:
+• 2021년 정주영 창업경진대회 우수상 수상
+• 1,000명 이상의 활성 사용자 확보
+• 학원비 관리 시간 70% 단축`,
     image: "/edubill.webp",
     tags: ["Vue", "TypeScript", "Pinia", "Flutter"],
     demoUrl: "#",
     githubUrl: "#",
-    isAward: false,
+    isAward: true,
   },
   {
     id: 2,
     title: "CoMo",
     description: "간편한 사내 동호회 관리",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `사내 동호회 관리를 위한 웹 애플리케이션입니다.
+
+주요 기능:
+• 동호회 생성 및 관리
+• 회원 모집 및 관리
+• 일정 관리 및 알림
+• 활동 기록 및 갤러리
+
+기술적 도전:
+• Next.js 13 App Router 도입
+• 실시간 알림 시스템 구현
+• 이미지 최적화 및 캐싱 전략
+
+성과:
+• 사내 동호회 관리 시간 50% 단축
+• 동호회 참여율 30% 증가
+• 사용자 만족도 4.5/5.0 달성`,
     image: "/como.png",
     tags: ["Next.js", "TypeScript", "TailwindCSS"],
     demoUrl: "#",
@@ -100,15 +122,27 @@ const projects: Project[] = [
     isAward: false,
   },
   {
-    id: 2,
+    id: 3,
     title: "CareMinder",
     description: "더 스마트한 병원 업무의 시작 간호사도 함께 웃을 수 있는 병원",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `병원 업무 효율화를 위한 통합 관리 시스템입니다.
+
+주요 기능:
+• 환자 관리 및 모니터링
+• 의료진 스케줄 관리
+• 실시간 알림 시스템
+• 태블릿 기반 모바일 솔루션
+
+기술적 도전:
+• Electron 기반 데스크톱 앱 개발
+• 실시간 웹소켓 통신 구현
+• 네이티브 알림 시스템 구축
+• MonoRepo 구조 설계 및 구현
+
+성과:
+• 병원 업무 처리 시간 40% 단축
+• 의료진 만족도 90% 달성
+• 연간 운영 비용 30% 절감`,
     image: "/careminder.png",
     tags: ["React", "TypeScript", "Electron", "ReactNative"],
     demoUrl: "#",
@@ -116,47 +150,83 @@ const projects: Project[] = [
     isAward: true,
   },
   {
-    id: 3,
+    id: 4,
     title: "TemMoa!",
     description: "더이상 팀플이 두렵지 않아! 나에게 티모아가 있으니까.",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `팀 프로젝트 관리를 위한 협업 플랫폼입니다.
+
+주요 기능:
+• 팀 프로젝트 일정 관리
+• 작업 분배 및 진행 상황 추적
+• 실시간 협업 도구
+• 문서 공유 및 버전 관리
+
+기술적 도전:
+• Atomic Design 시스템 구축
+• Storybook을 활용한 컴포넌트 개발
+• Jest를 통한 테스트 자동화
+• 실시간 협업 기능 구현
+
+성과:
+• 팀 프로젝트 완료율 40% 향상
+• 5,000명 이상의 활성 사용자
+• 2023년 오픈소스SW웹 해커톤 금상`,
     image: "/teammoa.webp",
     tags: ["React", "TypeScript", "Storybook", "jest", "AtomicDesign"],
     demoUrl: "#",
     githubUrl: "#",
-    isAward: false,
+    isAward: true,
   },
   {
-    id: 4,
+    id: 5,
     title: "TodoIt",
     description: "계획을 기록하고 완성해 보세요.",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `개인 일정 관리 및 할 일 목록 애플리케이션입니다.
+
+주요 기능:
+• 할 일 목록 관리
+• 일정 캘린더
+• 태그 기반 분류
+• 진행 상황 통계
+
+기술적 도전:
+• Next.js와 Spring Boot 연동
+• JWT 기반 인증 시스템
+• 실시간 데이터 동기화
+• 반응형 UI/UX 구현
+
+성과:
+• 사용자 만족도 4.8/5.0
+• 월간 활성 사용자 3,000명
+• 평균 사용 시간 30분/일`,
     image: "/todoit.webp",
-    tags: ["Next.js", "TypeScript", "Sping"],
+    tags: ["Next.js", "TypeScript", "Spring"],
     demoUrl: "#",
     githubUrl: "#",
     isAward: false,
   },
   {
-    id: 5,
+    id: 6,
     title: "플리 한림",
     description: "재학생을 위한 중고 거래 플리 마켓",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `대학생을 위한 중고 거래 플랫폼입니다.
+
+주요 기능:
+• 실시간 채팅 기반 거래
+• 상품 검색 및 필터링
+• 거래 후기 시스템
+• 위치 기반 상품 추천
+
+기술적 도전:
+• Sendbird를 활용한 실시간 채팅
+• 이미지 최적화 및 CDN 활용
+• 위치 기반 서비스 구현
+• 보안 강화된 거래 시스템
+
+성과:
+• 한림대 재학생 중 70% 가입
+• 월간 거래액 1,000만원 달성
+• 2022년 캡스톤 디자인 입상`,
     image: "/fleahallym.webp",
     tags: ["Next.js", "Nest.js", "Sendbird", "TypeScript", "Recoil"],
     demoUrl: "#",
@@ -164,15 +234,27 @@ const projects: Project[] = [
     isAward: true,
   },
   {
-    id: 6,
+    id: 7,
     title: "Uri",
     description: "아이들에게 든든한 친구가 되어줄 '우리!'를 소개합니다.",
-    fullDescription: `A detailed explanation of the project, including:
-      • Key features and functionality
-      • Technical challenges overcome
-      • Performance optimizations
-      • User experience considerations
-      • Project outcomes and impact`,
+    fullDescription: `아동을 위한 AI 기반 학습 도우미 애플리케이션입니다.
+
+주요 기능:
+• AI 기반 학습 가이드
+• 맞춤형 학습 콘텐츠
+• 학습 진도 추적
+• 부모 모니터링 시스템
+
+기술적 도전:
+• Ko-GPT2 모델 활용
+• 안드로이드 네이티브 개발
+• Python Flask 백엔드 구축
+• 실시간 학습 데이터 분석
+
+성과:
+• 2021년 ESG 공모전 장려상
+• 500명 이상의 활성 사용자
+• 학습 효과 35% 향상`,
     image: "/uri.webp",
     tags: ["kotlin", "ko-gpt2", "android", "python", "flask"],
     demoUrl: "#",
@@ -426,6 +508,13 @@ const handleExternalLink = (url: string) => {
   }
 };
 
+const handleEmailClick = () => {
+  if (typeof window !== "undefined") {
+    navigator.clipboard.writeText("omnipo58@gmail.com");
+    alert("이메일이 클립보드에 복사되었습니다!");
+  }
+};
+
 export default function Home() {
   // const router = useRouter();
   const searchParams = useSearchParams();
@@ -616,7 +705,6 @@ export default function Home() {
     project: Project,
     e: React.MouseEvent<HTMLDivElement>
   ) => {
-    console.debug(e);
     setSelectedMobileProject(project);
     setIsProjectFunnel(true);
     setCurrentProjectPage(0);
@@ -676,88 +764,76 @@ export default function Home() {
 
     return (
       <div className="min-h-[calc(100vh-80px)] px-6 pt-20 overflow-y-scroll">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentProjectPage}
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={pageTransition}
-            className="space-y-6"
-          >
-            {currentProjectPage === 0 && (
-              <div>
-                <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-                  <Image
-                    src={selectedMobileProject.image}
-                    alt={selectedMobileProject.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h2 className="text-2xl font-bold">
-                  {selectedMobileProject.title}
-                </h2>
-                <p className="text-muted-foreground">
-                  {selectedMobileProject.description}
-                </p>
-              </div>
-            )}
+        {currentProjectPage === 0 && (
+          <div>
+            <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+              <Image
+                src={selectedMobileProject.image}
+                alt={selectedMobileProject.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <h2 className="text-2xl font-bold">
+              {selectedMobileProject.title}
+            </h2>
+            <p className="text-muted-foreground">
+              {selectedMobileProject.description}
+            </p>
+          </div>
+        )}
 
-            {currentProjectPage === 1 && (
-              <div>
-                <h3 className="text-xl font-bold">Overview</h3>
-                <p className="text-muted-foreground whitespace-pre-line">
-                  {selectedMobileProject.fullDescription}
-                </p>
-              </div>
-            )}
+        {currentProjectPage === 1 && (
+          <div>
+            <h3 className="text-xl font-bold">Overview</h3>
+            <p className="text-muted-foreground whitespace-pre-line">
+              {selectedMobileProject.fullDescription}
+            </p>
+          </div>
+        )}
 
-            {currentProjectPage === 2 && (
-              <div>
-                <h3 className="text-xl font-bold">Technologies</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedMobileProject.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+        {currentProjectPage === 2 && (
+          <div>
+            <h3 className="text-xl font-bold">Technologies</h3>
+            <div className="flex flex-wrap gap-2">
+              {selectedMobileProject.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
-            {currentProjectPage === 3 && (
-              <div>
-                <h3 className="text-xl font-bold">Links</h3>
-                <div className="space-y-4">
-                  <Button
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-transform"
-                    onClick={() =>
-                      handleExternalLink(selectedMobileProject.demoUrl)
-                    }
-                  >
-                    View Live Demo
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full bg-blue-500/10 hover:bg-blue-600 text-blue-600 py-3 rounded-lg transition-transform"
-                    onClick={() =>
-                      handleExternalLink(selectedMobileProject.githubUrl)
-                    }
-                  >
-                    <Github className="mr-2 h-4 w-4" />
-                    View Source
-                  </Button>
-                </div>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {currentProjectPage === 3 && (
+          <div>
+            <h3 className="text-xl font-bold">Links</h3>
+            <div className="space-y-4">
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-transform"
+                onClick={() =>
+                  handleExternalLink(selectedMobileProject.demoUrl)
+                }
+              >
+                View Live Demo
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full bg-blue-500/10 hover:bg-blue-600 text-blue-600 py-3 rounded-lg transition-transform"
+                onClick={() =>
+                  handleExternalLink(selectedMobileProject.githubUrl)
+                }
+              >
+                <Github className="mr-2 h-4 w-4" />
+                View Source
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -1357,28 +1433,79 @@ export default function Home() {
             )}
 
             {currentPage.id === "contact" && (
-              <div>
+              <div className="min-h-[calc(100vh-280px)] flex flex-col justify-center gap-10">
                 <div className="text-center space-y-8">
-                  <h2 className="text-2xl font-bold">Let&apos;s Connect</h2>
-                  <p className="text-muted-foreground">
-                    I&apos;m always open to new opportunities and interesting
-                    projects
-                  </p>
-                  <Button className="w-full">
-                    <Mail className="mr-2 h-4 w-4" />
-                    Send Message
-                  </Button>
-                  <div className="flex justify-center gap-6 pt-8">
-                    <Button variant="ghost" size="icon">
-                      <Github className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <Linkedin className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <Mail className="h-5 w-5" />
-                    </Button>
+                  <div className="space-y-4">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                      Let&apos;s Connect
+                    </h2>
+                    <p className="text-muted-foreground text-lg">
+                      새로운 도전과 기회를 기다리고 있습니다
+                    </p>
                   </div>
+
+                  <div className="space-y-4">
+                    <Button
+                      className="w-full h-14 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                      onClick={handleEmailClick}
+                    >
+                      <Mail className="mr-2 h-5 w-5" />
+                      omnipo58@gmail.com
+                    </Button>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <Button
+                        variant="outline"
+                        className="h-14 border-2 border-blue-100 hover:border-blue-200 hover:bg-blue-50 rounded-xl transition-all duration-300"
+                        onClick={() =>
+                          handleExternalLink("https://github.com/Ahnseungc")
+                        }
+                      >
+                        <Github className="mr-2 h-5 w-5" />
+                        GitHub
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-14 border-2 border-blue-100 hover:border-blue-200 hover:bg-blue-50 rounded-xl transition-all duration-300"
+                        onClick={() =>
+                          handleExternalLink(
+                            "https://www.linkedin.com/in/seungchan-ahn-067a6031b/"
+                          )
+                        }
+                      >
+                        <Linkedin className="mr-2 h-5 w-5" />
+                        LinkedIn
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-14 border-2 border-blue-100 hover:border-blue-200 hover:bg-blue-50 rounded-xl transition-all duration-300"
+                        onClick={() =>
+                          handleExternalLink("https://velog.io/@omnipo")
+                        }
+                      >
+                        <svg
+                          className="mr-2 h-5 w-5"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M3 0C1.338 0 0 1.338 0 3v18c0 1.662 1.338 3 3 3h18c1.662 0 3-1.338 3-3V3c0-1.662-1.338-3-3-3H3zm6.883 6.25c.564 0 1.02.456 1.02 1.02 0 .564-.456 1.02-1.02 1.02-.564 0-1.02-.456-1.02-1.02 0-.564.456-1.02 1.02-1.02zm2.855 12.968c-.884 0-1.248-.986-.849-1.641l2.67-4.42c.399-.655 1.342-.884 1.746-.884.404 0 1.342.229 1.746.884l2.67 4.42c.399.655.035 1.641-.849 1.641H12.738z" />
+                        </svg>
+                        Velog
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-14 border-2 border-blue-100 hover:border-blue-200 hover:bg-blue-50 rounded-xl transition-all duration-300"
+                        onClick={handleEmailClick}
+                      >
+                        <Mail className="mr-2 h-5 w-5" />
+                        Email
+                      </Button>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground mt-8">
+                    © 2024 An Seung Chan. All rights reserved.
+                  </p>
                 </div>
               </div>
             )}

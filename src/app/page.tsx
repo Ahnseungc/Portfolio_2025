@@ -85,6 +85,22 @@ const projects: Project[] = [
   },
   {
     id: 2,
+    title: "CoMo",
+    description: "간편한 사내 동호회 관리",
+    fullDescription: `A detailed explanation of the project, including:
+      • Key features and functionality
+      • Technical challenges overcome
+      • Performance optimizations
+      • User experience considerations
+      • Project outcomes and impact`,
+    image: "/como.png",
+    tags: ["Next.js", "TypeScript", "TailwindCSS"],
+    demoUrl: "#",
+    githubUrl: "#",
+    isAward: false,
+  },
+  {
+    id: 2,
     title: "CareMinder",
     description: "더 스마트한 병원 업무의 시작 간호사도 함께 웃을 수 있는 병원",
     fullDescription: `A detailed explanation of the project, including:
@@ -178,7 +194,6 @@ const experiences: Experience[] = [
         description: [
           {
             text: "Jenkins/Docker/Nginx 기반 CI / CD 파이프라인 구축",
-            link: "https://example.com/pipeline",
           },
           { text: "JWT Token 기반 로그인 개발" },
           { text: "웹 소켓 기반 채팅 구현" },
@@ -188,7 +203,6 @@ const experiences: Experience[] = [
           { text: "윈도우 코드 서명 등록" },
           {
             text: "github release 통한 배포 구축 및 자동 업데이트",
-            link: "https://example.com/pipeline",
           },
           { text: "네이티브 커스텀 알림 구현" },
         ],
@@ -203,15 +217,12 @@ const experiences: Experience[] = [
           { text: "시니어를 위한 시니어 모드 개발" },
           {
             text: "react-native-tts를 이용한 음성 텍스트 변환 개발",
-            link: "https://example.com/pipeline",
           },
           {
             text: "웹뷰를 통한 유튜브 및 각종 콘텐츠 개발",
-            link: "https://example.com/pipeline",
           },
           {
             text: "SSE를 통한 원격 로그 아웃 구현",
-            link: "https://example.com/pipeline",
           },
         ],
       },
@@ -220,15 +231,12 @@ const experiences: Experience[] = [
         description: [
           {
             text: "기존 프로젝트들을 pnpm과 turbopack를 통해 하나의 레포지토리로 관리",
-            link: "https://example.com/pipeline",
           },
           {
             text: "Jenkins와 docker를 통한 CI/CD 파이프라인 구축",
-            link: "https://example.com/pipeline",
           },
           {
             text: "기존 프로젝트 번등사이즈 25%감소 및 종속성 충돌 방지",
-            link: "https://example.com/pipeline",
           },
         ],
       },
@@ -237,7 +245,6 @@ const experiences: Experience[] = [
         description: [
           {
             text: "AtomicDesign,Storybook을 통한 디자인 시스템 개발",
-            link: "https://example.com/pipeline",
           },
         ],
       },
@@ -1221,8 +1228,8 @@ export default function Home() {
             )}
 
             {currentPage.id.startsWith("projects") && (
-              <div>
-                <div className="space-y-6">
+              <div className="">
+                <div className="min-h-[calc(100vh-280px)] flex flex-col justify-center gap-10">
                   {currentPage.id === "projects-1" &&
                     projects.slice(0, 2).map((project) => (
                       <div

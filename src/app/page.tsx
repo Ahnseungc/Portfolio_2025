@@ -702,8 +702,8 @@ export default function Home() {
   //   setCurrentProjectPage(0);
   // };
   const handleProjectClick = (
-    project: Project,
-    e: React.MouseEvent<HTMLDivElement>
+    project: Project
+    // e: React.MouseEvent<HTMLDivElement>
   ) => {
     setSelectedMobileProject(project);
     setIsProjectFunnel(true);
@@ -751,16 +751,16 @@ export default function Home() {
   const renderProjectFunnelPage = () => {
     if (!selectedMobileProject) return null;
 
-    const pageVariants = {
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -20 },
-    };
+    // const pageVariants = {
+    //   initial: { opacity: 0, y: 20 },
+    //   animate: { opacity: 1, y: 0 },
+    //   exit: { opacity: 0, y: -20 },
+    // };
 
-    const pageTransition = {
-      type: "tween",
-      duration: 0.3,
-    };
+    // const pageTransition = {
+    //   type: "tween",
+    //   duration: 0.3,
+    // };
 
     return (
       <div className="min-h-[calc(100vh-80px)] px-6 pt-20 overflow-y-scroll">
@@ -1311,7 +1311,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={(e) => handleProjectClick(project, e)}
+                        onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image
@@ -1352,7 +1352,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={(e) => handleProjectClick(project, e)}
+                        onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image
@@ -1393,7 +1393,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={(e) => handleProjectClick(project, e)}
+                        onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image

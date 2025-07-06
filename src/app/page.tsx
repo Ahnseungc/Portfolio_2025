@@ -6,7 +6,6 @@ import {
   Mail,
   Linkedin,
   Trophy,
-  ArrowRight,
   ChevronLeft,
   ExternalLink,
 } from "lucide-react";
@@ -50,15 +49,16 @@ interface Award {
   description?: string;
 }
 
-// interface Library {
-//   id: number;
-//   name: string;
-//   description: string;
-//   techStack: string[];
-//   stars?: number;
-//   downloads?: number;
-//   url: string;
-// }
+interface Library {
+  id: number;
+  name: string;
+  description: string;
+  techStack: string[];
+  stars?: number;
+  downloads?: number;
+  url: string;
+  fullDescription: string;
+}
 
 // interface IntroStep {
 //   icon: string;
@@ -68,33 +68,6 @@ interface Award {
 
 const projects: Project[] = [
   {
-    id: 1,
-    title: "Edubill",
-    description: "똑똑한 학원비 관리 어플",
-    fullDescription: `학원비 관리를 위한 모바일 애플리케이션입니다.
-
-주요 기능:
-• 학원비 자동 계산 및 관리
-• 결제 내역 실시간 추적
-• 학부모-학원 간 원활한 소통
-• 결제 알림 및 리마인더
-
-기술적 도전:
-• Flutter를 활용한 크로스 플랫폼 개발
-• 실시간 데이터 동기화 구현
-• 보안이 강화된 결제 시스템 구축
-
-성과:
-• 2021년 정주영 창업경진대회 우수상 수상
-• 1,000명 이상의 활성 사용자 확보
-• 학원비 관리 시간 70% 단축`,
-    image: "/edubill.webp",
-    tags: ["Vue", "TypeScript", "Pinia", "Flutter"],
-    demoUrl: "#",
-    githubUrl: "#",
-    isAward: true,
-  },
-  {
     id: 2,
     title: "CoMo",
     description: "간편한 사내 동호회 관리",
@@ -102,7 +75,7 @@ const projects: Project[] = [
 
 주요 기능:
 • 동호회 생성 및 관리
-• 회원 모집 및 관리
+• 영수증 관리
 • 일정 관리 및 알림
 • 활동 기록 및 갤러리
 
@@ -120,34 +93,6 @@ const projects: Project[] = [
     demoUrl: "#",
     githubUrl: "#",
     isAward: false,
-  },
-  {
-    id: 3,
-    title: "CareMinder",
-    description: "더 스마트한 병원 업무의 시작 간호사도 함께 웃을 수 있는 병원",
-    fullDescription: `병원 업무 효율화를 위한 통합 관리 시스템입니다.
-
-주요 기능:
-• 환자 관리 및 모니터링
-• 의료진 스케줄 관리
-• 실시간 알림 시스템
-• 태블릿 기반 모바일 솔루션
-
-기술적 도전:
-• Electron 기반 데스크톱 앱 개발
-• 실시간 웹소켓 통신 구현
-• 네이티브 알림 시스템 구축
-• MonoRepo 구조 설계 및 구현
-
-성과:
-• 병원 업무 처리 시간 40% 단축
-• 의료진 만족도 90% 달성
-• 연간 운영 비용 30% 절감`,
-    image: "/careminder.png",
-    tags: ["React", "TypeScript", "Electron", "ReactNative"],
-    demoUrl: "#",
-    githubUrl: "#",
-    isAward: true,
   },
   {
     id: 4,
@@ -176,34 +121,6 @@ const projects: Project[] = [
     demoUrl: "#",
     githubUrl: "#",
     isAward: true,
-  },
-  {
-    id: 5,
-    title: "TodoIt",
-    description: "계획을 기록하고 완성해 보세요.",
-    fullDescription: `개인 일정 관리 및 할 일 목록 애플리케이션입니다.
-
-주요 기능:
-• 할 일 목록 관리
-• 일정 캘린더
-• 태그 기반 분류
-• 진행 상황 통계
-
-기술적 도전:
-• Next.js와 Spring Boot 연동
-• JWT 기반 인증 시스템
-• 실시간 데이터 동기화
-• 반응형 UI/UX 구현
-
-성과:
-• 사용자 만족도 4.8/5.0
-• 월간 활성 사용자 3,000명
-• 평균 사용 시간 30분/일`,
-    image: "/todoit.webp",
-    tags: ["Next.js", "TypeScript", "Spring"],
-    demoUrl: "#",
-    githubUrl: "#",
-    isAward: false,
   },
   {
     id: 6,
@@ -463,26 +380,61 @@ const awards: Award[] = [
   },
 ];
 
-// const libraries: Library[] = [
-//   {
-//     id: 1,
-//     name: "react-use-modal",
-//     description: "React 모달을 쉽게 관리할 수 있는 커스텀 훅",
-//     techStack: ["React", "TypeScript", "Jest"],
-//     stars: 120,
-//     downloads: 5000,
-//     url: "https://github.com/yourusername/react-use-modal",
-//   },
-//   {
-//     id: 2,
-//     name: "use-intersection",
-//     description: "IntersectionObserver를 간편하게 사용하는 React 훅",
-//     techStack: ["React", "TypeScript"],
-//     stars: 85,
-//     downloads: 3200,
-//     url: "https://github.com/yourusername/use-intersection",
-//   },
-// ];
+const libraries: Library[] = [
+  {
+    id: 1,
+    name: "WEBVIEWKIT",
+    description: "웹에서 모바일 앱 스택 구조를 구현한 라이브러리",
+    fullDescription: `React 애플리케이션에서 모달 상태를 쉽게 관리할 수 있는 커스텀 훅입니다.
+
+주요 기능:
+• 모달 열기/닫기 상태 관리
+• 다중 모달 지원
+• 키보드 이벤트 처리 (ESC 키)
+• 포커스 트랩 구현
+• 접근성 고려
+
+기술적 특징:
+• TypeScript로 작성된 타입 안전한 훅
+• Jest를 활용한 테스트 커버리지 90% 달성
+• React 18의 새로운 기능 지원
+• 번들 크기 최적화
+
+사용 통계:
+• GitHub Stars: 120+
+• NPM 다운로드: 58`,
+    techStack: ["React", "TypeScript", "Jest"],
+
+    downloads: 58,
+    url: "https://www.npmjs.com/package/@ahnseungchan/webviewkit?activeTab=readme",
+  },
+  {
+    id: 2,
+    name: "use-intersection",
+    description: "IntersectionObserver를 간편하게 사용하는 React 훅",
+    fullDescription: `IntersectionObserver API를 React에서 쉽게 사용할 수 있는 커스텀 훅입니다.
+
+주요 기능:
+• 요소의 가시성 감지
+• 스크롤 기반 애니메이션 트리거
+• 무한 스크롤 구현 지원
+• 성능 최적화된 옵저버 관리
+
+기술적 특징:
+• 메모리 누수 방지를 위한 자동 정리
+• TypeScript 지원으로 타입 안전성 보장
+• 다양한 옵션 설정 가능
+• React 18 Concurrent Features 호환
+
+사용 통계:
+• GitHub Stars: 85+
+• NPM 다운로드: 3,200+`,
+    techStack: ["React", "TypeScript"],
+    stars: 85,
+    downloads: 3200,
+    url: "https://github.com/Ahnseungc/use-intersection",
+  },
+];
 
 // const introSteps: IntroStep[] = [
 //   {
@@ -621,11 +573,12 @@ export default function Home() {
       description: "프로젝트",
     },
     {
-      id: "projects-3",
-      title: "Projects",
-      component: "projects",
-      description: "프로젝트",
+      id: "libraries-1",
+      title: "Libraries",
+      component: "libraries",
+      description: "라이브러리",
     },
+
     {
       id: "contact",
       title: "Contact",
@@ -701,14 +654,14 @@ export default function Home() {
   //   setIsProjectFunnel(true);
   //   setCurrentProjectPage(0);
   // };
-  const handleProjectClick = (
-    project: Project
-    // e: React.MouseEvent<HTMLDivElement>
-  ) => {
-    setSelectedMobileProject(project);
-    setIsProjectFunnel(true);
-    setCurrentProjectPage(0);
-  };
+  // const handleProjectClick = (
+  //   project: Project
+  //   // e: React.MouseEvent<HTMLDivElement>
+  // ) => {
+  //   setSelectedMobileProject(project);
+  //   setIsProjectFunnel(true);
+  //   setCurrentProjectPage(0);
+  // };
 
   // const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
   //   e.preventDefault();
@@ -751,89 +704,149 @@ export default function Home() {
   const renderProjectFunnelPage = () => {
     if (!selectedMobileProject) return null;
 
-    // const pageVariants = {
-    //   initial: { opacity: 0, y: 20 },
-    //   animate: { opacity: 1, y: 0 },
-    //   exit: { opacity: 0, y: -20 },
-    // };
+    const pageVariants = {
+      initial: { opacity: 0, x: 20 },
+      animate: { opacity: 1, x: 0 },
+      exit: { opacity: 0, x: -20 },
+    };
 
-    // const pageTransition = {
-    //   type: "tween",
-    //   duration: 0.3,
-    // };
+    const pageTransition = {
+      type: "tween",
+      duration: 0.3,
+    };
 
     return (
       <div className="min-h-[calc(100vh-80px)] px-6 pt-20 overflow-y-scroll">
-        {currentProjectPage === 0 && (
-          <div>
-            <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-              <Image
-                src={selectedMobileProject.image}
-                alt={selectedMobileProject.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <h2 className="text-2xl font-bold">
-              {selectedMobileProject.title}
-            </h2>
-            <p className="text-muted-foreground">
-              {selectedMobileProject.description}
-            </p>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentProjectPage}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+          >
+            {currentProjectPage === 0 && (
+              <div className="space-y-6">
+                {/* 프로젝트 헤더 이미지 */}
+                <div className="relative w-full h-64 mb-6 rounded-2xl overflow-hidden shadow-lg">
+                  <Image
+                    src={selectedMobileProject.image}
+                    alt={selectedMobileProject.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {selectedMobileProject.isAward && (
+                    <div className="absolute top-4 right-4 bg-yellow-500 p-3 rounded-full shadow-lg">
+                      <Trophy className="w-5 h-5 text-white" />
+                    </div>
+                  )}
+                </div>
 
-        {currentProjectPage === 1 && (
-          <div>
-            <h3 className="text-xl font-bold">Overview</h3>
-            <p className="text-muted-foreground whitespace-pre-line">
-              {selectedMobileProject.fullDescription}
-            </p>
-          </div>
-        )}
+                {/* 프로젝트 제목과 설명 */}
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {selectedMobileProject.title}
+                  </h2>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {selectedMobileProject.description}
+                  </p>
+                </div>
 
-        {currentProjectPage === 2 && (
-          <div>
-            <h3 className="text-xl font-bold">Technologies</h3>
-            <div className="flex flex-wrap gap-2">
-              {selectedMobileProject.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-sm bg-blue-500/5 text-blue-600 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+                {/* 기술 스택 미리보기 */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                    사용 기술
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedMobileProject.tags.slice(0, 4).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 text-sm bg-blue-50 text-blue-600 rounded-full border border-blue-100"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {selectedMobileProject.tags.length > 4 && (
+                      <span className="px-3 py-1 text-sm bg-gray-50 text-gray-500 rounded-full">
+                        +{selectedMobileProject.tags.length - 4}개 더
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
-        {currentProjectPage === 3 && (
-          <div>
-            <h3 className="text-xl font-bold">Links</h3>
-            <div className="space-y-4">
-              <Button
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-transform"
-                onClick={() =>
-                  handleExternalLink(selectedMobileProject.demoUrl)
-                }
-              >
-                View Live Demo
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full bg-blue-500/10 hover:bg-blue-600 text-blue-600 py-3 rounded-lg transition-transform"
-                onClick={() =>
-                  handleExternalLink(selectedMobileProject.githubUrl)
-                }
-              >
-                <Github className="mr-2 h-4 w-4" />
-                View Source
-              </Button>
-            </div>
-          </div>
-        )}
+            {currentProjectPage === 1 && (
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    프로젝트 개요
+                  </h3>
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+                      {selectedMobileProject.fullDescription}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentProjectPage === 2 && (
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    기술 스택
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {selectedMobileProject.tags.map((tag) => (
+                      <div
+                        key={tag}
+                        className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center"
+                      >
+                        <span className="text-sm font-medium text-gray-700">
+                          {tag}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentProjectPage === 3 && (
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    프로젝트 링크
+                  </h3>
+                  <div className="space-y-4">
+                    <Button
+                      className="w-full h-14 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                      onClick={() =>
+                        handleExternalLink(selectedMobileProject.demoUrl)
+                      }
+                    >
+                      <ExternalLink className="mr-2 h-5 w-5" />
+                      라이브 데모 보기
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full h-14 border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 rounded-xl transition-all duration-300"
+                      onClick={() =>
+                        handleExternalLink(selectedMobileProject.githubUrl)
+                      }
+                    >
+                      <Github className="mr-2 h-5 w-5" />
+                      소스 코드 보기
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     );
   };
@@ -858,11 +871,11 @@ export default function Home() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPage.id}
-            variants={pageVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={pageTransition}
+            variants={currentPage.id === "about-1" ? {} : pageVariants}
+            initial={currentPage.id === "about-1" ? undefined : "initial"}
+            animate={currentPage.id === "about-1" ? undefined : "animate"}
+            exit={currentPage.id === "about-1" ? undefined : "exit"}
+            transition={currentPage.id === "about-1" ? {} : pageTransition}
             className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6 overflow-y-scroll"
           >
             {/* {currentPage.id === "intro" && (
@@ -1311,7 +1324,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={() => handleProjectClick(project)}
+                        // onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image
@@ -1352,7 +1365,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={() => handleProjectClick(project)}
+                        // onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image
@@ -1393,7 +1406,7 @@ export default function Home() {
                       <div
                         key={project.id}
                         className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                        onClick={() => handleProjectClick(project)}
+                        // onClick={() => handleProjectClick(project)}
                       >
                         <div className="relative w-full h-36 overflow-hidden">
                           <Image
@@ -1422,6 +1435,102 @@ export default function Home() {
                                 className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded-full"
                               >
                                 {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            {currentPage.id.startsWith("libraries") && (
+              <div className="">
+                <div className="min-h-[calc(100vh-280px)] flex flex-col justify-start gap-10">
+                  {currentPage.id === "libraries-1" &&
+                    libraries.slice(0, 1).map((library) => (
+                      <div
+                        key={library.id}
+                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        onClick={() => handleExternalLink(library.url)}
+                      >
+                        <div className="p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                {library.name}
+                              </h3>
+                              <p className="text-sm text-gray-600 leading-relaxed">
+                                {library.description}
+                              </p>
+                            </div>
+                            <div className="flex flex-col items-end space-y-1">
+                              {library.stars && (
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <span className="mr-1">⭐</span>
+                                  <span>{library.stars}</span>
+                                </div>
+                              )}
+                              {library.downloads && (
+                                <div className="text-xs text-gray-400">
+                                  {library.downloads.toLocaleString()} downloads
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {library.techStack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-full border border-blue-100"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                  {currentPage.id === "libraries-2" &&
+                    libraries.slice(1, 2).map((library) => (
+                      <div
+                        key={library.id}
+                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        onClick={() => handleExternalLink(library.url)}
+                      >
+                        <div className="p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                {library.name}
+                              </h3>
+                              <p className="text-sm text-gray-600 leading-relaxed">
+                                {library.description}
+                              </p>
+                            </div>
+                            <div className="flex flex-col items-end space-y-1">
+                              {library.stars && (
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <span className="mr-1">⭐</span>
+                                  <span>{library.stars}</span>
+                                </div>
+                              )}
+                              {library.downloads && (
+                                <div className="text-xs text-gray-400">
+                                  {library.downloads.toLocaleString()} downloads
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {library.techStack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-full border border-blue-100"
+                              >
+                                {tech}
                               </span>
                             ))}
                           </div>
@@ -1580,7 +1689,6 @@ export default function Home() {
     </main>
   );
 }
-
 // 리스트 아이템 컴포넌트 스타일 수정
 // const ListItem = ({ icon, title, subtitle, onClick }: any) => (
 //   <div

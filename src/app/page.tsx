@@ -384,7 +384,7 @@ const libraries: Library[] = [
   {
     id: 1,
     name: "WEBVIEWKIT",
-    description: "웹에서 모바일 앱 스택 구조를 구현한 라이브러리",
+    description: "모바일 앱 스택 구조를 구현한 라이브러리",
     fullDescription: `React 애플리케이션에서 모달 상태를 쉽게 관리할 수 있는 커스텀 훅입니다.
 
 주요 기능:
@@ -876,7 +876,7 @@ export default function Home() {
             animate={currentPage.id === "about-1" ? undefined : "animate"}
             exit={currentPage.id === "about-1" ? undefined : "exit"}
             transition={currentPage.id === "about-1" ? {} : pageTransition}
-            className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-6 overflow-y-scroll"
+            className="min-h-[calc(100vh-80px)] w-full bg-background pt-10 px-0 overflow-y-scroll"
           >
             {/* {currentPage.id === "intro" && (
               <div className="flex flex-col items-center text-center">
@@ -1317,16 +1317,18 @@ export default function Home() {
             )}
 
             {currentPage.id.startsWith("projects") && (
-              <div className="">
-                <div className="min-h-[calc(100vh-280px)] flex flex-col justify-center gap-10">
+              <div className="relative min-h-[calc(100vh-280px)]">
+                {/* 배경 이미지 */}
+
+                <div className="relative flex flex-col justify-center gap-6 ">
                   {currentPage.id === "projects-1" &&
                     projects.slice(0, 2).map((project) => (
                       <div
                         key={project.id}
-                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        className="rounded-2xl overflow-hidden bg-white/90 backdrop-blur-sm shadow-lg active:scale-[0.98] transition-transform cursor-pointer border border-white/20"
                         // onClick={() => handleProjectClick(project)}
                       >
-                        <div className="relative w-full h-36 overflow-hidden">
+                        <div className="relative w-full h-28 overflow-hidden">
                           <Image
                             src={project.image}
                             alt={project.title}
@@ -1346,7 +1348,7 @@ export default function Home() {
                           <p className="text-sm text-gray-500 mt-1">
                             {project.description}
                           </p>
-                          <div className="flex flex-wrap gap-1 mt-3">
+                          {/* <div className="flex flex-wrap gap-1 mt-3">
                             {project.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
@@ -1355,7 +1357,7 @@ export default function Home() {
                                 {tag}
                               </span>
                             ))}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     ))}
@@ -1364,10 +1366,10 @@ export default function Home() {
                     projects.slice(2, 4).map((project) => (
                       <div
                         key={project.id}
-                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        className="rounded-2xl overflow-hidden bg-white/90 backdrop-blur-sm shadow-lg active:scale-[0.98] transition-transform cursor-pointer border border-white/20"
                         // onClick={() => handleProjectClick(project)}
                       >
-                        <div className="relative w-full h-36 overflow-hidden">
+                        <div className="relative w-full h-28 overflow-hidden">
                           <Image
                             src={project.image}
                             alt={project.title}
@@ -1387,7 +1389,7 @@ export default function Home() {
                           <p className="text-sm text-gray-500 mt-1">
                             {project.description}
                           </p>
-                          <div className="flex flex-wrap gap-1 mt-3">
+                          {/* <div className="flex flex-wrap gap-1 mt-3">
                             {project.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
@@ -1396,7 +1398,7 @@ export default function Home() {
                                 {tag}
                               </span>
                             ))}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     ))}
@@ -1405,10 +1407,10 @@ export default function Home() {
                     projects.slice(4, 6).map((project) => (
                       <div
                         key={project.id}
-                        className="rounded-2xl overflow-hidden bg-white shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+                        className="rounded-2xl overflow-hidden bg-white/90 backdrop-blur-sm shadow-lg active:scale-[0.98] transition-transform cursor-pointer border border-white/20"
                         // onClick={() => handleProjectClick(project)}
                       >
-                        <div className="relative w-full h-36 overflow-hidden">
+                        <div className="relative w-full h-28 overflow-hidden">
                           <Image
                             src={project.image}
                             alt={project.title}
@@ -1428,7 +1430,7 @@ export default function Home() {
                           <p className="text-sm text-gray-500 mt-1">
                             {project.description}
                           </p>
-                          <div className="flex flex-wrap gap-1 mt-3">
+                          {/* <div className="flex flex-wrap gap-1 mt-3">
                             {project.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
@@ -1437,7 +1439,7 @@ export default function Home() {
                                 {tag}
                               </span>
                             ))}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     ))}
@@ -1472,11 +1474,11 @@ export default function Home() {
                                   <span>{library.stars}</span>
                                 </div>
                               )}
-                              {library.downloads && (
+                              {/* {library.downloads && (
                                 <div className="text-xs text-gray-400">
                                   {library.downloads.toLocaleString()} downloads
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="flex flex-wrap gap-2">

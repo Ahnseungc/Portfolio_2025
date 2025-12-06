@@ -1,36 +1,35 @@
-"use client";
-
-import { useEffect, useRef } from "react";
+import { useScroll, useTransform, MotionValue } from "framer-motion";
 
 export function useScrollAnimation() {
-  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // 요소가 화면에 20% 이상 보일 때 애니메이션 시작
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
-          } else {
-            // 요소가 화면에서 완전히 벗어났을 때만 애니메이션 초기화
-            if (entry.intersectionRatio <= 0) {
-              entry.target.classList.remove("animate-in");
-            }
-          }
-        });
-      },
-      {
-        threshold: [0, 0.2], // 0%와 20% 지점에서 콜백 실행
-        rootMargin: "-50px 0px", // 상하 50px 여유를 두고 실행
-      }
-    );
+  const fadeIn = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  const fadeOut = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
+  const yTransform = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const scaleTransform = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
-    const elements = document.querySelectorAll(".animate-on-scroll");
-    elements.forEach((el) => observer.observe(el));
+  return {
+    scrollYProgress,
+    fadeIn,
+    fadeOut,
+    yTransform,
+    scaleTransform,
+  };
+}
 
-    return () => observer.disconnect();
-  }, []);
+export function useSectionAnimation(sectionStart: number, sectionEnd: number) {
+  const { scrollYProgress } = useScroll();
 
-  return ref;
+  const opacity = useTransform(
+    scrollYProgress,
+    [sectionStart, sectionEnd],
+    [0, 1]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [sectionStart, sectionEnd],
+    [50, 0]
+  );
+
+  return { opacity, y };
 }

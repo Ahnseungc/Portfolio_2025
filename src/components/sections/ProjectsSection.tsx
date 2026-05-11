@@ -1,111 +1,105 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { projects } from "@/data";
 import { handleExternalLink } from "@/utils/external";
-
-const FADE_DISTANCE_PX = 40;
-const STAGGER_CHILD_DELAY_SECONDS = 0.12;
-
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: FADE_DISTANCE_PX },
-  visible: { opacity: 1, y: 0 },
-};
+import { springLift, springSnappy } from "@/lib/motion";
+import { ProjectCover } from "@/components/projects/ProjectCover";
 
 const staggerContainerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: STAGGER_CHILD_DELAY_SECONDS },
-  },
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
 };
 
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: springSnappy },
+};
+
+/** DESIGN.md — store-utility-card: white, hairline, rounded-lg 18px, no card shadow */
 export default function ProjectsSection() {
-  const featuredProjects = useMemo(
-    () => projects.filter((project) => project.featured).slice(0, 3),
-    []
-  );
+  const sorted = [...projects].sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return 0;
+  });
 
   return (
     <motion.section
       id="projects"
-      className="mx-auto max-w-6xl px-6 py-24 md:py-40"
+      className="w-full bg-apple-parchment py-16 md:py-[80px]"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.08 }}
       variants={staggerContainerVariants}
     >
-      <motion.div
-        className="mb-12 flex items-center justify-between"
-        variants={fadeUpVariants}
-      >
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500">
-          PROJECTS
-        </p>
-        <button
-          type="button"
-          className="flex items-center gap-1 text-sm font-medium text-gray-400 transition-colors hover:text-white"
-          onClick={() => handleExternalLink("https://github.com/Ahnseungc")}
+      <div className="mx-auto max-w-[1440px] px-4 md:px-6">
+        <motion.div
+          className="mb-12 flex flex-wrap items-end justify-between gap-4"
+          variants={fadeUpVariants}
         >
-          Github 전체 보기
-          <ArrowUpRight className="h-4 w-4" />
-        </button>
-      </motion.div>
-      <div className="space-y-16">
-        {featuredProjects.map((project) => (
-          <motion.article
-            key={project.id}
-            className="group flex flex-col gap-8 border-b border-white/10 pb-16 md:flex-row md:items-start"
-            variants={fadeUpVariants}
+          <div>
+            <p className="text-[12px] font-normal leading-none tracking-[0.14em] text-apple-ink-muted-48">
+              0 → 1의 기록
+            </p>
+            <h2 className="mt-3 text-[40px] font-semibold leading-[1.1] tracking-[-0.02em] text-apple-ink">
+              프로젝트
+            </h2>
+            <p className="mt-2 max-w-xl text-[17px] font-normal leading-[1.5] tracking-[-0.374px] text-apple-ink-muted-80">
+              각 카드는 &lsquo;없던 것을 만들어 낸&rsquo; 한 번의 출항입니다.
+              상세에서 기여·지표·배운 점을 적었습니다.
+            </p>
+          </div>
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.95 }}
+            transition={springSnappy}
+            className="inline-flex items-center gap-1 text-[17px] font-normal leading-[1.47] tracking-[-0.374px] text-apple-primary"
+            onClick={() => handleExternalLink("https://github.com/Ahnseungc")}
           >
-            <div className="flex-1 space-y-4">
-              <div className="flex items-center gap-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500">
-                  {project.year}
-                </p>
-                {project.isAward ? (
-                  <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-white">
-                    Awarded
-                  </span>
-                ) : null}
-              </div>
-              <h3 className="text-3xl font-semibold text-white">
-                {project.title}
-              </h3>
-              <p className="text-base leading-relaxed text-gray-300">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500">
-                {project.tags.slice(0, 5).map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-white/15 px-3 py-1 text-gray-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="flex w-full flex-col gap-3 md:w-64">
-              <Button
-                variant="secondary"
-                className="rounded-full border border-white/20 bg-white/10 px-6 py-5 text-sm font-semibold text-white hover:border-white/30 hover:bg-white/15"
-                onClick={() => handleExternalLink(project.demoUrl ?? "#")}
+            GitHub
+            <ArrowUpRight className="h-4 w-4" aria-hidden />
+          </motion.button>
+        </motion.div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {sorted.map((project) => (
+            <motion.div
+              key={project.id}
+              variants={fadeUpVariants}
+              whileHover={{ y: -5, transition: springLift }}
+            >
+              <Link
+                href={`/projects/${project.slug}`}
+                className="group block rounded-[18px] border border-apple-hairline bg-apple-canvas p-6 transition-colors hover:border-apple-ink-muted-48/40"
               >
-                데모 보기
-              </Button>
-              <Button
-                variant="outline"
-                className="rounded-full border border-white/20 px-6 py-5 text-sm font-semibold text-white hover:border-white/30"
-                onClick={() => handleExternalLink(project.githubUrl ?? "#")}
-              >
-                GitHub 살펴보기
-              </Button>
-            </div>
-          </motion.article>
-        ))}
+                <motion.div whileTap={{ scale: 0.98 }} transition={springSnappy}>
+                  <ProjectCover src={project.image} alt={`${project.title} 썸네일`} withProductShadow />
+                  <div className="mt-5 space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[14px] font-normal leading-[1.43] tracking-[-0.224px] text-apple-ink-muted-48">
+                        {project.year}
+                      </span>
+                      {project.isAward ? (
+                        <span className="rounded-full border border-apple-hairline px-2 py-0.5 text-[12px] font-semibold text-apple-ink-muted-80">
+                          Award
+                        </span>
+                      ) : null}
+                    </div>
+                    <h3 className="text-[17px] font-semibold leading-[1.24] tracking-[-0.374px] text-apple-ink group-hover:text-apple-primary">
+                      {project.title}
+                    </h3>
+                    <p className="line-clamp-2 text-[14px] font-normal leading-[1.43] tracking-[-0.224px] text-apple-ink-muted-80">
+                      {project.description}
+                    </p>
+                    <p className="text-[14px] font-semibold text-apple-primary">자세히 보기 →</p>
+                  </div>
+                </motion.div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.section>
   );

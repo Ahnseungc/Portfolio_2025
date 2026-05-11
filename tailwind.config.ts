@@ -19,7 +19,37 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        apple: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Apple SD Gothic Neo"',
+          '"Malgun Gothic"',
+          "system-ui",
+          "sans-serif",
+        ],
+      },
+      boxShadow: {
+        "apple-product": "rgba(0, 0, 0, 0.22) 3px 5px 30px 0",
+      },
       colors: {
+        apple: {
+          canvas: "#ffffff",
+          parchment: "#f5f5f7",
+          pearl: "#fafafc",
+          ink: "#1d1d1f",
+          "ink-muted-80": "#333333",
+          "ink-muted-48": "#7a7a7a",
+          primary: "#0066cc",
+          "primary-focus": "#0071e3",
+          "primary-on-dark": "#2997ff",
+          hairline: "#e0e0e0",
+          "divider-soft": "#f0f0f0",
+          tile1: "#272729",
+          tile2: "#2a2a2c",
+          tile3: "#252527",
+          black: "#000000",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -2,7 +2,8 @@
 
 import { useScroll, useSpring, motion } from "framer-motion";
 
-const SCROLL_PROGRESS_SPRING = { stiffness: 120, damping: 24, mass: 0.4 };
+/** 크롬바만 단색 — 장식 그라데이션 없음 (DESIGN.md) */
+const SCROLL_PROGRESS_SPRING = { stiffness: 380, damping: 32, mass: 0.6 };
 
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -10,8 +11,9 @@ export default function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed left-0 top-0 z-30 h-1 w-full origin-left bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-400"
+      className="fixed left-0 top-0 z-[60] h-[2px] w-full origin-left bg-apple-primary"
       style={{ scaleX: scrollProgress }}
+      aria-hidden
     />
   );
 }

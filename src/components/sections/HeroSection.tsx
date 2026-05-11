@@ -44,7 +44,7 @@ export default function HeroSection() {
           className="inline-flex w-fit items-center gap-3 rounded-full border border-white/10 bg-white/10 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-gray-300 shadow-[0_20px_40px_rgba(0,0,0,0.4)] backdrop-blur-md"
           variants={heroBadgeVariants}
         >
-          Black Conference 2025
+          Black Conference 2026
         </motion.div>
         <motion.h1
           className="text-4xl font-semibold leading-tight tracking-tight text-white md:text-6xl"

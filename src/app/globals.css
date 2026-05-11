@@ -4,40 +4,39 @@
 
 @layer base {
   :root {
-    /* 모노톤 색상 스키마로 변경 */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 12%;
+    /* DESIGN.md — Apple: parchment canvas, Action Blue primary */
+    --background: 240 5% 96.5%;
+    --foreground: 240 3% 12%;
 
-    /* 강조색을 검은색 계열로 변경 */
     --accent-warm: 0 0% 20%;
     --accent-warm-light: 0 0% 96%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 12%;
+    --card-foreground: 240 3% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
+    --popover-foreground: 240 3% 12%;
 
-    --primary: 0 0% 20%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 211 100% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 240 5% 96.5%;
+    --secondary-foreground: 240 3% 12%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 240 5% 96.5%;
+    --muted-foreground: 0 0% 48%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 20%;
+    --accent: 240 6% 98%;
+    --accent-foreground: 240 3% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 0 0% 20%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 211 100% 45%;
 
-    --radius: 0.5rem;
+    --radius: 1.125rem;
   }
 
   .dark {
@@ -76,8 +75,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground relative;
-    min-height: 100vh;
+    @apply relative min-h-screen bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+      "Malgun Gothic", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
   }
 }
 

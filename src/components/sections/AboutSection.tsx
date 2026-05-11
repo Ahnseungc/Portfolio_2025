@@ -53,10 +53,10 @@ export default function AboutSection() {
                 기술적 철학
               </h3>
               <p className="text-gray-600 leading-relaxed pt-5">
-                Next.js, TypeScript, React, Zustand, React Query, Supabase 등
-                현대적인 기술 스택을 기반으로 개발하고 있으며, Storybook 기반의
-                디자인 시스템 구축부터 테스팅 자동화, CI/CD 환경 세팅, 에러
-                핸들링 전략 설계까지 다양한 프로젝트 경험을 통해
+                Next.js, TypeScript, React, Flutter, React Native, WebView
+                브릿지 등을 기반으로 개발하고 있으며, Storybook 기반의 디자인
+                시스템 구축부터 테스팅 자동화, CI/CD(GitHub Actions·Docker·ECR),
+                에러 핸들링 전략까지 다양한 프로덕트 경험을 통해
                 <span className="text-blue-600 font-semibold">
                   {" "}
                   지속 가능한 제품 개발
@@ -69,14 +69,14 @@ export default function AboutSection() {
               <div className="bg-blue-50 p-6 rounded-2xl">
                 <Code className="w-8 h-8 text-blue-600 mb-3" />
                 <h4 className="font-semibold text-gray-900 mb-2">Frontend</h4>
-                <p className="text-sm text-gray-600">React, Next.js, Vue.js</p>
+                <p className="text-sm text-gray-600">React, Next.js, TypeScript</p>
               </div>
               <div className="bg-green-50 p-6 rounded-2xl">
                 <Smartphone className="w-8 h-8 text-green-600 mb-3" />
                 <h4 className="font-semibold text-gray-900 mb-2">
                   Desktop / Mobile
                 </h4>
-                <p className="text-sm text-gray-600">React Native, Electron</p>
+                <p className="text-sm text-gray-600">React Native, Electron, Flutter</p>
               </div>
               <div className="bg-purple-50 p-6 rounded-2xl">
                 <Palette className="w-8 h-8 text-purple-600 mb-3" />
@@ -87,7 +87,7 @@ export default function AboutSection() {
                 <Cloud className="w-8 h-8 text-orange-600 mb-3" />
                 <h4 className="font-semibold text-gray-900 mb-2">CI/CD</h4>
                 <p className="text-sm text-gray-600">
-                  Docker, Jenkins, Github Actions
+                  Docker, GitHub Actions, AWS ECR
                 </p>
               </div>
             </div>
@@ -107,10 +107,10 @@ export default function AboutSection() {
                   <div className="flex items-center space-x-2">
                     <h4 className="font-semibold text-gray-900">한림대학교</h4>
                     <p className="text-sm text-gray-600">
-                      2021년 9월~2025년 8월
+                      2018년 3월 ~ 2025년 8월 (졸업)
                     </p>
                   </div>
-                  <p className="text-sm text-gray-600">소프트웨어융합학과</p>
+                  <p className="text-sm text-gray-600">컴퓨터공학 학사</p>
                 </div>
               </div>
             </div>
@@ -132,8 +132,8 @@ export default function AboutSection() {
                   </div>
                   <p className="text-sm text-gray-600 pl-6 pt-2">
                     CareMinder 프로덕트의 프론트엔드 리드를 맡아 태블릿/PC 웹
-                    앱을 개발했으며, 본 프로젝트로 정주행 창업경진대회 우수상 및
-                    인기상을 수상하였습니다
+                    앱을 개발했으며,                     본 프로젝트로 정주영 창업경진대회 우수상 및 인기상을
+                    수상하였습니다
                   </p>
                 </div>
 
@@ -173,7 +173,7 @@ export default function AboutSection() {
                     <span className="text-sm text-gray-700 font-semibold">
                       국민은행 ESG공모전 장려상
                     </span>
-                    <p className="text-sm text-gray-600">2021.10.01</p>
+                    <p className="text-sm text-gray-600">2022</p>
                   </div>
                   <p className="text-sm text-gray-600 pl-6 pt-2">
                     koGPT2를 활용한 소아 우울증 진단 및 관리 앱 개발을 통해

@@ -1,5 +1,7 @@
 export interface Project {
   id: number;
+  /** URL 경로: /projects/[slug] */
+  slug: string;
   title: string;
   description: string;
   fullDescription: string;

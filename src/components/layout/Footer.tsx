@@ -51,6 +51,11 @@ export default function Footer() {
             </p>
             <ul className="mt-3 space-y-2">
               <li>
+                <Link href="/#journey" className="text-[17px] font-normal leading-[2.41] text-apple-primary hover:underline">
+                  여정
+                </Link>
+              </li>
+              <li>
                 <Link href="/#about" className="text-[17px] font-normal leading-[2.41] text-apple-primary hover:underline">
                   소개
                 </Link>
@@ -70,9 +75,9 @@ export default function Footer() {
         </div>
         <div className="text-[12px] font-normal leading-none tracking-[-0.12px] text-apple-ink-muted-48">
           <p>&copy; {new Date().getFullYear()} 안승찬. All rights reserved.</p>
-          <p className="mt-4 max-w-xs leading-[1.3]">
-            UI는 DESIGN.md (Apple, getdesign) 기준으로 구성했습니다. Action Blue
-            #0066cc만 액센트로 사용합니다.
+          <p className="mt-4 max-w-md leading-[1.35] text-apple-ink-muted-80">
+            0→1과 1→100 사이를 오가며 빌드합니다. UI는 DESIGN.md(Apple,
+            getdesign) 기준, 액센트는 Action Blue #0066cc입니다.
           </p>
         </div>
       </div>

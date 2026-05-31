@@ -20,6 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
         apple: [
           "-apple-system",
           "BlinkMacSystemFont",
@@ -33,6 +34,11 @@ const config = {
         "apple-product": "rgba(0, 0, 0, 0.22) 3px 5px 30px 0",
       },
       colors: {
+        perf: {
+          DEFAULT: "#00e8b8",
+          dark: "#00b894",
+          muted: "rgba(0, 232, 184, 0.14)",
+        },
         apple: {
           canvas: "#ffffff",
           parchment: "#f5f5f7",

@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
+import ProjectThumbnail from "@/components/ProjectThumbnail";
 import { projects } from "@/data/portfolio";
 
 export default function Projects() {
@@ -30,11 +32,21 @@ export default function Projects() {
         </div>
 
         <div className="proj-grid">
-          {projects.map((p, i) => (
-            <article className="proj-card" key={i} data-reveal="">
+          {projects.map((p) => (
+            <Link
+              className="proj-card"
+              href={`/projects/${p.slug}`}
+              key={p.slug}
+              data-reveal=""
+              scroll={false}
+            >
               <div className="proj-card__media">
                 <span className="proj-card__tag">{p.tag}</span>
-                <div className="placeholder">{p.placeholder}</div>
+                <ProjectThumbnail
+                  src={p.thumbnail}
+                  alt={p.title}
+                  placeholder={p.placeholder}
+                />
               </div>
               <div className="proj-card__body">
                 <h3>{p.title}</h3>
@@ -44,11 +56,11 @@ export default function Projects() {
                     <span className="chip" key={c}>{c}</span>
                   ))}
                 </div>
-                <a className="proj-card__link" href={p.caseHref}>
+                <span className="proj-card__link">
                   케이스 보기 <span className="arrow">→</span>
-                </a>
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
 
           <a

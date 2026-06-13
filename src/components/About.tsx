@@ -125,13 +125,13 @@ export default function About() {
               변화가<br />기본값입니다.
             </h2>
             <p data-reveal="" style={{ "--d": ".06s" } as React.CSSProperties}>
-              세 곳의 스타트업에서 늘 구조를 바꾸는 쪽을 택했습니다. RN → WebView 전환, 모노레포 설계, 이 포트폴리오 전체를 통째로 갈아엎은 것처럼 — 익숙한 것에 안주하지 않습니다.
+              렌더링·하이드레이션·번들 최적화로 화면 성능을 다듬는 작업을 주로 해온 프론트엔드 개발자입니다. Lighthouse 40~50점대를 80~90점대로, LCP 5.2s를 2.1s로 끌어내린 경험이 있습니다.
             </p>
             <p data-reveal="" style={{ "--d": ".12s" } as React.CSSProperties}>
-              React·Next.js·React Native·Flutter·Electron을 오가며 플랫폼의 경계를 넘어왔습니다. 어떤 스택이든 더 나은 구조가 있다면 기꺼이 다시 짭니다.
+              WebView 구조와 모노레포, 디자인 시스템, CI/CD를 직접 설계하고 만들어 왔습니다. RN → WebView 전환을 주도하며 4개 도메인을 하나의 모노레포로 묶고, S3 기반 실시간 배포 체계를 구축했습니다.
             </p>
             <p data-reveal="" style={{ "--d": ".18s" } as React.CSSProperties}>
-              변화의 속도만큼 중요한 건 방향입니다. 디자이너·기획자·백엔드와 함께 옳은 방향을 빠르게 결정하는 구조를 만드는 일에 집중합니다.
+              기획·디자인·백엔드·QA와 함께 일하는 방식을 정리해 팀이 더 빠르게 움직이도록 돕는 일에도 관심이 많습니다.
             </p>
           </div>
         </div>

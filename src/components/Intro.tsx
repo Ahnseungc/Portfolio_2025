@@ -94,10 +94,39 @@ export default function Intro() {
       return clamp01(window.scrollY / total);
     }
 
+    let autoScrolled = false;
+
     function draw(now: number) {
       const p    = computeProgress();
       const done = p >= 0.999;
-      ov.classList.toggle("is-done", done);
+
+      // 인트로 끝나면 히어로로 즉시 점프 + 오버레이 페이드아웃
+      if (done && !autoScrolled) {
+        autoScrolled = true;
+
+        // 1. 스페이서 숨김 → 히어로가 최상단으로 올라옴
+        sp.style.display = "none";
+
+        // 2. 스크롤 즉시 0으로 (히어로가 이제 최상단)
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        // 3. 히어로 내 data-reveal 강제 활성화
+        const heroEl = document.getElementById('top');
+        if (heroEl) {
+          heroEl.querySelectorAll<HTMLElement>('[data-reveal]').forEach(el => {
+            el.classList.add('in');
+          });
+        }
+
+        // 4. 오버레이 페이드아웃
+        ov.style.transition = 'opacity 0.5s ease';
+        ov.style.opacity = '0';
+        setTimeout(() => { ov.style.display = "none"; }, 600);
+
+        cancelAnimationFrame(rafId);
+        return;
+      }
 
       if (p > 0.9 && !heroPlayed) {
         heroPlayed = true;

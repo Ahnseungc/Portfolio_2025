@@ -41,8 +41,8 @@ export default function Hero() {
           </span>
         </h1>
         <p className="lead" data-reveal="fade" style={{ "--d": "0.22s" } as React.CSSProperties}>
-          변화를 기본값으로 삼는 프론트엔드 개발자. 익숙한 구조를 부수고 더 나은 것으로
-          다시 짓습니다. React·Next.js·React Native·Flutter — 안승찬
+          렌더링·하이드레이션·번들 최적화로 화면 성능을 다듬고, WebView 구조와 모노레포·디자인 시스템·CI/CD를
+          직접 설계해온 프론트엔드 개발자. — 안승찬
         </p>
         <div className="hero__actions" data-reveal="fade" style={{ "--d": "0.32s" } as React.CSSProperties}>
           <a className="btn btn--primary" href="#work">

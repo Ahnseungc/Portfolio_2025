@@ -54,7 +54,7 @@ export default function Intro() {
       const off = document.createElement("canvas");
       off.width = W; off.height = H;
       const o = off.getContext("2d")!;
-      const fs = Math.min(W * 0.09, H * 0.18, 140);
+      const fs = Math.min(W * 0.12, H * 0.22, 180);
       o.fillStyle = "#000";
       o.textAlign = "center";
       o.textBaseline = "middle";

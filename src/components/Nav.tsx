@@ -61,18 +61,21 @@ export default function Nav() {
             onClick={toggleTheme}
             aria-label="다크/라이트 모드 전환"
             style={{
-              background: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "36px",
+              height: "36px",
+              borderRadius: "10px",
               border: "none",
               cursor: "pointer",
-              fontSize: "18px",
-              padding: "9px 10px",
-              borderRadius: "10px",
+              fontSize: "16px",
               lineHeight: 1,
-              transition: "background 0.2s",
-              color: "var(--text-2)",
+              transition: "background 0.25s, color 0.25s",
+              // 라이트모드 → 다크 배경/색상, 다크모드 → 라이트 배경/색상
+              background: theme === "light" ? "#181f29" : "#ffffff",
+              color: theme === "light" ? "#f4f6f8" : "#181f29",
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-soft)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "none")}
           >
             {theme === "light" ? "🌙" : "☀️"}
           </button>

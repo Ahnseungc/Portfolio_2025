@@ -122,17 +122,9 @@ export default function Intro() {
           alpha = 1;
         }
         if (dispRaw > 0) {
-          // 은하수처럼 — 느리게 사방으로 퍼지며 크기 줄어들고 서서히 소멸
-          const spread = easeOut(dispRaw) * 1.8;
-          x = pt.tx + Math.cos(pt.ph) * W * 0.6 * spread;
-          y = pt.ty + Math.sin(pt.ph * 1.3) * H * 0.6 * spread - spread * 40;
-          alpha = Math.pow(1 - dispRaw, 1.8);
-          // 사이즈도 줄어들며 별처럼 작아짐
-          const sz = pt.s * (1 - dispRaw * 0.7);
-          ctx.globalAlpha = alpha;
-          ctx.fillStyle   = pt.blue ? blue : ink;
-          ctx.fillRect(x, y, sz, sz);
-          continue;
+          x = pt.tx + pt.vx * dispE;
+          y = pt.ty + pt.vy * dispE - dispE * 30;
+          alpha = 1 - dispE;
         }
 
         ctx.globalAlpha = alpha;

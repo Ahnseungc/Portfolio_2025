@@ -73,7 +73,8 @@ export default function Intro() {
         for (let x = 0; x < W; x += gap) {
           if (data[(y * W + x) * 4 + 3] > 128) {
             const ang = Math.random() * Math.PI * 2;
-            const spd = 60 + Math.random() * 130;
+            // 화면 전체에 뿌려지도록 속도를 화면 크기 기준으로 설정
+            const spd = Math.max(W, H) * (0.45 + Math.random() * 0.9);
             particles.push({
               tx: x + (Math.random() - 0.5) * gap * 0.6,
               ty: y + (Math.random() - 0.5) * gap * 0.6,

@@ -38,27 +38,16 @@ export default function StarBackground() {
 
     function buildStars() {
       const count = 600;
-      stars = Array.from({ length: count }, () => {
-        const tier = Math.random();
-        return {
-          x: Math.random(),
-          y: Math.random(),
-          // 크기 3단계: 작은 별 / 중간 별 / 밝은 별
-          r: tier < 0.65
-            ? 0.8 + Math.random() * 0.8         // 작은 별
-            : tier < 0.90
-              ? 1.6 + Math.random() * 1.2        // 중간 별
-              : 2.4 + Math.random() * 1.6,       // 밝은 별
-          alpha: tier < 0.65
-            ? 0.35 + Math.random() * 0.35
-            : tier < 0.90
-              ? 0.55 + Math.random() * 0.35
-              : 0.75 + Math.random() * 0.25,
-          speed: 0.00002 + Math.random() * 0.00005,
-          phase: Math.random() * Math.PI * 2,
-          blue: Math.random() < 0.18,
-        };
-      });
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random(),
+        y: Math.random(),
+        // 인트로 파티클과 동일한 크기 (1.6 or 2.4)
+        r: Math.random() < 0.4 ? 1.6 : 2.4,
+        alpha: 0.3 + Math.random() * 0.5,
+        speed: 0.00002 + Math.random() * 0.00005,
+        phase: Math.random() * Math.PI * 2,
+        blue: Math.random() < 0.18,
+      }));
     }
 
     function draw(now: number) {
@@ -81,25 +70,10 @@ export default function StarBackground() {
         const worldY = (s.y - scrollRatio * 0.85 + t * s.speed) % 1;
         const screenY = ((worldY + 1) % 1) * H;
         const screenX = s.x * W + Math.sin(t * 0.4 + s.phase) * 3;
-        const twinkle = 0.7 + 0.3 * Math.sin(t * 1.8 + s.phase);
-        const alpha = s.alpha * twinkle;
-        const color = s.blue ? primary : "#ffffff";
-
-        // 밝은 별(큰 별)은 글로우 추가
-        if (s.r > 2.2) {
-          ctx.beginPath();
-          const grd = ctx.createRadialGradient(screenX, screenY, 0, screenX, screenY, s.r * 3);
-          grd.addColorStop(0, color);
-          grd.addColorStop(1, "transparent");
-          ctx.globalAlpha = alpha * 0.3;
-          ctx.fillStyle = grd;
-          ctx.arc(screenX, screenY, s.r * 3, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = color;
-        ctx.fillRect(screenX - s.r / 2, screenY - s.r / 2, s.r, s.r);
+        const twinkle = 0.6 + 0.4 * Math.sin(t * 1.8 + s.phase);
+        ctx.globalAlpha = s.alpha * twinkle;
+        ctx.fillStyle = s.blue ? primary : "#ffffff";
+        ctx.fillRect(screenX, screenY, s.r, s.r);
       }
       ctx.globalAlpha = 1;
       rafId = requestAnimationFrame(draw);

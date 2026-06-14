@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const TEXT = "CHANGE BY DEFAULT";
-const DURATION = 3200;
+const DURATION = 5500;
 const P_FLOW = 0.12;
 const P_CONV = 0.58;
 const P_HOLD = 0.74;
@@ -106,7 +106,8 @@ export default function Intro() {
       const p = clamp01((now - startTime) / DURATION);
       const convE   = easeInOut(clamp01((p - P_FLOW) / (P_CONV - P_FLOW)));
       const dispRaw = clamp01((p - P_HOLD) / (1 - P_HOLD));
-      const dispE   = easeOut(dispRaw);
+      // 흩어짐을 천천히 — 2차 곡선으로 부드럽게
+      const dispE   = dispRaw * dispRaw;
       const driftK  = 1 - convE;
       const fadeIn  = clamp01(p / (P_FLOW * 0.6));
 

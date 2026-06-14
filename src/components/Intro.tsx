@@ -54,11 +54,16 @@ export default function Intro() {
       const off = document.createElement("canvas");
       off.width = W; off.height = H;
       const o = off.getContext("2d")!;
-      const fs = Math.min(W * 0.12, H * 0.22, 180);
-      o.fillStyle = "#000";
+      // 폰트 크기를 캔버스 너비에 맞게 자동 조절
+      let fs = Math.min(W * 0.12, H * 0.22, 180);
       o.textAlign = "center";
       o.textBaseline = "middle";
       o.font = `800 ${fs}px 'Pretendard Variable', Pretendard, -apple-system, sans-serif`;
+      // 텍스트가 화면 너비 90% 초과하면 줄여서 맞춤
+      const measured = o.measureText(TEXT).width;
+      if (measured > W * 0.9) fs = fs * (W * 0.9 / measured);
+      o.font = `800 ${fs}px 'Pretendard Variable', Pretendard, -apple-system, sans-serif`;
+      o.fillStyle = "#000";
       o.fillText(TEXT, W / 2, H * 0.46);
       const data = o.getImageData(0, 0, W, H).data;
 

@@ -62,15 +62,23 @@ body {
   transition: background 0.5s var(--ease-soft), color 0.5s var(--ease-soft);
 }
 
-/* 섹션 배경 반투명 — 은하수 배경이 비치게 */
-.hero            { background: transparent; }
-.about           { background: color-mix(in srgb, var(--bg) 88%, transparent); }
-.projects        { background: color-mix(in srgb, var(--bg-soft) 85%, transparent); }
-.case            { background: color-mix(in srgb, var(--bg) 88%, transparent); }
-.timeline        { background: color-mix(in srgb, var(--bg-soft) 85%, transparent); }
-.awards          { background: color-mix(in srgb, var(--bg-soft) 85%, transparent); }
-.skills          { background: color-mix(in srgb, var(--bg) 88%, transparent); }
-.contact         { background: color-mix(in srgb, var(--text) 92%, transparent); }
+/* 섹션 배경 — 라이트는 불투명, 다크는 은하수 비치게 반투명 */
+.hero     { background: transparent; }
+.about    { background: var(--bg); }
+.projects { background: var(--bg-soft); }
+.case     { background: var(--bg); }
+.timeline { background: var(--bg-soft); }
+.awards   { background: var(--bg-soft); }
+.skills   { background: var(--bg); }
+.contact  { background: var(--text); }
+
+[data-theme="dark"] .about    { background: rgba(13,15,19,0.72); }
+[data-theme="dark"] .projects { background: rgba(20,23,29,0.70); }
+[data-theme="dark"] .case     { background: rgba(13,15,19,0.72); }
+[data-theme="dark"] .timeline { background: rgba(20,23,29,0.70); }
+[data-theme="dark"] .awards   { background: rgba(20,23,29,0.70); }
+[data-theme="dark"] .skills   { background: rgba(13,15,19,0.72); }
+[data-theme="dark"] .contact  { background: rgba(5,7,10,0.88); }
 
 ::selection { background: var(--primary); color: var(--on-primary); }
 a { color: inherit; text-decoration: none; }

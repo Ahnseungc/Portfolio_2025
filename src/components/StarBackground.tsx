@@ -55,7 +55,12 @@ export default function StarBackground() {
 
       const t = now * 0.001;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      if (!isDark) { rafId = requestAnimationFrame(draw); return; } // 라이트모드에선 숨김
+      // 라이트모드에선 캔버스 투명 처리 후 계속 루프 유지 (모드 전환 감지 위해)
+      if (!isDark) {
+        ctx.clearRect(0, 0, W, H);
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
 
       const primary = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary").trim() || "#3182f6";

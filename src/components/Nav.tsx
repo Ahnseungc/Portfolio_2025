@@ -1,28 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+function getInitialTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  const saved = localStorage.getItem("theme") as "light" | "dark" | null;
+  if (saved) return saved;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
 
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
+  // 초기 테마 적용
+  useEffect(() => {
+    const t = getInitialTheme();
+    setTheme(t);
+    document.documentElement.setAttribute("data-theme", t);
+  }, []);
+
+  // 스크롤 이벤트
   useEffect(() => {
     const nav = navRef.current;
     const bar = barRef.current;
     if (!nav || !bar) return;
 
     const onScroll = () => {
-      const scrolled = window.scrollY > 60;
-      nav.classList.toggle("scrolled", scrolled);
-
+      nav.classList.toggle("scrolled", window.scrollY > 60);
       const total = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
-      bar.style.width = `${pct}%`;
+      bar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : "0%";
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+  };
 
   return (
     <>
@@ -37,6 +57,25 @@ export default function Nav() {
           <a href="#work">프로젝트</a>
           <a href="#career">경력</a>
           <a href="#skills">스킬</a>
+          <button
+            onClick={toggleTheme}
+            aria-label="다크/라이트 모드 전환"
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "18px",
+              padding: "9px 10px",
+              borderRadius: "10px",
+              lineHeight: 1,
+              transition: "background 0.2s",
+              color: "var(--text-2)",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-soft)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "none")}
+          >
+            {theme === "light" ? "🌙" : "☀️"}
+          </button>
           <a className="nav__cta" href="#contact">연락하기</a>
         </div>
       </nav>

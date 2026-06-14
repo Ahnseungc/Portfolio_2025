@@ -116,8 +116,13 @@ export default function About() {
       <div className="wrap" style={{ paddingBottom: "clamp(80px, 14vh, 180px)" }}>
         <div className="about__bio">
           <div data-reveal="scale">
-            <div className="portrait">
-              <span>[ 프로필 사진 ]</span>
+            <div className="portrait" style={{ padding: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/profile.png"
+                alt="안승찬 프로필"
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+              />
             </div>
           </div>
           <div>

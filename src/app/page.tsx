@@ -3,7 +3,7 @@ import Intro from "@/components/Intro";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
-import CaseStudy from "@/components/CaseStudy";
+// import CaseStudy from "@/components/CaseStudy";
 import Career from "@/components/Career";
 import Awards from "@/components/Awards";
 import Skills from "@/components/Skills";
@@ -17,7 +17,7 @@ export default function Home() {
       <Hero />
       <About />
       <Projects />
-      <CaseStudy />
+      {/* <CaseStudy /> */}
       <Career />
       <Awards />
       <Skills />

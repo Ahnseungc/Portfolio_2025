@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" fill="none">
+  <rect width="390" height="844" fill="#FFFFFF"/>
+  <rect x="24" y="72" width="160" height="12" rx="6" fill="#1D1D1F" opacity="0.85"/>
+  <rect x="24" y="96" width="220" height="8" rx="4" fill="#86868B"/>
+  <rect x="24" y="140" width="342" height="320" rx="22" fill="#F5F5F7"/>
+  <rect x="60" y="220" width="72" height="72" rx="14" fill="#FFFFFF"/>
+  <rect x="159" y="220" width="72" height="72" rx="14" fill="#FFFFFF"/>
+  <rect x="258" y="220" width="72" height="72" rx="14" fill="#FFFFFF"/>
+  <path d="M96 310 V360 H195 V400 H294" stroke="#0071E3" stroke-width="3" stroke-linecap="round"/>
+  <rect x="120" y="400" width="150" height="48" rx="14" fill="#0071E3"/>
+  <text x="195" y="430" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="15" font-weight="600">½ Ü‘</text>
+  <rect x="24" y="500" width="342" height="120" rx="18" fill="#FFFFFF" stroke="#E8E8ED"/>
+  <text x="44" y="540" fill="#6E6E73" font-family="system-ui,sans-serif" font-size="13" font-weight="600">µi |</text>
+  <text x="44" y="570" fill="#86868B" font-family="system-ui,sans-serif" font-size="14"> … ’ ½ ’ X</text>
+</svg>

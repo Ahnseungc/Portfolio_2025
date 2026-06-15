@@ -70,7 +70,7 @@ async function fetchVelogPage(
       query: POSTS_QUERY,
       variables: { username, limit, cursor },
     }),
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
 
   if (!response.ok) {

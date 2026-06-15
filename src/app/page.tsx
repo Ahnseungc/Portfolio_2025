@@ -16,7 +16,7 @@ import { getVelogPosts } from "@/lib/velog";
 
 export const metadata = createPageMetadata();
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export default async function Home() {
   let blogPosts: Awaited<ReturnType<typeof getVelogPosts>> = [];

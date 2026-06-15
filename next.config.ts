@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "github.com",
         pathname: "/Ahnseungc/**",
       },
+      {
+        protocol: "https",
+        hostname: "velog.velcdn.com",
+        pathname: "/images/**",
+      },
     ],
   },
 };

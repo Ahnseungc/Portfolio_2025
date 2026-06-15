@@ -22,8 +22,8 @@ export default function Awards() {
     <section className="awards section-pad" id="awards" ref={sectionRef}>
       <div className="wrap">
         <div className="section-head">
-          <span className="section-num">04 — AWARDS &amp; TALKS</span>
-          <h2 className="section-title" data-reveal="">활동과 수상</h2>
+          <span className="section-num">05 — AWARDS &amp; TALKS</span>
+          <h2 className="section-title" data-reveal="">활동</h2>
         </div>
         <div className="awards-list">
           {awards.map((a, i) => (

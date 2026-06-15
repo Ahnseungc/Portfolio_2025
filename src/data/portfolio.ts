@@ -44,8 +44,8 @@ export const projects: Project[] = [
   {
     slug: "webviewkit",
     tag: "OPEN SOURCE",
-    title: "WebViewKit — WebView 스택 라우터",
-    desc: "React WebView에서 네이티브처럼 push/back 네비게이션을 쓰게 만든 npm 패키지. 케어마인더·골드앤컴퍼니에서 쓰던 WebView 라우팅 문제를 코드로 빼낸 결과물.",
+    title: "WebViewKit",
+    desc: "WebView에서 네이티브형 push/back 네비게이션을 제공하는 npm 패키지입니다.",
     thumbnail: "/projects/webviewkit/thumbnail.svg",
     chips: ["TypeScript", "React", "pnpm", "Vitest", "npm"],
     placeholder: "[ WebViewKit 스택 라우터 ]",
@@ -115,8 +115,8 @@ export const projects: Project[] = [
   {
     slug: "careminder-pc",
     tag: "CAREMINDER · PUBLIC",
-    title: "CareMinder PC — 병동 데스크 웹",
-    desc: "케어마인더 병동·간호 데스크용 PC 웹 프론트 저장소. 재직 당시 RN → WebView 전환·모노레포·CDS 작업과 연결되는 공개 FE repo.",
+    title: "CareMinder PC",
+    desc: "병동·간호 데스크용 PC 웹 프론트엔드 공개 저장소입니다.",
     thumbnail: "/projects/careminder-pc/thumbnail.svg",
     chips: ["React", "TypeScript", "Vite", "WebView", "Storybook"],
     placeholder: "[ CareMinder PC 웹 ]",
@@ -161,8 +161,8 @@ export const projects: Project[] = [
   {
     slug: "team-moa",
     tag: "TEAM · HACKATHON",
-    title: "TeamMoa (Damoa) — 팀 프로젝트",
-    desc: "React + TypeScript + Vite로 만든 팀 프로토타입. README에 스크린샷과 YouTube 데모가 남아 있는 공개 repo.",
+    title: "TeamMoa",
+    desc: "React·TypeScript·Vite로 제작한 팀 프로토타입입니다.",
     thumbnail: TEAMMOA_SCREEN,
     chips: ["React", "TypeScript", "Vite"],
     placeholder: "[ TeamMoa 프로토타입 ]",
@@ -217,8 +217,8 @@ export const projects: Project[] = [
   {
     slug: "transition-router",
     tag: "SIDE PROJECT",
-    title: "transition-router — Next.js 페이지 전환",
-    desc: "Next.js App Router에서 페이지 전환 애니메이션을 실험한 side repo. create-next-app 기반.",
+    title: "transition-router",
+    desc: "Next.js App Router 페이지 전환을 실험한 개인 프로젝트입니다.",
     thumbnail: "/projects/transition-router/thumbnail.svg",
     chips: ["Next.js", "TypeScript", "App Router"],
     placeholder: "[ transition-router ]",
@@ -277,27 +277,27 @@ export const caseSteps = [
 export const career = [
   {
     date: "2026.01 — 재직 중",
-    role: "프론트엔드 개발자 · 정규직",
+    role: "프론트엔드 개발자",
     org: "(주)골드앤컴퍼니 · 금 거래 플랫폼",
-    desc: "B2C/B2B 앱·웹. 방치형 앱테크, Toss Payments 결제, WebView 브릿지, CDN+PM2 트래픽 대응, GitHub Actions CI/CD. Lighthouse 40~50 → 80~90점대, CPU 피크 70~80% → 30~40%.",
+    desc: "금 거래 B2C/B2B 앱 프론트엔드. WebView 브릿지, 결제, 성능·트래픽 최적화, CI/CD.",
   },
   {
     date: "2025.03 — 2026.01",
-    role: "프론트엔드 리드 · 정규직 · 11개월",
+    role: "프론트엔드 리드",
     org: "(주)케어마인더 · 병동 간호 플랫폼",
-    desc: "RN → WebView + Next.js 전환 주도. 4개 도메인 모노레포, CDS·Storybook, S3 실시간 배포, QR 병상 오더(주문 시작 20→30%). 초기 로딩 ~30%↓, 완료율 ~20%↑.",
+    desc: "WebView + Next.js 전환 주도. 모노레포·디자인 시스템·S3 실시간 배포.",
   },
   {
     date: "2024.09 — 2025.02",
-    role: "프론트엔드 개발자 · 정규직 · 6개월",
+    role: "프론트엔드 개발자",
     org: "(주)리케어랩 · 간병 매칭 (케어나인)",
-    desc: "홈 CSR → ISR/SSR, RN–WebView postMessage·스택 라우터. LCP 5.2s → 2.1s, 연장률 23→35%, 홈 이탈 41→30%.",
+    desc: "홈 렌더링 ISR/SSR 전환, RN–WebView 브릿지. LCP 5.2s → 2.1s.",
   },
   {
     date: "2018.03 — 2025.08",
     role: "컴퓨터공학 학사 · 졸업",
     org: "한림대학교",
-    desc: "창업 동아리, 오픈소스 SW 웹 해커톤 금상, 캡스톤(OCR+TTS), KBSC ESG 장려상 등.",
+    desc: "컴퓨터공학 전공. 해커톤·캡스톤·창업 대회 등 활동.",
   },
 ];
 
@@ -319,8 +319,8 @@ export const skills = [
 ];
 
 export const stats = [
-  { num: 90, suf: "점대", label: "Lighthouse (40→80~90)" },
+  { num: 90, suf: "점", label: "Lighthouse 개선" },
   { num: 3, suf: "곳", label: "스타트업 경력" },
-  { num: 30, suf: "%↓", label: "케어마인더 초기 로딩" },
-  { num: 97, suf: "%↓", label: "앱테크 미디어 용량" },
+  { num: 60, suf: "%↓", label: "LCP 개선" },
+  { num: 30, suf: "%", label: "초기 로딩 개선" },
 ];

@@ -25,9 +25,9 @@ export default function Projects() {
       <div className="wrap">
         <div className="section-head">
           <span className="section-num">02 — SELECTED WORK</span>
-          <h2 className="section-title" data-reveal="">GitHub에 있는 것</h2>
+          <h2 className="section-title" data-reveal="">프로젝트</h2>
           <p className="lead" data-reveal="fade">
-            회사 서비스 코드는 대부분 비공개입니다. 공개 저장소만 모았고, 재직 중 성과는 경력 섹션에 적어 두었습니다.
+            GitHub에 공개된 저장소입니다. 회사 프로젝트는 경력에서 확인할 수 있습니다.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function Projects() {
                   ))}
                 </div>
                 <span className="proj-card__link">
-                  케이스 보기 <span className="arrow">→</span>
+                  자세히 보기 <span className="arrow">→</span>
                 </span>
               </div>
             </Link>
@@ -70,8 +70,8 @@ export default function Projects() {
             rel="noopener"
             data-reveal=""
           >
-            <span className="mono">MORE ON GITHUB</span>
-            <h3>더 많은 작업과<br />실험들 →</h3>
+            <span className="mono">GITHUB</span>
+            <h3>더 많은 저장소 →</h3>
             <span className="url">github.com/Ahnseungc</span>
           </a>
         </div>

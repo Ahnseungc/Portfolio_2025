@@ -55,15 +55,12 @@ export default function StarBackground() {
 
       const t = now * 0.001;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      // 라이트모드에선 캔버스 투명 처리 후 계속 루프 유지 (모드 전환 감지 위해)
-      if (!isDark) {
-        ctx.clearRect(0, 0, W, H);
-        rafId = requestAnimationFrame(draw);
-        return;
-      }
-
-      const primary = getComputedStyle(document.documentElement)
-        .getPropertyValue("--primary").trim() || "#3182f6";
+      const primary =
+        getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() ||
+        "#3182f6";
+      const ink =
+        getComputedStyle(document.documentElement).getPropertyValue("--text").trim() ||
+        "#181f29";
       const scrollRatio = scrollY / (document.documentElement.scrollHeight - H || 1);
 
       for (const s of stars) {
@@ -71,8 +68,9 @@ export default function StarBackground() {
         const screenY = ((worldY + 1) % 1) * H;
         const screenX = s.x * W + Math.sin(t * 0.4 + s.phase) * 3;
         const twinkle = 0.6 + 0.4 * Math.sin(t * 1.8 + s.phase);
-        ctx.globalAlpha = s.alpha * twinkle;
-        ctx.fillStyle = s.blue ? primary : "#ffffff";
+        const alphaScale = isDark ? 1 : 0.7;
+        ctx.globalAlpha = s.alpha * twinkle * alphaScale;
+        ctx.fillStyle = s.blue ? primary : isDark ? "#ffffff" : ink;
         ctx.fillRect(screenX, screenY, s.r, s.r);
       }
       ctx.globalAlpha = 1;

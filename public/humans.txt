@@ -1,0 +1,14 @@
+/* TEAM */
+Developer: 안승찬
+Role: Frontend Developer
+Site: https://portfolio-ahn.vercel.app
+Location: Republic of Korea
+
+/* CONTACT */
+Email: omnipoo@naver.com
+GitHub: https://github.com/Ahnseungc
+LinkedIn: https://www.linkedin.com/in/seungchan-ahn
+Velog: https://velog.io/@omnipo
+
+/* STACK */
+React, Next.js, React Native, TypeScript, WebView, Performance

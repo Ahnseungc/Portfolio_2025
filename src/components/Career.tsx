@@ -38,8 +38,9 @@ export default function Career() {
     <section className="timeline section-pad" id="career">
       <div className="wrap">
         <div className="section-head">
-          <span className="section-num">03 — CAREER</span>
-          <h2 className="section-title">바꿔온 곳들</h2>
+          <span className="section-num">04 — CAREER</span>
+          <h2 className="section-title">경력</h2>
+          <p className="lead">다양한 제품에서 프론트엔드 개발 경험을 쌓고 있습니다.</p>
         </div>
         <div className="tl" ref={tlRef}>
           <div className="tl__line">

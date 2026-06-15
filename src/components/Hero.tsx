@@ -28,25 +28,23 @@ export default function Hero() {
   return (
     <header className="hero" id="top" ref={sectionRef}>
       <div className="hero__center wrap">
-        <span className="eyebrow hero__eyebrow" data-reveal="fade">
-          FRONTEND ENGINEER
-        </span>
         <h1>
           <span className="line" data-reveal="">
-            WebView랑 성능,
+            안녕하세요,
           </span>
           <br />
-          <span className="line" data-reveal="" style={{ "--d": "0.12s" } as React.CSSProperties}>
-            <span className="accent">숫자로</span> 확인하고 고칩니다.
+          <span className="line" data-reveal="" style={{ "--d": "0.1s" } as React.CSSProperties}>
+            개발자 <span className="accent">안승찬</span>입니다.
           </span>
         </h1>
-        <p className="lead" data-reveal="fade" style={{ "--d": "0.22s" } as React.CSSProperties}>
-          렌더링·번들·WebView 브릿지 쪽을 주로 해온 프론트엔드 개발자입니다.
-          지금은 골드앤컴퍼니, 그 전엔 케어마인더·리케어랩에서 WebView 전환과 모노레포를 맡았습니다. — 안승찬
+        <p className="lead" data-reveal="fade" style={{ "--d": "0.2s" } as React.CSSProperties}>
+          TypeScript, Next.js, React Native를 중심으로 웹·앱을 개발합니다.
+          <br />
+          WebView 아키텍처와 성능 개선을 주로 다뤄왔습니다.
         </p>
-        <div className="hero__actions" data-reveal="fade" style={{ "--d": "0.32s" } as React.CSSProperties}>
+        <div className="hero__actions" data-reveal="fade" style={{ "--d": "0.28s" } as React.CSSProperties}>
           <a className="btn btn--primary" href="#work">
-            프로젝트 보기 <span className="arrow">→</span>
+            프로젝트 <span className="arrow">→</span>
           </a>
           <a className="btn btn--ghost" href="#contact">
             연락하기

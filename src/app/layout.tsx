@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SiteJsonLd } from "@/components/JsonLd";
+import { createPageMetadata } from "@/lib/metadata";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 export const metadata: Metadata = {
-  title: "안승찬 · 프론트엔드 개발자",
-  description:
-    "렌더링·WebView·모노레포 쪽을 주로 해온 프론트엔드 개발자. 골드앤컴퍼니 재직, 케어마인더·리케어랩 경력.",
-  openGraph: {
-    title: "안승찬 · 프론트엔드 개발자",
-    description: "WebView랑 성능, 숫자로 확인하고 고칩니다.",
-    locale: "ko_KR",
-    type: "website",
+  ...createPageMetadata(),
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  formatDetection: {
+    email: true,
+    telephone: true,
   },
 };
 
@@ -21,8 +28,9 @@ export default function RootLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
           rel="stylesheet"
@@ -35,8 +43,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="author" href="/humans.txt" />
       </head>
       <body>
+        <a className="skip-link" href="#main">
+          본문 바로가기
+        </a>
+        <SiteJsonLd />
         {children}
         {modal}
       </body>

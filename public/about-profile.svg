@@ -1,0 +1,75 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#ffffff"></stop><stop offset="1" stop-color="#f7f8fa"></stop></linearGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#3182f6" stop-opacity="0.18"></stop><stop offset="1" stop-color="#3182f6" stop-opacity="0"></stop></radialGradient>
+  <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#3182f6" stop-opacity="0.10"></stop><stop offset="1" stop-color="#3182f6" stop-opacity="0"></stop></radialGradient>
+  <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3182f6"></stop><stop offset="1" stop-color="#1b64da"></stop></linearGradient>
+  <filter id="shBig" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="34" stdDeviation="46" flood-color="#1b3a78" flood-opacity="0.22"></feDropShadow></filter>
+  <filter id="shMed" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="18" stdDeviation="30" flood-color="#1b2b50" flood-opacity="0.13"></feDropShadow></filter>
+  <filter id="shSm" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1b2b50" flood-opacity="0.12"></feDropShadow></filter>
+</defs>
+<rect x="0" y="0" width="900" height="1125" rx="0" fill="url(#bg)"></rect>
+<ellipse cx="720" cy="250" rx="520" ry="460" fill="url(#glow)"></ellipse>
+<ellipse cx="160" cy="980" rx="420" ry="380" fill="url(#glow2)"></ellipse>
+
+
+<g transform="rotate(-9 220 335)" filter="url(#shMed)" opacity="0.92">
+    <rect x="70" y="250" width="300" height="170" rx="22" fill="#ffffff"></rect>
+    <rect x="96" y="276" width="40" height="40" rx="11" fill="#eef1f5"></rect>
+    <rect x="150" y="282" width="180" height="13" rx="6.5" fill="#dfe3e8"></rect>
+    <rect x="150" y="304" width="140" height="13" rx="6.5" fill="#eef1f5"></rect>
+    <rect x="96" y="340" width="248" height="12" rx="6" fill="#eef1f5"></rect>
+    <rect x="96" y="362" width="200" height="12" rx="6" fill="#dfe3e8"></rect>
+  </g>
+<g transform="rotate(8 710 555)" filter="url(#shMed)" opacity="0.92">
+    <rect x="560" y="470" width="300" height="170" rx="22" fill="#ffffff"></rect>
+    <rect x="586" y="496" width="40" height="40" rx="11" fill="#eef1f5"></rect>
+    <rect x="640" y="502" width="180" height="13" rx="6.5" fill="#dfe3e8"></rect>
+    <rect x="640" y="524" width="140" height="13" rx="6.5" fill="#eef1f5"></rect>
+    <rect x="586" y="560" width="248" height="12" rx="6" fill="#eef1f5"></rect>
+    <rect x="586" y="582" width="200" height="12" rx="6" fill="#dfe3e8"></rect>
+  </g>
+<g transform="rotate(6 270 885)" filter="url(#shMed)" opacity="0.92">
+    <rect x="120" y="800" width="300" height="170" rx="22" fill="#ffffff"></rect>
+    <rect x="146" y="826" width="40" height="40" rx="11" fill="#eef1f5"></rect>
+    <rect x="200" y="832" width="180" height="13" rx="6.5" fill="#dfe3e8"></rect>
+    <rect x="200" y="854" width="140" height="13" rx="6.5" fill="#eef1f5"></rect>
+    <rect x="146" y="890" width="248" height="12" rx="6" fill="#eef1f5"></rect>
+    <rect x="146" y="912" width="200" height="12" rx="6" fill="#dfe3e8"></rect>
+  </g>
+
+
+<g filter="url(#shSm)"><g transform="rotate(-4 300 150)">
+  <rect x="150" y="108" width="300" height="84" rx="42" fill="#ffffff"></rect>
+  <circle cx="206" cy="150" r="26" fill="#e7f0fe"></circle><circle cx="206" cy="150" r="9" fill="#3182f6"></circle>
+  <rect x="246" y="138" width="150" height="15" rx="7.5" fill="#eef1f5"></rect>
+  <rect x="246" y="164" width="104" height="12" rx="6" fill="#dfe3e8"></rect>
+</g></g>
+
+
+<path d="M330 210 C 360 300, 420 320, 450 400" fill="none" stroke="#9cc4fb" stroke-width="3" stroke-dasharray="2 11" stroke-linecap="round"></path>
+
+
+<g transform="rotate(-3 455 600)">
+  <g filter="url(#shBig)"><rect x="235" y="420" width="440" height="360" rx="30" fill="#ffffff"></rect></g>
+  <path d="M235 450 a30 30 0 0 1 30 -30 h380 a30 30 0 0 1 30 30 v78 h-440 z" fill="url(#hero)"></path>
+  <circle cx="298" cy="489" r="30" fill="#ffffff"></circle>
+  <path d="M285 489 l9 9 l17 -19" fill="none" stroke="#3182f6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <rect x="348" y="476" width="180" height="17" rx="8.5" fill="#ffffff"></rect>
+  <rect x="348" y="506" width="120" height="12" rx="6" fill="#d3e4fd"></rect>
+  <rect x="265" y="560" width="380" height="52" rx="14" fill="#f7f8fa"></rect><circle cx="297" cy="586" r="13" fill="#ffffff" stroke="#dfe3e8" stroke-width="2"></circle><rect x="326" y="580" width="120" height="13" rx="6.5" fill="#dfe3e8"></rect><rect x="265" y="628" width="380" height="52" rx="14" fill="#e7f0fe"></rect><rect x="265" y="628" width="380" height="52" rx="14" fill="none" stroke="#d3e4fd" stroke-width="2"></rect><circle cx="297" cy="654" r="13" fill="#3182f6" stroke="#3182f6" stroke-width="2"></circle><path d="M290 654 l5 5 l9 -10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path><rect x="326" y="648" width="150" height="13" rx="6.5" fill="#3182f6"></rect><rect x="265" y="696" width="380" height="52" rx="14" fill="#f7f8fa"></rect><circle cx="297" cy="722" r="13" fill="#ffffff" stroke="#dfe3e8" stroke-width="2"></circle><rect x="326" y="716" width="120" height="13" rx="6.5" fill="#dfe3e8"></rect>
+</g>
+
+
+<g transform="rotate(8 720 762)"><g filter="url(#shSm)"><rect x="640" y="720" width="170" height="84" rx="20" fill="#ffffff"></rect></g>
+  <circle cx="678" cy="762" r="22" fill="#e3f5ec"></circle>
+  <path d="M678 772 l0 -20 m-8 8 l8 -8 l8 8" fill="none" stroke="#1f8a5b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <rect x="712" y="752" width="72" height="13" rx="6.5" fill="#eef1f5"></rect><rect x="712" y="774" width="52" height="11" rx="5.5" fill="#dfe3e8"></rect>
+</g>
+
+
+<path d="M712 540 l8 22 l22 8 l-22 8 l-8 22 l-8 -22 l-22 -8 l22 -8 z" fill="#3182f6" opacity="0.85"></path>
+<circle cx="180" cy="560" r="9" fill="#9cc4fb"></circle>
+<circle cx="770" cy="950" r="13" fill="#d3e4fd"></circle>
+<circle cx="610" cy="300" r="7" fill="#3182f6"></circle>
+</svg>

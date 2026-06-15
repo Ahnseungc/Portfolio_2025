@@ -22,8 +22,9 @@ export default function Skills() {
     <section className="skills section-pad" id="skills" ref={sectionRef}>
       <div className="wrap">
         <div className="section-head">
-          <span className="section-num">05 — SKILLS &amp; TOOLS</span>
-          <h2 className="section-title" data-reveal="">다루는 도구들</h2>
+          <span className="section-num">06 — SKILLS &amp; TOOLS</span>
+          <h2 className="section-title" data-reveal="">기술 스택</h2>
+          <p className="lead" data-reveal="fade">아래 기술을 사용할 수 있습니다.</p>
         </div>
         <div className="skill-grid">
           {skills.map((s, i) => (

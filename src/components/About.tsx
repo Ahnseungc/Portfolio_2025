@@ -3,32 +3,71 @@
 import { useEffect, useRef } from "react";
 import { stats } from "@/data/portfolio";
 
-const words = ["프론트에서", "막히는", "건", "대부분", "비슷합니다.", "렌더링,", "WebView", "동기,", "배포.", "재현하고", "숫자로", "확인한", "다음", "고칩니다."];
-const keyWords = ["비슷합니다.", "고칩니다."];
+const lines = [
+  ["기술의", "사용법보다"],
+  ["‘왜", "필요한가’를", "먼저", "이해하며,"],
+  ["문제", "해결", "중심으로", "기술을", "선택하는", "개발자입니다."],
+] as const;
+
+const keyWords = new Set(["‘왜", "필요한가’를", "개발자입니다."]);
 
 export default function About() {
   const sceneRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
   const statRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Sticky statement word reveal
+  const visualFrameRef = useRef<HTMLDivElement>(null);
+
+  // Sticky statement word reveal + visual spread
   useEffect(() => {
     const scene = sceneRef.current;
+    const copy = copyRef.current;
+    const visual = visualRef.current;
+    const frame = visualFrameRef.current;
     if (!scene) return;
     const wordEls = scene.querySelectorAll<HTMLSpanElement>("[data-word]");
 
+    const applyVisual = (spread: number) => {
+      const t = 1 - Math.pow(1 - spread, 1.5);
+      const inset = Math.max(0, (1 - t) * 40);
+      const copyShift = t * -8;
+
+      if (frame) {
+        frame.style.opacity = String(0.5 + t * 0.5);
+        frame.style.clipPath =
+          inset < 0.5
+            ? "inset(0 0 0 0 round 24px)"
+            : `inset(0 ${inset}% 0 ${inset}% round 24px)`;
+      }
+      if (copy) copy.style.transform = `translateX(${copyShift}px)`;
+      if (visual) visual.style.transform = "none";
+    };
+
     const onScroll = () => {
       const rect = scene.getBoundingClientRect();
-      const h = scene.offsetHeight - window.innerHeight;
+      const h = Math.max(scene.offsetHeight - window.innerHeight, 1);
       const progress = Math.max(0, Math.min(1, -rect.top / h));
       const threshold = progress * wordEls.length * 1.2;
+
       wordEls.forEach((el, i) => {
         el.classList.toggle("lit", i < threshold);
       });
+
+      const wordSpread = wordEls.length ? threshold / wordEls.length : 0;
+      const spread = Math.min(1, Math.max(wordSpread, progress * 0.2));
+
+      applyVisual(spread);
     };
 
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // Stats counter
@@ -73,21 +112,33 @@ export default function About() {
   return (
     <section className="about" id="about" ref={sectionRef}>
       {/* Pinned statement */}
-      <div className="scene" style={{ height: "230vh" }} ref={sceneRef}>
+      <div className="scene" style={{ height: "260vh" }} ref={sceneRef}>
         <div className="scene__sticky">
-          <div className="wrap">
-            <span className="section-num">01 — ABOUT</span>
-            <p className="statement">
-              {words.map((w, i) => (
-                <span
-                  key={i}
-                  data-word=""
-                  className={keyWords.includes(w) ? "key" : ""}
-                >
-                  {w}{" "}
-                </span>
-              ))}
-            </p>
+          <div className="wrap scene__inner">
+            <div className="scene__copy" ref={copyRef}>
+              <span className="section-num">01 — ABOUT</span>
+              <p className="statement">
+                {lines.map((line, lineIndex) => (
+                  <span className="statement__line" key={lineIndex}>
+                    {line.map((w, wordIndex) => (
+                      <span
+                        key={`${lineIndex}-${wordIndex}`}
+                        data-word=""
+                        className={keyWords.has(w) ? "key" : ""}
+                      >
+                        {w}{" "}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </p>
+            </div>
+            <div className="scene__visual" ref={visualRef} aria-hidden="true">
+              <div className="scene__visual-frame" ref={visualFrameRef}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/about-profile.svg" alt="" width={900} height={1125} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -127,16 +178,19 @@ export default function About() {
           </div>
           <div>
             <h2 className="section-title" data-reveal="">
-              일하는<br />방식
+              소개
             </h2>
-            <p data-reveal="" style={{ "--d": ".06s" } as React.CSSProperties}>
-              Lighthouse 40~50점대를 80~90점대로, LCP 5.2s를 2.1s까지 줄인 적이 있습니다. 커서 기반 무한스크롤, SSR/ISR/CSR 나누기, Dynamic Import 같은 건 그때 실제로 쓴 방법들이고요.
+            <p className="about__lead" data-reveal="" style={{ "--d": ".04s" } as React.CSSProperties}>
+              성능과 구조를 함께 봅니다.
             </p>
-            <p data-reveal="" style={{ "--d": ".12s" } as React.CSSProperties}>
-              케어마인더에서는 RN → WebView + Next.js 전환을 주도했고, 4개 도메인 모노레포·CDS·S3 실시간 배포까지 맡았습니다. 지금은 금 거래 앱에서 WebView 브릿지, 앱테크, 트래픽 피크 대응을 하고 있습니다.
+            <p data-reveal="" style={{ "--d": ".08s" } as React.CSSProperties}>
+              Lighthouse·LCP 등 지표로 개선 전후를 확인합니다. SSR/ISR 분리, 리스트 가상화, 번들 최적화를 실무에 적용해 왔습니다.
             </p>
-            <p data-reveal="" style={{ "--d": ".18s" } as React.CSSProperties}>
-              코드 한 줄에는 의도를, 구조에는 책임 경계를 분명히 두는 편입니다. 기획·디자인·백엔드와 협업하는 방식을 정리하는 것도 좋아합니다.
+            <p data-reveal="" style={{ "--d": ".14s" } as React.CSSProperties}>
+              케어마인더에서는 RN → WebView + Next.js 전환과 모노레포·디자인 시스템을 맡았고, 현재 골드앤컴퍼니에서 금 거래 앱 프론트엔드를 개발하고 있습니다.
+            </p>
+            <p data-reveal="" style={{ "--d": ".2s" } as React.CSSProperties}>
+              기획·디자인·백엔드와 협업하며, 팀이 같은 기준으로 일할 수 있게 정리하는 편입니다.
             </p>
           </div>
         </div>

@@ -31,7 +31,12 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="proj-grid">
+        <p className="carousel-hint" aria-hidden="true">
+          옆으로 스와이프
+        </p>
+
+        <div className="mobile-carousel">
+          <div className="proj-grid">
           {projects.map((p) => (
             <Link
               className="proj-card"
@@ -74,6 +79,7 @@ export default function Projects() {
             <h3>더 많은 저장소 →</h3>
             <span className="url">github.com/Ahnseungc</span>
           </a>
+          </div>
         </div>
       </div>
     </section>

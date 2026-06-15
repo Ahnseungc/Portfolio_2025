@@ -112,7 +112,7 @@ export default function About() {
   return (
     <section className="about" id="about" ref={sectionRef}>
       {/* Pinned statement */}
-      <div className="scene" style={{ height: "260vh" }} ref={sceneRef}>
+      <div className="scene scene--about" ref={sceneRef}>
         <div className="scene__sticky">
           <div className="wrap scene__inner">
             <div className="scene__copy" ref={copyRef}>

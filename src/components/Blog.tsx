@@ -44,7 +44,12 @@ export default function Blog({ posts }: BlogProps) {
         </div>
 
         {posts.length > 0 ? (
-          <div className="blog-grid">
+          <>
+            <p className="carousel-hint" aria-hidden="true">
+              옆으로 스와이프
+            </p>
+            <div className="mobile-carousel">
+              <div className="blog-grid">
             {posts.map((post) => (
               <a
                 key={post.id}
@@ -92,7 +97,9 @@ export default function Blog({ posts }: BlogProps) {
                 </div>
               </a>
             ))}
-          </div>
+              </div>
+            </div>
+          </>
         ) : (
           <p className="blog-empty" data-reveal="">
             글 목록을 불러오지 못했습니다.{" "}

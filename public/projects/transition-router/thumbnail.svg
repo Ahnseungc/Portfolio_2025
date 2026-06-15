@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0f1419"/>
+  <rect x="120" y="140" width="200" height="220" rx="16" fill="#3182f6" opacity="0.35"/>
+  <rect x="480" y="140" width="200" height="220" rx="16" fill="#3182f6" opacity="0.55"/>
+  <path d="M320 250 H480" stroke="#3182f6" stroke-width="3" marker-end="url(#a)"/>
+  <text x="400" y="400" fill="#e8edf4" font-family="system-ui,sans-serif" font-size="22" font-weight="600" text-anchor="middle">transition-router</text>
+</svg>

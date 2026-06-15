@@ -28,6 +28,8 @@ export type Project = {
   company: string;
   period: string;
   role: string;
+  repoUrl?: string;
+  demoUrl?: string;
   overview: string;
   highlights: string[];
   sections: ProjectSection[];
@@ -35,300 +37,240 @@ export type Project = {
   steps?: ProjectStep[];
 };
 
+const TEAMMOA_SCREEN =
+  "https://github.com/Ahnseungc/TeamMoa/assets/94547692/03c2055f-af65-4f6e-a16d-a869e993125e";
+
 export const projects: Project[] = [
   {
-    slug: "gold-app-tech-funnel",
-    tag: "GOLD · 재직 중",
-    title: "방치형 앱테크 개발 및 트래픽 대응",
-    desc: "리텐션 푸시로 몰리는 트래픽을 CDN 캐싱과 PM2 클러스터로 나눠 받고, WebView ↔ Next.js 브릿지로 앱–웹 상태를 동기화한 프로젝트.",
-    thumbnail: "/projects/gold-app-tech-funnel/screen-02.svg",
-    chips: ["Next.js", "Flutter WebView", "Zustand", "PM2", "CloudFront"],
-    placeholder: "[ 방치형 앱테크 적립 플로우 ]",
-    company: "(주)골드앤컴퍼니",
-    period: "2026.01 — 재직 중",
-    role: "프론트엔드 개발자",
+    slug: "webviewkit",
+    tag: "OPEN SOURCE",
+    title: "WebViewKit — WebView 스택 라우터",
+    desc: "React WebView에서 네이티브처럼 push/back 네비게이션을 쓰게 만든 npm 패키지. 케어마인더·골드앤컴퍼니에서 쓰던 WebView 라우팅 문제를 코드로 빼낸 결과물.",
+    thumbnail: "/projects/webviewkit/thumbnail.svg",
+    chips: ["TypeScript", "React", "pnpm", "Vitest", "npm"],
+    placeholder: "[ WebViewKit 스택 라우터 ]",
+    company: "개인 · 오픈소스",
+    period: "2025.05 — 유지보수 중",
+    role: "설계 · 개발 · npm 배포",
+    repoUrl: "https://github.com/Ahnseungc/WebViewKit",
     overview:
-      "금 거래 B2C 앱의 방치형 앱테크 기능을 설계·구현했습니다. 광고·초대·푸시 등 흩어진 유입 채널을 단일 퍼널로 통합하고, Flutter WebView와 Next.js 사이 브릿지로 인증·적립·라우팅 상태를 양방향 동기화했습니다.",
+      "WebView 안에서 화면 전환·뒤로가기·히스토리가 브라우저 기본값과 맞지 않을 때가 많습니다. 스택 라우터, history 관리, 브라우저 데모 앱을 모노레포로 묶어 `@ahnseungchan/webviewkit`으로 배포했습니다.",
     highlights: [
-      "적립 단계를 (대기 → 시청 → 검증 → 지급) 상태 머신으로 정의해 중복·예외 차단",
-      "광고·초대·푸시 유입을 이벤트 단위로 표준화해 전환 추적 가능하게 구조화",
-      "postMessage 프로토콜로 WebView ↔ Next.js 인증·적립·딥링크 동기화",
-      "참여율 +50%, D+7 재방문율 +20%, 미디어 용량 20MB → 0.7MB",
+      "스택 push/back API와 history 상태를 패키지로 분리",
+      "Vite 기반 `@webviewkit/browser` 데모 앱 포함",
+      "pnpm workspace + Vitest로 코어 로직 테스트",
+      "npm public 배포 (`@ahnseungchan/webviewkit`)",
     ],
     sections: [
       {
-        title: "문제",
+        title: "왜 만들었는지",
         content:
-          "광고·초대·푸시로 들어온 사용자 행동 데이터가 매체별로 분산돼 전환 기여도 추적이 어려웠고, 하이브리드 구조의 딥링크 동기화 이슈도 있었습니다.",
+          "RN WebView + Next.js 조합에서 뒤로가기와 라우팅이 자주 어긋났습니다. 프로젝트마다 비슷한 코드를 다시 쓰기보다, 재사용 가능한 라우터로 빼내는 게 낫다고 판단했습니다.",
       },
       {
-        title: "해결",
+        title: "구조",
         content:
-          "유입 경로를 하나의 퍼널로 묶고, 적립 플로우를 상태 머신으로 모델링했습니다. 앱–웹 브릿지를 통해 세션·적립 상태를 실시간으로 맞췄습니다.",
+          "packages/core에 스택 라우터와 history를 두고, packages/browser에 동작 확인용 데모를 뒀습니다. CHANGELOG와 README를 repo 루트에서 관리합니다.",
       },
       {
-        title: "결과",
+        title: "배포",
         content:
-          "흩어졌던 유입이 하나의 흐름이 되었고, 참여율과 재방문율이 눈에 띄게 개선됐습니다. 미디어 리소스도 대폭 경량화했습니다.",
+          "코어 빌드 후 npm publish --access public로 올립니다. v1.1.0에서 dev roadmap UI와 빌드 설정을 정리했고, 불필요한 gsap 의존성은 제거했습니다.",
       },
     ],
     images: [
       {
-        src: "/projects/gold-app-tech-funnel/01-funnel.svg",
-        alt: "유입 퍼널 대시보드",
-        caption: "광고·초대·푸시 유입을 하나의 퍼널로 통합한 화면",
-      },
-      {
-        src: "/projects/gold-app-tech-funnel/02-reward-flow.svg",
-        alt: "적립 플로우",
-        caption: "대기 → 시청 → 검증 → 지급 상태 머신 기반 적립 플로우",
-      },
-      {
-        src: "/projects/gold-app-tech-funnel/03-bridge.svg",
-        alt: "WebView 브릿지",
-        caption: "Flutter WebView ↔ Next.js postMessage 브릿지 구조",
-      },
-      {
-        src: "/projects/gold-app-tech-funnel/04-impact.svg",
-        alt: "성과 지표",
-        caption: "참여율 +50%, 재방문 +20%, 미디어 용량 97% 절감",
+        src: "/projects/webviewkit/thumbnail.svg",
+        alt: "WebViewKit",
+        caption: "WebView 스택 라우터 npm 패키지",
       },
     ],
     steps: [
       {
-        eyebrow: "01 · 문제",
-        title: "유입 경로가 채널마다 흩어져 있었습니다.",
-        desc: "광고·초대·푸시로 들어온 사용자 행동이 매체별로 분산돼, 어떤 경로가 전환에 기여하는지 추적하기 어려웠습니다.",
-        did: "유입 채널별 이벤트 스키마를 정리하고, 딥링크·세션 동기화 이슈를 먼저 맵핑했습니다.",
-        image: {
-          src: "/projects/gold-app-tech-funnel/screen-01.svg",
-          alt: "분산된 유입 채널 화면",
-          caption: "광고 · 초대 · 푸시 — 각각 다른 진입 경로",
-        },
+        eyebrow: "01 · 배경",
+        title: "프로젝트마다 같은 WebView 라우팅 코드가 반복됐습니다.",
+        desc: "푸시·딥링크·뒤로가기를 웹 라우터와 맞추려면 매번 postMessage와 history를 다시 짰습니다.",
+        did: "케어마인더·리케어랩·골드앤컴퍼니에서 겪은 패턴을 정리해 공통 API로 뽑았습니다.",
       },
       {
-        eyebrow: "02 · 퍼널",
-        title: "유입을 하나의 플로우로 묶었습니다.",
-        desc: "모든 채널이 동일한 적립 플로우로 합류하도록 설계해, 사용자 동선과 전환 데이터를 한곳에서 추적할 수 있게 했습니다.",
-        did: "광고·초대·푸시 유입을 이벤트 단위로 표준화하고, 단일 퍼널 대시보드로 연결했습니다.",
-        image: {
-          src: "/projects/gold-app-tech-funnel/screen-02.svg",
-          alt: "통합 퍼널 화면",
-          caption: "유입 → 적립 → 전환 단일 플로우",
-        },
+        eyebrow: "02 · 패키지",
+        title: "스택 라우터와 history를 `@ahnseungchan/webviewkit`으로 분리했습니다.",
+        desc: "push/back, 스택 depth, history sync를 React 훅·컴포넌트 형태로 제공합니다.",
+        did: "모노레포(core + browser)로 코어와 데모를 같이 돌리게 구성했습니다.",
       },
       {
-        eyebrow: "03 · 적립",
-        title: "상태 머신으로 적립을 안정화했습니다.",
-        desc: "대기 → 시청 → 검증 → 지급 단계를 상태 머신으로 정의해 중복 적립과 예외 케이스를 구조적으로 차단했습니다.",
-        did: "Flutter WebView ↔ Next.js postMessage 브릿지로 인증·적립 상태를 양방향 동기화했습니다.",
-        image: {
-          src: "/projects/gold-app-tech-funnel/screen-03.svg",
-          alt: "적립 플로우 화면",
-          caption: "대기 → 시청 → 검증 → 지급",
-        },
+        eyebrow: "03 · 검증",
+        title: "Vitest와 browser 데모로 동작을 확인합니다.",
+        desc: "스택 전환·back 처리·엣지 케이스를 테스트로 고정해 두었습니다.",
+        did: "pnpm test / pnpm build 파이프라인을 repo 루트에서 한 번에 실행합니다.",
       },
       {
-        eyebrow: "04 · 결과",
-        title: "참여율 +50%, 미디어 용량 97%↓.",
-        desc: "D+7 재방문율 +20%, 적립 연출 리소스 20MB → 0.7MB. 흩어졌던 유입이 하나의 흐름이 되었습니다.",
-        did: "미디어 리소스 경량화와 렌더링 최적화로 앱 내 적립 경험의 로딩·용량을 함께 개선했습니다.",
-        image: {
-          src: "/projects/gold-app-tech-funnel/screen-04.svg",
-          alt: "성과 화면",
-          caption: "참여율 +50% · 재방문 +20%",
-        },
+        eyebrow: "04 · 배포",
+        title: "npm에 public으로 올려 두었습니다.",
+        desc: "다른 WebView 프로젝트에서 import만으로 같은 네비게이션 모델을 쓸 수 있습니다.",
+        did: "packages/core README와 CHANGELOG에 버전별 변경을 남깁니다.",
       },
     ],
   },
   {
-    slug: "gold-performance-ops",
-    tag: "GOLD · 재직 중",
-    title: "렌더링·성능 최적화 및 결제·배포 운영",
-    desc: "커서 기반 무한스크롤, SSR/ISR/CSR 분리, Dynamic Import로 Lighthouse 40~50점 → 80~90점. Toss Payments 결제 및 OneSignal 타깃 푸시 연동.",
-    thumbnail: "/projects/gold-performance-ops/thumbnail.webp",
-    chips: ["Next.js", "React Query", "Vitest", "Playwright", "GitHub Actions"],
-    placeholder: "[ Lighthouse 성능 리포트 ]",
-    company: "(주)골드앤컴퍼니",
-    period: "2026.01 — 재직 중",
-    role: "프론트엔드 개발자",
-    overview:
-      "금 거래 플랫폼의 렌더링 전략을 재설계하고, LCP·FCP 등 Core Web Vitals를 개선했습니다. 결제 플로우 안정화와 CI/CD·E2E 테스트 체계까지 운영 품질을 높였습니다.",
-    highlights: [
-      "리스트 가상화·메모이제이션으로 불필요한 리렌더 차단",
-      "페이지 특성에 맞게 SSR / ISR / CSR 렌더링 전략 분리",
-      "LCP·FCP 약 2배 개선, Lighthouse 성능 점수 상승",
-      "Playwright E2E + GitHub Actions CI/CD 파이프라인 구축",
-    ],
-    sections: [
-      {
-        title: "문제",
-        content:
-          "대용량 리스트와 무거운 초기 렌더로 LCP가 높았고, 결제·배포 파이프라인에 수동 검증 의존도가 컸습니다.",
-      },
-      {
-        title: "해결",
-        content:
-          "렌더링 계층을 분리하고 가상화를 적용했습니다. E2E 테스트와 자동 배포 파이프라인으로 릴리즈 안정성을 확보했습니다.",
-      },
-      {
-        title: "결과",
-        content:
-          "체감 로딩 속도와 운영 안정성이 동시에 개선됐습니다. 성능 지표와 배포 신뢰도 모두 눈에 띄게 올랐습니다.",
-      },
-    ],
-    images: [
-      {
-        src: "/projects/gold-performance-ops/01-lighthouse.webp",
-        alt: "Lighthouse 리포트",
-        caption: "성능 최적화 전후 Lighthouse 점수 비교",
-      },
-      {
-        src: "/projects/gold-performance-ops/02-virtual-list.webp",
-        alt: "가상화 리스트",
-        caption: "대용량 리스트 가상화 적용 화면",
-      },
-      {
-        src: "/projects/gold-performance-ops/03-cicd.webp",
-        alt: "CI/CD 파이프라인",
-        caption: "GitHub Actions + Playwright E2E 파이프라인",
-      },
-    ],
-  },
-  {
-    slug: "careminder-qr-order",
-    tag: "CAREMINDER",
-    title: "환자 요청 관리 플랫폼 아키텍처 설계·개발",
-    desc: "RN → WebView + Next.js 전환을 주도하고, 4개 도메인을 모노레포로 통합. S3 기반 실시간 앱 배포·CDS 구축·운영 모니터링 체계 설계.",
-    thumbnail: "/projects/careminder-qr-order/thumbnail.webp",
-    chips: ["Next.js", "React Native", "Storybook", "Jenkins", "AWS S3"],
-    placeholder: "[ 모노레포 · 디자인 시스템 ]",
+    slug: "careminder-pc",
+    tag: "CAREMINDER · PUBLIC",
+    title: "CareMinder PC — 병동 데스크 웹",
+    desc: "케어마인더 병동·간호 데스크용 PC 웹 프론트 저장소. 재직 당시 RN → WebView 전환·모노레포·CDS 작업과 연결되는 공개 FE repo.",
+    thumbnail: "/projects/careminder-pc/thumbnail.svg",
+    chips: ["React", "TypeScript", "Vite", "WebView", "Storybook"],
+    placeholder: "[ CareMinder PC 웹 ]",
     company: "(주)케어마인더",
     period: "2025.03 — 2026.01",
-    role: "프론트엔드 개발자",
+    role: "프론트엔드 (리드)",
+    repoUrl: "https://github.com/Ahnseungc/CareMinder-PC",
     overview:
-      "React Native 기반 4개 도메인을 WebView + Next.js 아키텍처로 전환했습니다. 모노레포와 CDS(케어마인더 디자인 시스템)를 구축해 배포 속도와 UI 일관성을 높였습니다.",
+      "병동 간호 인력이 환자 요청을 처리하는 B2B 데스크 웹입니다. README는 템플릿 수준이지만, repo 설명과 재직 기간 동안의 아키텍처 전환·운영 작업이 이 코드베이스와 같은 제품군입니다.",
     highlights: [
-      "4개 도메인 모노레포 통합, 공통 패키지·빌드 파이프라인 정리",
-      "Storybook 기반 CDS 구축으로 컴포넌트 재사용성 확보",
-      "WebView 전환으로 앱 스토어 심사 없이 실시간 업데이트 가능",
-      "에러 모니터링·로깅 체계로 운영 가시성 확보",
+      "CareFlow / CareVoice / CareDesk 4개 도메인 모노레포 통합",
+      "RN 중심 → WebView + Next.js 전환 주도",
+      "Atomic Design 기반 CDS(CareMinder Design System) + Storybook",
+      "S3 자체 배포 + FCM 트리거로 앱 심사 없이 업데이트",
+      "초기 로딩 ~30% 개선, 요청 완료율 ~20% 향상 (팀 지표)",
     ],
     sections: [
       {
-        title: "문제",
+        title: "맥락",
         content:
-          "도메인별 코드베이스가 분리돼 UI 불일치와 배포 지연이 반복됐고, RN 네이티브 업데이트 사이클이 느렸습니다.",
+          "앱 스토어 심사 때문에 RN 핫픽스가 느렸고, 도메인별 코드 중복도 컸습니다. WebView + Next.js로 옮기면서 이 PC·태블릿·웹 제품군을 한 repo 체계로 맞췄습니다.",
       },
       {
-        title: "해결",
+        title: "내가 한 일",
         content:
-          "모노레포로 통합하고 WebView 아키텍처로 전환했습니다. CDS와 Storybook으로 디자인·개발 협업 기반을 마련했습니다.",
+          "아키텍처 전환을 주도했고, 프론트 3명이 Next.js를 처음 쓰는 상황이라 스크럼마다 공식 문서를 같이 읽으며 마이그레이션을 진행했습니다. 저사양 태블릿은 rAF·CSS 전환으로 드래그 끊김을 줄였습니다.",
       },
       {
-        title: "결과",
+        title: "운영",
         content:
-          "배포 주기가 단축되고 UI 일관성이 개선됐습니다. 운영 중 이슈 추적도 체계화됐습니다.",
+          "EAS OTA 한계를 S3 배포 + FCM 알림으로 보완했고, 태블릿 네트워크·백그라운드·종료 이벤트 모니터링 페이지와 원격 대응 기능을 붙였습니다.",
       },
     ],
     images: [
       {
-        src: "/projects/careminder-webview-arch/01-monorepo.webp",
-        alt: "모노레포 구조",
-        caption: "4개 도메인 모노레포 구조",
-      },
-      {
-        src: "/projects/careminder-webview-arch/02-cds.webp",
-        alt: "디자인 시스템",
-        caption: "Storybook 기반 CDS 컴포넌트",
-      },
-      {
-        src: "/projects/careminder-webview-arch/03-webview.webp",
-        alt: "WebView 아키텍처",
-        caption: "RN WebView ↔ Next.js 아키텍처",
+        src: "/projects/careminder-pc/thumbnail.svg",
+        alt: "CareMinder PC",
+        caption: "공개 repo — 운영 빌드·화면은 비공개",
       },
     ],
   },
   {
-    slug: "recarelab-home-rendering",
-    tag: "RECARELAB",
-    title: "홈 화면 렌더링 고도화 및 WebView 브릿지 설계",
-    desc: "CSR → SSR/ISR 전환과 postMessage 프로토콜로 홈 LCP 5.2s → 2.1s 개선. RN ↔ WebView 내비게이션 상태 동기화.",
-    thumbnail: "/projects/recarelab-home-rendering/thumbnail.webp",
-    chips: ["Next.js", "React Native", "SWR", "Recoil", "ISR"],
-    placeholder: "[ 홈 화면 렌더링 / 스켈레톤 ]",
-    company: "(주)리케어랩",
-    period: "2024.09 — 2025.02",
-    role: "프론트엔드 개발자",
+    slug: "team-moa",
+    tag: "TEAM · HACKATHON",
+    title: "TeamMoa (Damoa) — 팀 프로젝트",
+    desc: "React + TypeScript + Vite로 만든 팀 프로토타입. README에 스크린샷과 YouTube 데모가 남아 있는 공개 repo.",
+    thumbnail: TEAMMOA_SCREEN,
+    chips: ["React", "TypeScript", "Vite"],
+    placeholder: "[ TeamMoa 프로토타입 ]",
+    company: "팀 프로젝트",
+    period: "2024.06",
+    role: "프론트엔드",
+    repoUrl: "https://github.com/Ahnseungc/TeamMoa",
+    demoUrl: "https://damoa.vercel.app",
     overview:
-      "간병 매칭 앱 홈 화면의 렌더링 구조를 CSR에서 ISR/SSR로 전환했습니다. 조건부 스켈레톤과 RN–WebView 브릿지로 초기 로딩·화면 전환 경험을 개선했습니다.",
+      "해커톤·팀 단위로 진행한 웹 프로토타입입니다. 커밋 컨벤션·코드 컨벤션을 README에 정리해 두었고, Vercel에 배포한 버전과 YouTube 시연 영상 링크가 있습니다.",
     highlights: [
-      "CSR → ISR/SSR 전환으로 초기 로딩 체감 속도 개선",
-      "데이터 로딩 상태별 조건부 스켈레톤 UI 적용",
-      "RN–WebView 브릿지로 네이티브·웹 상태 동기화",
-      "Recoil 기반 홈 피드 상태 관리 구조 정리",
+      "React + TypeScript + Vite 기반 SPA",
+      "팀 커밋·코드 컨벤션 문서화",
+      "Vercel 배포 (damoa.vercel.app)",
+      "README에 UI 스크린샷 13장 보관",
     ],
     sections: [
       {
-        title: "문제",
+        title: "저장소",
         content:
-          "CSR 기반 홈 화면은 초기 로딩이 느렸고, 데이터 페칭 중 빈 화면이 노출되는 경우가 있었습니다.",
+          "GitHub에 전체 프론트 코드와 스크린샷이 공개되어 있습니다. Working Prototype 영상도 README에 링크돼 있습니다.",
       },
       {
-        title: "해결",
+        title: "협업",
         content:
-          "페이지 특성에 맞게 ISR/SSR을 적용하고, 스켈레톤 UI로 로딩 경험을 개선했습니다. WebView 브릿지로 앱 연동도 정리했습니다.",
+          "Feat/Fix/Docs 등 커밋 타입과 PR 본문 형식을 팀 규칙으로 맞춰 두었습니다. 문자열은 쌍따옴표, 문장 끝 세미콜론 같은 코드 스타일도 README에 적어 두었습니다.",
       },
       {
-        title: "결과",
+        title: "데모",
         content:
-          "홈 진입 속도와 화면 전환 안정성이 개선됐습니다. 사용자 이탈 가능성이 높던 초기 구간이 매끄러워졌습니다.",
+          "https://damoa.vercel.app 에 배포본이 있고, YouTube 시연(https://youtu.be/0ohJlE4AYjE)으로 플로우를 확인할 수 있습니다.",
       },
     ],
     images: [
       {
-        src: "/projects/recarelab-home-rendering/01-home.webp",
-        alt: "홈 화면",
-        caption: "ISR/SSR 적용 후 홈 화면",
+        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/18763f68-fc93-4c6c-b9a0-6aad9540e68a",
+        alt: "TeamMoa 화면 2",
+        caption: "README에 포함된 UI 스크린샷",
       },
       {
-        src: "/projects/recarelab-home-rendering/02-skeleton.webp",
-        alt: "스켈레톤 UI",
-        caption: "조건부 스켈레톤 로딩 UI",
+        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/ad4c49fd-7f21-47d1-b75b-d088373fdb6e",
+        alt: "TeamMoa 화면 3",
+        caption: "프로토타입 주요 화면",
       },
       {
-        src: "/projects/recarelab-home-rendering/03-bridge.webp",
-        alt: "WebView 브릿지",
-        caption: "RN–WebView 브릿지 연동",
+        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/19b2794c-a6b7-4335-9dfd-a3f3801acb05",
+        alt: "TeamMoa 화면 4",
+        caption: "팀 프로젝트 UI",
       },
     ],
+  },
+  {
+    slug: "transition-router",
+    tag: "SIDE PROJECT",
+    title: "transition-router — Next.js 페이지 전환",
+    desc: "Next.js App Router에서 페이지 전환 애니메이션을 실험한 side repo. create-next-app 기반.",
+    thumbnail: "/projects/transition-router/thumbnail.svg",
+    chips: ["Next.js", "TypeScript", "App Router"],
+    placeholder: "[ transition-router ]",
+    company: "개인",
+    period: "2026.01",
+    role: "실험 · 구현",
+    repoUrl: "https://github.com/Ahnseungc/transition-router",
+    overview:
+      "라우트 전환 시 UX를 조금 더 부드럽게 만들 수 있는지 테스트한 저장소입니다. README는 Next.js 기본 템플릿이지만, repo 이름대로 transition 실험 코드가 들어 있습니다.",
+    highlights: [
+      "Next.js App Router 프로젝트",
+      "페이지 전환(transition) 실험",
+      "TypeScript 설정",
+    ],
+    sections: [
+      {
+        title: "목적",
+        content: "WebView·SPA 모두에서 화면 전환이 딱딱하게 느껴질 때, Next.js 쪽에서 할 수 있는지 가볍게 실험한 repo입니다.",
+      },
+      {
+        title: "상태",
+        content: "본업 프로젝트에서 검증한 패턴을 옮기기 전 단계의 playground에 가깝습니다. 공개된 코드 기준으로 확인 가능합니다.",
+      },
+    ],
+    images: [],
   },
 ];
 
 export const caseSteps = [
   {
     eyebrow: "CASE · 골드앤컴퍼니",
-    title: "리텐션 푸시가 트래픽을 한꺼번에 터뜨렸습니다.",
-    desc: "특정 시간대에 일괄 발송한 리텐션 푸시로 사용자가 몰리면서 CPU가 과부하에 걸려 초기 로딩이 느려졌고, 광고·초대·푸시로 분산된 유입 경로는 전환 기여도 파악을 어렵게 했습니다.",
-    viz: "[ CPU 70~80% 과부하 · 유입 채널 분산 ]",
+    title: "리텐션 푸시 시간에 트래픽이 한꺼번에 몰렸습니다.",
+    desc: "특정 시간대 일괄 푸시 이후 CPU가 70~80%까지 올라가고, 광고·초대·푸시 유입도 채널마다 따로 잡혀 전환 추적이 어려웠습니다.",
+    viz: "[ CPU 70~80% · 유입 분산 ]",
   },
   {
-    eyebrow: "접근 · APPROACH",
-    title: "CDN 캐싱과 PM2 클러스터로 받아냈습니다.",
-    desc: "정적 자산을 CloudFront 엣지에 캐싱해 origin 부하를 줄이고, Docker 컨테이너 안에서 PM2 클러스터 모드로 멀티코어를 활용했습니다. k6 부하 테스트로 vU 3,000까지 검증했습니다.",
-    viz: "[ PM2 클러스터 · CDN 캐싱 구조 ]",
+    eyebrow: "접근",
+    title: "CDN 캐싱과 PM2 클러스터로 먼저 받았습니다.",
+    desc: "CloudFront에 정적 자산·페이지 응답을 캐싱하고, Docker 안에서 PM2 cluster mode로 코어만큼 워커를 띄웠습니다. k6로 vU 3,000까지 확인했습니다.",
+    viz: "[ PM2 cluster · CDN ]",
   },
   {
-    eyebrow: "설계 · ENGINEERING",
-    title: "BroadcastChannel로 WebView 세션을 동기화했습니다.",
-    desc: "여러 WebView에서 인증 상태가 따로 놀던 문제를 BroadcastChannel 공통 훅으로 해결했습니다. 적립 연출 미디어는 GIF → MP4/WebP 전환으로 20MB → 0.7MB(약 97%↓)로 줄였습니다.",
-    viz: "[ WebView 세션 동기화 · 미디어 97%↓ ]",
+    eyebrow: "설계",
+    title: "BroadcastChannel로 WebView 세션을 맞췄습니다.",
+    desc: "여러 WebView에 로그인 상태가 따로 남던 문제를 공통 훅으로 해결했습니다. 적립 연출 미디어는 GIF → MP4/WebP로 20MB → 0.7MB(약 97%↓)까지 줄였습니다.",
+    viz: "[ 세션 동기 · 미디어 97%↓ ]",
   },
   {
-    eyebrow: "결과 · IMPACT",
-    title: "CPU 70~80% → 30~40%. 트래픽 피크를 안정화했습니다.",
-    desc: "AWS EC2 모니터링 기준 트래픽이 몰릴 때 70~80%까지 치솟던 CPU 사용률이 적용 후 30~40%대로 안정화됐습니다. 미디어 용량 97% 절감과 Lighthouse 80~90점대를 달성했습니다.",
-    viz: "[ CPU 30~40% 안정화 · Lighthouse 80~90점 ]",
+    eyebrow: "결과",
+    title: "CPU 30~40%대로 내려갔습니다.",
+    desc: "EC2 모니터링 기준 피크 CPU가 안정화됐고, Lighthouse도 40~50점대에서 80~90점대로 올렸습니다. (회사 서비스 — repo 비공개)",
+    viz: "[ CPU 30~40% · Lighthouse 80~90 ]",
   },
 ];
 
@@ -337,30 +279,30 @@ export const career = [
     date: "2026.01 — 재직 중",
     role: "프론트엔드 개발자 · 정규직",
     org: "(주)골드앤컴퍼니 · 금 거래 플랫폼",
-    desc: "금 거래 B2C/B2B 앱 프론트엔드 개발. 방치형 앱테크, 렌더링·성능 최적화, 결제(Toss Payments), CI/CD 자동화, 사내 MCP 서버 구축.",
+    desc: "B2C/B2B 앱·웹. 방치형 앱테크, Toss Payments 결제, WebView 브릿지, CDN+PM2 트래픽 대응, GitHub Actions CI/CD. Lighthouse 40~50 → 80~90점대, CPU 피크 70~80% → 30~40%.",
   },
   {
     date: "2025.03 — 2026.01",
     role: "프론트엔드 리드 · 정규직 · 11개월",
     org: "(주)케어마인더 · 병동 간호 플랫폼",
-    desc: "환자 요청 관리 플랫폼 RN → WebView + Next.js 아키텍처 전환 주도. 모노레포·CDS 구축, S3 실시간 배포, Jenkins CI/CD, 운영 모니터링 체계 설계.",
+    desc: "RN → WebView + Next.js 전환 주도. 4개 도메인 모노레포, CDS·Storybook, S3 실시간 배포, QR 병상 오더(주문 시작 20→30%). 초기 로딩 ~30%↓, 완료율 ~20%↑.",
   },
   {
     date: "2024.09 — 2025.02",
     role: "프론트엔드 개발자 · 정규직 · 6개월",
-    org: "(주)리케어랩 · 간병 매칭 플랫폼",
-    desc: "간병 매칭 앱 홈 화면 CSR → SSR/ISR 렌더링 고도화. RN–WebView postMessage 브릿지 설계. 홈 LCP 5.2s → 2.1s 개선.",
+    org: "(주)리케어랩 · 간병 매칭 (케어나인)",
+    desc: "홈 CSR → ISR/SSR, RN–WebView postMessage·스택 라우터. LCP 5.2s → 2.1s, 연장률 23→35%, 홈 이탈 41→30%.",
   },
   {
     date: "2018.03 — 2025.08",
     role: "컴퓨터공학 학사 · 졸업",
     org: "한림대학교",
-    desc: "컴퓨터공학 전공. 창업 동아리, 해커톤, 캡스톤 디자인 등 다수 대외 활동 참여.",
+    desc: "창업 동아리, 오픈소스 SW 웹 해커톤 금상, 캡스톤(OCR+TTS), KBSC ESG 장려상 등.",
   },
 ];
 
 export const awards = [
-  { year: "2025", title: "스타트업에서 스타팅 개발자로 살아남기", org: "SKKAI (SungKyunKwan AI Association) · 연사", kind: "TALK", isTalk: true },
+  { year: "2025", title: "스타트업에서 스타팅 개발자로 살아남기", org: "SKKAI · 연사", kind: "TALK", isTalk: true },
   { year: "2024", title: "정주영 창업경진대회 — 우수상 · 인기상", org: "아산나눔재단", kind: "AWARD", isTalk: false },
   { year: "2023", title: "오픈소스 SW 웹 해커톤 — 금상", org: "한림대학교", kind: "AWARD", isTalk: false },
   { year: "2023", title: "캡스톤 디자인", org: "한림대학교", kind: "PROJECT", isTalk: false },
@@ -377,8 +319,8 @@ export const skills = [
 ];
 
 export const stats = [
-  { num: 97, suf: "%↓", label: "미디어 용량 절감" },
-  { num: 90, suf: "점", label: "Lighthouse 성능 점수" },
-  { num: 3, suf: "곳", label: "거쳐온 스타트업" },
-  { num: 4, suf: "개", label: "구축한 서비스 도메인" },
+  { num: 90, suf: "점대", label: "Lighthouse (40→80~90)" },
+  { num: 3, suf: "곳", label: "스타트업 경력" },
+  { num: 30, suf: "%↓", label: "케어마인더 초기 로딩" },
+  { num: 97, suf: "%↓", label: "앱테크 미디어 용량" },
 ];

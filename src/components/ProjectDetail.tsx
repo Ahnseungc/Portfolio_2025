@@ -15,7 +15,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
         <dl className="project-detail__meta">
           <div>
-            <dt>회사</dt>
+            <dt>분류</dt>
             <dd>{project.company}</dd>
           </div>
           <div>
@@ -26,6 +26,26 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             <dt>역할</dt>
             <dd>{project.role}</dd>
           </div>
+          {project.repoUrl && (
+            <div>
+              <dt>저장소</dt>
+              <dd>
+                <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                  {project.repoUrl.replace("https://github.com/", "github.com/")}
+                </a>
+              </dd>
+            </div>
+          )}
+          {project.demoUrl && (
+            <div>
+              <dt>데모</dt>
+              <dd>
+                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                  {project.demoUrl.replace("https://", "")}
+                </a>
+              </dd>
+            </div>
+          )}
         </dl>
 
         <div className="project-detail__chips">
@@ -61,9 +81,11 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
       <section className="project-detail__section">
         <h2>화면</h2>
         <p className="project-detail__gallery-note">
-          실제 서비스 화면을 아래에 첨부할 수 있습니다.{" "}
-          <code>public/projects/{project.slug}/</code> 경로에 이미지를 넣으면 자동으로 표시됩니다.
+          {project.images.length > 0
+            ? "아래는 README·공개 자료에 있는 화면입니다."
+            : "공개된 스크린샷이 없어 개요만 적어 두었습니다."}
         </p>
+        {project.images.length > 0 && (
         <div className="project-detail__gallery">
           {project.images.map((image, index) => (
             <ProjectImage
@@ -75,6 +97,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             />
           ))}
         </div>
+        )}
       </section>
     </article>
   );

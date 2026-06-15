@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import { stats } from "@/data/portfolio";
 
-const words = ["저는", "익숙한", "것을", "부수고,", "더", "나은", "것으로", "다시", "짓는", "일을", "두려워하지", "않습니다."];
-const keyWords = ["부수고,", "다시", "않습니다."];
+const words = ["프론트에서", "막히는", "건", "대부분", "비슷합니다.", "렌더링,", "WebView", "동기,", "배포.", "재현하고", "숫자로", "확인한", "다음", "고칩니다."];
+const keyWords = ["비슷합니다.", "고칩니다."];
 
 export default function About() {
   const sceneRef = useRef<HTMLDivElement>(null);
@@ -127,16 +127,16 @@ export default function About() {
           </div>
           <div>
             <h2 className="section-title" data-reveal="">
-              변화가<br />기본값입니다.
+              일하는<br />방식
             </h2>
             <p data-reveal="" style={{ "--d": ".06s" } as React.CSSProperties}>
-              렌더링·하이드레이션·번들 최적화로 화면 성능을 다듬는 작업을 주로 해온 프론트엔드 개발자입니다. Lighthouse 40~50점대를 80~90점대로, LCP 5.2s를 2.1s로 끌어내린 경험이 있습니다.
+              Lighthouse 40~50점대를 80~90점대로, LCP 5.2s를 2.1s까지 줄인 적이 있습니다. 커서 기반 무한스크롤, SSR/ISR/CSR 나누기, Dynamic Import 같은 건 그때 실제로 쓴 방법들이고요.
             </p>
             <p data-reveal="" style={{ "--d": ".12s" } as React.CSSProperties}>
-              WebView 구조와 모노레포, 디자인 시스템, CI/CD를 직접 설계하고 만들어 왔습니다. RN → WebView 전환을 주도하며 4개 도메인을 하나의 모노레포로 묶고, S3 기반 실시간 배포 체계를 구축했습니다.
+              케어마인더에서는 RN → WebView + Next.js 전환을 주도했고, 4개 도메인 모노레포·CDS·S3 실시간 배포까지 맡았습니다. 지금은 금 거래 앱에서 WebView 브릿지, 앱테크, 트래픽 피크 대응을 하고 있습니다.
             </p>
             <p data-reveal="" style={{ "--d": ".18s" } as React.CSSProperties}>
-              기획·디자인·백엔드·QA와 함께 일하는 방식을 정리해 팀이 더 빠르게 움직이도록 돕는 일에도 관심이 많습니다.
+              코드 한 줄에는 의도를, 구조에는 책임 경계를 분명히 두는 편입니다. 기획·디자인·백엔드와 협업하는 방식을 정리하는 것도 좋아합니다.
             </p>
           </div>
         </div>

@@ -33,16 +33,16 @@ export default function Hero() {
         </span>
         <h1>
           <span className="line" data-reveal="">
-            구조를 바꾸고,
+            WebView랑 성능,
           </span>
           <br />
           <span className="line" data-reveal="" style={{ "--d": "0.12s" } as React.CSSProperties}>
-            경험을 <span className="accent">다시 씁니다.</span>
+            <span className="accent">숫자로</span> 확인하고 고칩니다.
           </span>
         </h1>
         <p className="lead" data-reveal="fade" style={{ "--d": "0.22s" } as React.CSSProperties}>
-          렌더링·하이드레이션·번들 최적화로 화면 성능을 다듬고, WebView 구조와 모노레포·디자인 시스템·CI/CD를
-          직접 설계해온 프론트엔드 개발자. — 안승찬
+          렌더링·번들·WebView 브릿지 쪽을 주로 해온 프론트엔드 개발자입니다.
+          지금은 골드앤컴퍼니, 그 전엔 케어마인더·리케어랩에서 WebView 전환과 모노레포를 맡았습니다. — 안승찬
         </p>
         <div className="hero__actions" data-reveal="fade" style={{ "--d": "0.32s" } as React.CSSProperties}>
           <a className="btn btn--primary" href="#work">

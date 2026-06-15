@@ -129,7 +129,17 @@ export default function ProjectDetailScroller({ project }: ProjectDetailScroller
       <header className="pd-header">
         <p className="pd-header__tag">{project.tag}</p>
         <h1 className="pd-header__title">{project.title}</h1>
-        <p className="pd-header__meta">{project.company} · {project.chips.join(" · ")}</p>
+        <p className="pd-header__meta">
+          {project.company} · {project.period}
+          {project.repoUrl && (
+            <>
+              {" · "}
+              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="pd-header__link">
+                GitHub
+              </a>
+            </>
+          )}
+        </p>
       </header>
 
       <div className="pd-layout">
@@ -221,7 +231,7 @@ export default function ProjectDetailScroller({ project }: ProjectDetailScroller
                     src={step.image.src}
                     alt={step.image.alt}
                     priority={index === 0}
-                    sizes="280px"
+                    sizes="480px"
                     className="pd-screen__image"
                   />
                 ) : (

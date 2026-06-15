@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0f1419"/>
+  <rect x="40" y="56" width="720" height="388" rx="12" fill="#1a2332" stroke="#4ade80" stroke-width="2"/>
+  <text x="400" y="230" fill="#e8edf4" font-family="system-ui,sans-serif" font-size="26" font-weight="700" text-anchor="middle">CareMinder PC</text>
+  <text x="400" y="268" fill="#8b9cb3" font-family="system-ui,sans-serif" font-size="15" text-anchor="middle">ÑÙ p¤l · public repo</text>
+</svg>

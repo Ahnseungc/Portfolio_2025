@@ -4,10 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "안승찬 · 프론트엔드 개발자",
   description:
-    "변화를 기본값으로 삼는 프론트엔드 개발자. 익숙한 구조를 부수고 더 나은 것으로 다시 짓습니다.",
+    "렌더링·WebView·모노레포 쪽을 주로 해온 프론트엔드 개발자. 골드앤컴퍼니 재직, 케어마인더·리케어랩 경력.",
   openGraph: {
     title: "안승찬 · 프론트엔드 개발자",
-    description: "Change by Default — 구조를 바꾸고, 경험을 다시 씁니다.",
+    description: "WebView랑 성능, 숫자로 확인하고 고칩니다.",
     locale: "ko_KR",
     type: "website",
   },

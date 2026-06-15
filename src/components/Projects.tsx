@@ -25,9 +25,9 @@ export default function Projects() {
       <div className="wrap">
         <div className="section-head">
           <span className="section-num">02 — SELECTED WORK</span>
-          <h2 className="section-title" data-reveal="">바꾼 것들</h2>
+          <h2 className="section-title" data-reveal="">GitHub에 있는 것</h2>
           <p className="lead" data-reveal="fade">
-            구조를 뜯어고치고, 아키텍처를 전환하고, 더 나은 방식으로 다시 지은 작업들.
+            회사 서비스 코드는 대부분 비공개입니다. 공개 저장소만 모았고, 재직 중 성과는 경력 섹션에 적어 두었습니다.
           </p>
         </div>
 

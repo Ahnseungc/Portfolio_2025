@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const TEXT = "CHANGE BY DEFAULT";
+const TEXT = "안승찬";
 const DURATION = 4230; // 흩어짐(26%) ≈ 1100ms
 const P_FLOW = 0.12;
 const P_CONV = 0.58;

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#08070f"/>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="#0f0d1a" stroke="#a78bfa" stroke-width="1.5"/>
+
+  <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1a1630" stroke-width="0.5"/>
+  </pattern>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="url(#g)"/>
+
+  <!-- Heart decoration -->
+  <text x="400" y="175" fill="#8b5cf6" font-family="system-ui,sans-serif" font-size="38" text-anchor="middle">♥</text>
+
+  <text x="400" y="248" fill="#f1f5f9" font-family="system-ui,sans-serif" font-size="52" font-weight="800" text-anchor="middle">우리</text>
+  <text x="400" y="288" fill="#a78bfa" font-family="system-ui,sans-serif" font-size="16" font-weight="400" text-anchor="middle" letter-spacing="4">U R I</text>
+  <text x="400" y="322" fill="#475569" font-family="system-ui,sans-serif" font-size="13" text-anchor="middle">소아우울증 케어 챗봇 앱</text>
+
+  <!-- Badge -->
+  <rect x="276" y="348" width="248" height="32" rx="16" fill="#1a1030" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="400" y="368" fill="#c4b5fd" font-family="system-ui,sans-serif" font-size="12" font-weight="600" text-anchor="middle">Android · AI Chatbot · 감정 케어</text>
+</svg>

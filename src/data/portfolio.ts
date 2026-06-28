@@ -37,213 +37,283 @@ export type Project = {
   steps?: ProjectStep[];
 };
 
-const TEAMMOA_SCREEN =
-  "https://github.com/Ahnseungc/TeamMoa/assets/94547692/03c2055f-af65-4f6e-a16d-a869e993125e";
-
 export const projects: Project[] = [
   {
     slug: "webviewkit",
-    tag: "OPEN SOURCE",
+    tag: "OPEN SOURCE · npm",
     title: "WebViewKit",
-    desc: "WebView에서 네이티브형 push/back 네비게이션을 제공하는 npm 패키지입니다.",
+    desc: "WebView 앱에서 네이티브 앱과 동일한 스택 네비게이션을 제공하는 npm 라이브러리입니다.",
     thumbnail: "/projects/webviewkit/thumbnail.svg",
-    chips: ["TypeScript", "React", "pnpm", "Vitest", "npm"],
-    placeholder: "[ WebViewKit 스택 라우터 ]",
+    chips: ["TypeScript", "React", "pnpm", "Jest", "npm", "Vite"],
+    placeholder: "[ WebViewKit 아키텍처 ]",
     company: "개인 · 오픈소스",
     period: "2025.05 — 유지보수 중",
     role: "설계 · 개발 · npm 배포",
     repoUrl: "https://github.com/Ahnseungc/WebViewKit",
     overview:
-      "WebView 안에서 화면 전환·뒤로가기·히스토리가 브라우저 기본값과 맞지 않을 때가 많습니다. 스택 라우터, history 관리, 브라우저 데모 앱을 모노레포로 묶어 `@ahnseungchan/webviewkit`으로 배포했습니다.",
+      "RN·Flutter WebView 안에서 화면 전환과 뒤로가기가 브라우저 기본값과 달라 매 프로젝트마다 같은 코드를 반복 작성했습니다. Stack Router·History 관리·WebView Bridge(RN·Flutter)를 pnpm 모노레포로 묶어 @ahnseungchan/webviewkit으로 배포했습니다.",
     highlights: [
-      "스택 push/back API와 history 상태를 패키지로 분리",
-      "Vite 기반 `@webviewkit/browser` 데모 앱 포함",
-      "pnpm workspace + Vitest로 코어 로직 테스트",
-      "npm public 배포 (`@ahnseungchan/webviewkit`)",
+      "Stack Router: push · pop · back · depth 관리",
+      "WebView Bridge: RN postMessage + Flutter JavaScript Channel",
+      "History API 동기화로 브라우저 history와 앱 스택을 일치",
+      "pnpm workspace 모노레포 (packages/core + packages/browser 데모)",
+      "Jest 기반 유닛 테스트 · npm public 배포 v1.3.0",
     ],
     sections: [
       {
         title: "왜 만들었는지",
         content:
-          "RN WebView + Next.js 조합에서 뒤로가기와 라우팅이 자주 어긋났습니다. 프로젝트마다 비슷한 코드를 다시 쓰기보다, 재사용 가능한 라우터로 빼내는 게 낫다고 판단했습니다.",
+          "케어마인더·리케어랩·골드앤컴퍼니 세 회사에서 WebView 라우팅 코드를 매번 새로 짰습니다. postMessage 인터페이스, history 동기화, 스택 depth 관리가 모두 제각각이었고, 재사용 가능한 패키지로 추출해야 한다는 판단에 만들었습니다.",
       },
       {
-        title: "구조",
+        title: "모노레포 구조",
         content:
-          "packages/core에 스택 라우터와 history를 두고, packages/browser에 동작 확인용 데모를 뒀습니다. CHANGELOG와 README를 repo 루트에서 관리합니다.",
+          "packages/core: Stack Router, WebView Bridge(RN·Flutter), History API, TypeScript 타입을 포함합니다. packages/browser: Vite + React 기반 데모 앱으로 실시간 동작을 확인합니다. tsup으로 ESM/CJS 듀얼 빌드하고 npm에 배포합니다.",
       },
       {
-        title: "배포",
+        title: "테스트 · 배포",
         content:
-          "코어 빌드 후 npm publish --access public로 올립니다. v1.1.0에서 dev roadmap UI와 빌드 설정을 정리했고, 불필요한 gsap 의존성은 제거했습니다.",
+          "Jest로 스택 전환·back 처리·엣지 케이스를 고정합니다. pnpm build → jest → npm publish --access public 파이프라인을 루트에서 한 번에 실행합니다. CHANGELOG에 버전별 변경 이력을 남깁니다.",
       },
     ],
     images: [
-      {
-        src: "/projects/webviewkit/thumbnail.svg",
-        alt: "WebViewKit",
-        caption: "WebView 스택 라우터 npm 패키지",
-      },
+      { src: "/projects/webviewkit/arch.svg", alt: "WebViewKit 아키텍처", caption: "pnpm monorepo 구조" },
     ],
     steps: [
       {
         eyebrow: "01 · 배경",
-        title: "프로젝트마다 같은 WebView 라우팅 코드가 반복됐습니다.",
-        desc: "푸시·딥링크·뒤로가기를 웹 라우터와 맞추려면 매번 postMessage와 history를 다시 짰습니다.",
-        did: "케어마인더·리케어랩·골드앤컴퍼니에서 겪은 패턴을 정리해 공통 API로 뽑았습니다.",
+        title: "WebView 라우팅 코드가 매 프로젝트마다 반복됐습니다.",
+        desc: "push·딥링크·뒤로가기를 웹 라우터와 맞추려면 매번 postMessage와 history를 다시 짰습니다.",
+        did: "3곳의 스타트업에서 겪은 패턴을 하나의 공통 API로 뽑아 npm 라이브러리로 만들었습니다.",
+        image: { src: "/projects/webviewkit/thumbnail.svg", alt: "WebViewKit", caption: "WebView 스택 라우터 npm 패키지" },
       },
       {
-        eyebrow: "02 · 패키지",
-        title: "스택 라우터와 history를 `@ahnseungchan/webviewkit`으로 분리했습니다.",
-        desc: "push/back, 스택 depth, history sync를 React 훅·컴포넌트 형태로 제공합니다.",
-        did: "모노레포(core + browser)로 코어와 데모를 같이 돌리게 구성했습니다.",
+        eyebrow: "02 · 아키텍처",
+        title: "pnpm 모노레포로 core와 browser 데모를 분리했습니다.",
+        desc: "packages/core에 Stack Router·Bridge·History를, packages/browser에 Vite + React 데모를 뒀습니다.",
+        did: "Stack Router(push/pop/back), WebView Bridge(RN·Flutter), History 동기화를 React 훅 형태로 제공합니다.",
+        image: { src: "/projects/webviewkit/arch.svg", alt: "WebViewKit 아키텍처", caption: "모노레포 구조도" },
       },
       {
         eyebrow: "03 · 검증",
-        title: "Vitest와 browser 데모로 동작을 확인합니다.",
-        desc: "스택 전환·back 처리·엣지 케이스를 테스트로 고정해 두었습니다.",
-        did: "pnpm test / pnpm build 파이프라인을 repo 루트에서 한 번에 실행합니다.",
+        title: "Jest 유닛 테스트로 동작을 고정합니다.",
+        desc: "스택 전환·back 처리·edge case를 테스트로 잠가 두어 회귀를 막습니다.",
+        did: "pnpm test · pnpm build 파이프라인을 repo 루트에서 한 번에 실행합니다.",
       },
       {
         eyebrow: "04 · 배포",
-        title: "npm에 public으로 올려 두었습니다.",
-        desc: "다른 WebView 프로젝트에서 import만으로 같은 네비게이션 모델을 쓸 수 있습니다.",
-        did: "packages/core README와 CHANGELOG에 버전별 변경을 남깁니다.",
+        title: "npm에 public으로 배포했습니다.",
+        desc: "import만으로 동일한 네비게이션 모델을 쓸 수 있고, v1.3.0까지 유지보수 중입니다.",
+        did: "CHANGELOG · README에 버전별 변경을 남기고, MIT 라이선스로 공개합니다.",
       },
     ],
   },
   {
-    slug: "careminder-pc",
-    tag: "CAREMINDER · PUBLIC",
-    title: "CareMinder PC",
-    desc: "병동·간호 데스크용 PC 웹 프론트엔드 공개 저장소입니다.",
-    thumbnail: "/projects/careminder-pc/thumbnail.svg",
-    chips: ["React", "TypeScript", "Vite", "WebView", "Storybook"],
-    placeholder: "[ CareMinder PC 웹 ]",
-    company: "(주)케어마인더",
-    period: "2025.03 — 2026.01",
-    role: "프론트엔드 (리드)",
-    repoUrl: "https://github.com/Ahnseungc/CareMinder-PC",
-    overview:
-      "병동 간호 인력이 환자 요청을 처리하는 B2B 데스크 웹입니다. README는 템플릿 수준이지만, repo 설명과 재직 기간 동안의 아키텍처 전환·운영 작업이 이 코드베이스와 같은 제품군입니다.",
-    highlights: [
-      "CareFlow / CareVoice / CareDesk 4개 도메인 모노레포 통합",
-      "RN 중심 → WebView + Next.js 전환 주도",
-      "Atomic Design 기반 CDS(CareMinder Design System) + Storybook",
-      "S3 자체 배포 + FCM 트리거로 앱 심사 없이 업데이트",
-      "초기 로딩 ~30% 개선, 요청 완료율 ~20% 향상 (팀 지표)",
-    ],
-    sections: [
-      {
-        title: "맥락",
-        content:
-          "앱 스토어 심사 때문에 RN 핫픽스가 느렸고, 도메인별 코드 중복도 컸습니다. WebView + Next.js로 옮기면서 이 PC·태블릿·웹 제품군을 한 repo 체계로 맞췄습니다.",
-      },
-      {
-        title: "내가 한 일",
-        content:
-          "아키텍처 전환을 주도했고, 프론트 3명이 Next.js를 처음 쓰는 상황이라 스크럼마다 공식 문서를 같이 읽으며 마이그레이션을 진행했습니다. 저사양 태블릿은 rAF·CSS 전환으로 드래그 끊김을 줄였습니다.",
-      },
-      {
-        title: "운영",
-        content:
-          "EAS OTA 한계를 S3 배포 + FCM 알림으로 보완했고, 태블릿 네트워크·백그라운드·종료 이벤트 모니터링 페이지와 원격 대응 기능을 붙였습니다.",
-      },
-    ],
-    images: [
-      {
-        src: "/projects/careminder-pc/thumbnail.svg",
-        alt: "CareMinder PC",
-        caption: "공개 repo — 운영 빌드·화면은 비공개",
-      },
-    ],
-  },
-  {
-    slug: "team-moa",
-    tag: "TEAM · HACKATHON",
-    title: "TeamMoa",
-    desc: "React·TypeScript·Vite로 제작한 팀 프로토타입입니다.",
-    thumbnail: TEAMMOA_SCREEN,
-    chips: ["React", "TypeScript", "Vite"],
-    placeholder: "[ TeamMoa 프로토타입 ]",
+    slug: "como",
+    tag: "WEB · MOBILE · MVP",
+    title: "코모 (Como)",
+    desc: "직장인을 위한 취미 매칭 플랫폼으로, 서울시 교육청에 실제 MVP를 도입한 서비스입니다.",
+    thumbnail: "/projects/como/thumbnail.svg",
+    chips: ["Next.js 14", "Flutter", "WebView", "TypeScript", "Vercel"],
+    placeholder: "[ 코모 아키텍처 ]",
     company: "팀 프로젝트",
-    period: "2024.06",
-    role: "프론트엔드",
-    repoUrl: "https://github.com/Ahnseungc/TeamMoa",
-    demoUrl: "https://damoa.vercel.app",
+    period: "2023 — 2024",
+    role: "프론트엔드 개발 · 앱 개발",
     overview:
-      "해커톤·팀 단위로 진행한 웹 프로토타입입니다. 커밋 컨벤션·코드 컨벤션을 README에 정리해 두었고, Vercel에 배포한 버전과 YouTube 시연 영상 링크가 있습니다.",
+      "직장인들이 퇴근 후 취미를 함께할 사람을 찾을 수 있는 플랫폼입니다. Next.js 14로 웹을 개발하고 Flutter WebView로 iOS·Android 앱을 감싸 배포했습니다. 서울시 교육청에 실제 MVP로 도입되어 운영 검증을 거쳤습니다.",
     highlights: [
-      "React + TypeScript + Vite 기반 SPA",
-      "팀 커밋·코드 컨벤션 문서화",
-      "Vercel 배포 (damoa.vercel.app)",
-      "README에 UI 스크린샷 13장 보관",
+      "서울시 교육청 실제 MVP 도입 · 운영 검증",
+      "Next.js 14 App Router + TypeScript 기반 웹 개발",
+      "Flutter WebView로 iOS · Android 앱 동시 출시",
+      "Vercel Edge Deploy로 빠른 배포 · CI/CD 자동화",
+      "취미 매칭 · 피드 · 커뮤니티 핵심 기능 구현",
     ],
     sections: [
       {
-        title: "저장소",
+        title: "서비스 개요",
         content:
-          "GitHub에 전체 프론트 코드와 스크린샷이 공개되어 있습니다. Working Prototype 영상도 README에 링크돼 있습니다.",
+          "직장인들이 퇴근 후 관심 있는 취미 활동을 함께할 동료를 찾는 플랫폼입니다. 취미 카테고리별 검색, 실시간 매칭, 커뮤니티 피드 기능을 제공합니다.",
       },
       {
-        title: "협업",
+        title: "기술 구조",
         content:
-          "Feat/Fix/Docs 등 커밋 타입과 PR 본문 형식을 팀 규칙으로 맞춰 두었습니다. 문자열은 쌍따옴표, 문장 끝 세미콜론 같은 코드 스타일도 README에 적어 두었습니다.",
+          "Next.js 14 App Router로 SSR·ISR을 활용해 빠른 초기 로딩을 구현했습니다. Flutter WebView Bridge로 웹 코드를 iOS·Android 앱으로 래핑해 단일 코드베이스로 멀티 플랫폼을 지원합니다.",
       },
       {
-        title: "데모",
+        title: "서울시 교육청 MVP 도입",
         content:
-          "https://damoa.vercel.app 에 배포본이 있고, YouTube 시연(https://youtu.be/0ohJlE4AYjE)으로 플로우를 확인할 수 있습니다.",
+          "개발한 플랫폼이 서울시 교육청에 실제 MVP로 채택되어 운영되었습니다. 실제 사용자 피드백을 반영한 개선 사이클을 경험했습니다.",
       },
     ],
     images: [
+      { src: "/projects/como/arch.svg", alt: "코모 아키텍처", caption: "Flutter WebView + Next.js 14 구조" },
+    ],
+    steps: [
       {
-        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/18763f68-fc93-4c6c-b9a0-6aad9540e68a",
-        alt: "TeamMoa 화면 2",
-        caption: "README에 포함된 UI 스크린샷",
+        eyebrow: "01 · 서비스",
+        title: "직장인 취미 매칭 플랫폼을 만들었습니다.",
+        desc: "퇴근 후 함께 취미를 즐길 사람을 찾는 것이 생각보다 어렵다는 문제에서 시작했습니다.",
+        did: "취미 카테고리 검색, 매칭 피드, 커뮤니티 기능을 기획·개발했습니다.",
+        image: { src: "/projects/como/thumbnail.svg", alt: "코모", caption: "직장인 취미 플랫폼" },
       },
       {
-        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/ad4c49fd-7f21-47d1-b75b-d088373fdb6e",
-        alt: "TeamMoa 화면 3",
-        caption: "프로토타입 주요 화면",
+        eyebrow: "02 · 아키텍처",
+        title: "Next.js 14 웹을 Flutter WebView로 앱화했습니다.",
+        desc: "단일 코드베이스로 웹·iOS·Android를 동시에 지원하는 구조를 설계했습니다.",
+        did: "Vercel Edge Deploy로 CI/CD를 자동화하고 빠른 배포 주기를 유지했습니다.",
+        image: { src: "/projects/como/arch.svg", alt: "코모 아키텍처", caption: "서비스 아키텍처 구조도" },
       },
       {
-        src: "https://github.com/Ahnseungc/TeamMoa/assets/94547692/19b2794c-a6b7-4335-9dfd-a3f3801acb05",
-        alt: "TeamMoa 화면 4",
-        caption: "팀 프로젝트 UI",
+        eyebrow: "03 · MVP 도입",
+        title: "서울시 교육청에 실제 MVP로 채택됐습니다.",
+        desc: "실제 사용자 환경에서 플랫폼이 운영되며 검증을 거쳤습니다.",
+        did: "운영 데이터를 기반으로 UX를 개선하고 안정성을 높이는 작업을 진행했습니다.",
       },
     ],
   },
   {
-    slug: "transition-router",
-    tag: "SIDE PROJECT",
-    title: "transition-router",
-    desc: "Next.js App Router 페이지 전환을 실험한 개인 프로젝트입니다.",
-    thumbnail: "/projects/transition-router/thumbnail.svg",
-    chips: ["Next.js", "TypeScript", "App Router"],
-    placeholder: "[ transition-router ]",
-    company: "개인",
-    period: "2026.01",
-    role: "실험 · 구현",
-    repoUrl: "https://github.com/Ahnseungc/transition-router",
+    slug: "speakdog",
+    tag: "MOBILE · ACCESSIBILITY",
+    title: "스픽독 (Speakdog)",
+    desc: "시각장애인을 위한 PDF 리더 앱으로, TTS 음성 합성으로 문서를 들려주는 서비스입니다.",
+    thumbnail: "/projects/speakdog/thumbnail.svg",
+    chips: ["React Native", "React", "AWS", "TypeScript", "TTS", "S3"],
+    placeholder: "[ 스픽독 아키텍처 ]",
+    company: "팀 프로젝트",
+    period: "2023",
+    role: "앱 개발 · 프론트엔드",
+    demoUrl: "https://www.youtube.com/watch?v=qAf9XjZlnCA",
     overview:
-      "라우트 전환 시 UX를 조금 더 부드럽게 만들 수 있는지 테스트한 저장소입니다. README는 Next.js 기본 템플릿이지만, repo 이름대로 transition 실험 코드가 들어 있습니다.",
+      "시각장애인이 PDF 문서를 접근하기 어렵다는 문제를 해결하기 위한 앱입니다. React Native로 iOS·Android 앱을 만들고, TTS 엔진으로 PDF 텍스트를 음성으로 변환합니다. AWS S3에 PDF를 저장하고 Lambda로 텍스트를 추출, API Gateway로 클라이언트에 제공합니다.",
     highlights: [
-      "Next.js App Router 프로젝트",
-      "페이지 전환(transition) 실험",
-      "TypeScript 설정",
+      "React Native iOS · Android 앱 개발",
+      "TTS 음성 합성으로 PDF 텍스트 읽어주기",
+      "AWS S3 PDF 저장 · Lambda 텍스트 추출 파이프라인",
+      "React 웹 뷰어 · 어드민 페이지 개발",
+      "시각장애인 접근성 중심 UX 설계",
     ],
     sections: [
       {
-        title: "목적",
-        content: "WebView·SPA 모두에서 화면 전환이 딱딱하게 느껴질 때, Next.js 쪽에서 할 수 있는지 가볍게 실험한 repo입니다.",
+        title: "문제 정의",
+        content:
+          "시각장애인은 일반 PDF 리더를 사용하기 어렵습니다. 화면 낭독기가 있지만 PDF 구조 파싱이 제대로 되지 않아 문서 내용을 정확히 전달하지 못하는 경우가 많습니다. 스픽독은 이 문제를 해결하기 위해 PDF를 직접 파싱해 정제된 텍스트를 TTS로 읽어줍니다.",
       },
       {
-        title: "상태",
-        content: "본업 프로젝트에서 검증한 패턴을 옮기기 전 단계의 playground에 가깝습니다. 공개된 코드 기준으로 확인 가능합니다.",
+        title: "기술 구조",
+        content:
+          "React Native 앱에서 PDF를 업로드하면 AWS S3에 저장됩니다. Lambda가 PDF를 파싱해 텍스트를 추출하고, API Gateway를 통해 앱에 전달합니다. 앱은 TTS 엔진으로 텍스트를 음성으로 변환해 재생합니다.",
+      },
+      {
+        title: "접근성 UX",
+        content:
+          "시각장애인이 터치만으로 앱을 제어할 수 있도록 큰 터치 영역, 명확한 포커스 순서, 음성 피드백을 설계했습니다. React 웹 어드민에서 PDF 관리와 업로드를 지원합니다.",
       },
     ],
-    images: [],
+    images: [
+      { src: "/projects/speakdog/arch.svg", alt: "스픽독 아키텍처", caption: "React Native + AWS 구조도" },
+      { src: "https://img.youtube.com/vi/qAf9XjZlnCA/maxresdefault.jpg", alt: "스픽독 시연 영상", caption: "시연 영상 (YouTube)" },
+    ],
+    steps: [
+      {
+        eyebrow: "01 · 문제",
+        title: "시각장애인이 PDF 문서에 접근하기 어렵습니다.",
+        desc: "기존 화면 낭독기는 PDF 구조를 제대로 파싱하지 못해 내용을 정확히 전달하지 못합니다.",
+        did: "PDF를 직접 파싱해 정제된 텍스트를 TTS로 읽어주는 앱을 기획·개발했습니다.",
+        image: { src: "/projects/speakdog/thumbnail.svg", alt: "스픽독", caption: "시각장애인 PDF 리더" },
+      },
+      {
+        eyebrow: "02 · 아키텍처",
+        title: "React Native 앱과 AWS 백엔드를 연결했습니다.",
+        desc: "S3 저장 → Lambda 파싱 → API Gateway → 앱 TTS 재생 파이프라인을 구축했습니다.",
+        did: "React Native(iOS·Android) + React 웹 어드민 + AWS 서버리스로 풀스택을 구성했습니다.",
+        image: { src: "/projects/speakdog/arch.svg", alt: "스픽독 아키텍처", caption: "서비스 아키텍처 구조도" },
+      },
+      {
+        eyebrow: "03 · 접근성",
+        title: "시각장애인 중심 UX를 설계했습니다.",
+        desc: "큰 터치 영역, 명확한 포커스 순서, 음성 피드백으로 터치만으로 앱을 완전히 제어할 수 있습니다.",
+        did: "TTS 속도 조절, 구간 반복, 북마크 기능으로 실사용성을 높였습니다.",
+      },
+      {
+        eyebrow: "04 · 시연",
+        title: "YouTube에서 시연 영상을 확인할 수 있습니다.",
+        desc: "앱의 전체 사용 흐름과 TTS 음성 읽기 기능을 시연합니다.",
+        did: "youtu.be/qAf9XjZlnCA 에서 확인 가능합니다.",
+        image: { src: "https://img.youtube.com/vi/qAf9XjZlnCA/maxresdefault.jpg", alt: "스픽독 시연", caption: "▶  시연 영상 보기" },
+      },
+    ],
+  },
+  {
+    slug: "uri",
+    tag: "ANDROID · SOCIAL IMPACT",
+    title: "우리 (Uri)",
+    desc: "소아우울증 아동을 위한 AI 챗봇 앱으로, 감정 대화와 보호자 연결을 지원합니다.",
+    thumbnail: "/projects/uri/thumbnail.svg",
+    chips: ["Android", "AI Chatbot", "NLP", "Java", "감정 케어"],
+    placeholder: "[ 우리 아키텍처 ]",
+    company: "팀 프로젝트",
+    period: "2022 — 2023",
+    role: "Android 앱 개발",
+    demoUrl: "https://www.youtube.com/watch?v=BLpkjLulnyU",
+    overview:
+      "소아우울증을 앓는 아동이 감정을 표현하기 어렵다는 문제를 해결하기 위한 Android 챗봇 앱입니다. 캐릭터 기반 대화 UI로 아이가 자연스럽게 감정을 표현하도록 유도하고, AI가 감정 상태를 분석해 보호자·전문가에게 리포트를 제공합니다.",
+    highlights: [
+      "Android Native 앱 개발",
+      "AI 챗봇 엔진 · NLP 기반 감정 분류",
+      "캐릭터 기반 대화 UI로 아동 친화적 UX 설계",
+      "감정 추이 리포트 · 보호자 알림 시스템",
+      "소아우울증 조기 감지 케어 플로우 설계",
+    ],
+    sections: [
+      {
+        title: "문제 정의",
+        content:
+          "소아우울증 아동은 감정을 언어로 표현하는 것 자체가 어렵습니다. 전문 상담 전에 일상적인 감정 표현 창구가 필요했습니다. 우리는 아이가 좋아하는 캐릭터와 대화하듯 감정을 표현할 수 있는 앱을 만들었습니다.",
+      },
+      {
+        title: "챗봇 설계",
+        content:
+          "NLP 기반 감정 분류 모델이 아이의 대화에서 감정 상태를 파악합니다. 대화 시나리오 트리로 상황에 맞는 응답을 생성하고, 반복적인 부정 감정이 감지되면 보호자에게 알림을 전송합니다.",
+      },
+      {
+        title: "보호자 연결",
+        content:
+          "아이의 감정 추이 데이터를 시각화한 리포트를 보호자 뷰에서 확인할 수 있습니다. 위험 신호 감지 시 전문 상담 기관 연결 안내를 제공합니다.",
+      },
+    ],
+    images: [
+      { src: "/projects/uri/arch.svg", alt: "우리 아키텍처", caption: "Android + AI Chatbot 구조도" },
+      { src: "https://img.youtube.com/vi/BLpkjLulnyU/maxresdefault.jpg", alt: "우리 시연 영상", caption: "시연 영상 (YouTube)" },
+    ],
+    steps: [
+      {
+        eyebrow: "01 · 문제",
+        title: "소아우울증 아동에게 감정 표현 창구가 필요했습니다.",
+        desc: "아이들은 감정을 언어로 표현하기 어려워 증상이 악화될 때까지 발견이 늦어집니다.",
+        did: "캐릭터 기반 대화 UI로 아이가 자연스럽게 감정을 표현할 수 있는 앱을 기획했습니다.",
+        image: { src: "/projects/uri/thumbnail.svg", alt: "우리", caption: "소아우울증 케어 챗봇" },
+      },
+      {
+        eyebrow: "02 · 아키텍처",
+        title: "Android 앱에 AI 챗봇 엔진을 연결했습니다.",
+        desc: "NLP 감정 분류 → 대화 시나리오 → 리포트 생성 파이프라인을 구축했습니다.",
+        did: "Android Native 앱 + AI 챗봇 엔진 + 보호자 알림 시스템으로 케어 플로우를 완성했습니다.",
+        image: { src: "/projects/uri/arch.svg", alt: "우리 아키텍처", caption: "서비스 아키텍처 구조도" },
+      },
+      {
+        eyebrow: "03 · 케어 플로우",
+        title: "감정 추이를 분석해 보호자와 연결합니다.",
+        desc: "반복되는 부정 감정이 감지되면 보호자 알림과 전문 상담 안내를 제공합니다.",
+        did: "감정 추이 차트·리포트로 보호자가 아이의 상태를 시각적으로 파악할 수 있습니다.",
+      },
+      {
+        eyebrow: "04 · 시연",
+        title: "YouTube에서 시연 영상을 확인할 수 있습니다.",
+        desc: "앱의 전체 대화 흐름과 감정 케어 기능을 시연합니다.",
+        did: "youtu.be/BLpkjLulnyU 에서 확인 가능합니다.",
+        image: { src: "https://img.youtube.com/vi/BLpkjLulnyU/maxresdefault.jpg", alt: "우리 시연", caption: "▶  시연 영상 보기" },
+      },
+    ],
   },
 ];
 

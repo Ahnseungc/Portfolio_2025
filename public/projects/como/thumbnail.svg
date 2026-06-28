@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0a0f0a"/>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="#0f1a0f" stroke="#4ade80" stroke-width="1.5"/>
+
+  <!-- Grid pattern -->
+  <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1a2e1a" stroke-width="0.5"/>
+  </pattern>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="url(#g)"/>
+
+  <text x="400" y="200" fill="#f1f5f9" font-family="system-ui,sans-serif" font-size="52" font-weight="800" text-anchor="middle">코모</text>
+  <text x="400" y="248" fill="#86efac" font-family="system-ui,sans-serif" font-size="18" font-weight="400" text-anchor="middle" letter-spacing="4">C O M O</text>
+  <text x="400" y="286" fill="#475569" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">직장인 취미 플랫폼</text>
+
+  <!-- Badge -->
+  <rect x="300" y="312" width="200" height="32" rx="16" fill="#0f2d1a" stroke="#4ade80" stroke-width="1"/>
+  <text x="400" y="332" fill="#86efac" font-family="system-ui,sans-serif" font-size="12" font-weight="600" text-anchor="middle">서울시 교육청 MVP 도입</text>
+</svg>

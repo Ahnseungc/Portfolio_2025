@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
         hostname: "velog.velcdn.com",
         pathname: "/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        pathname: "/vi/**",
+      },
     ],
   },
 };

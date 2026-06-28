@@ -1,62 +1,82 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { career } from "@/data/portfolio";
 
+const SCROLL_PAGES = career.length + 1;
+
 export default function Career() {
-  const tlRef = useRef<HTMLDivElement>(null);
-  const lineIRef = useRef<HTMLElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const tl = tlRef.current;
-    const lineI = lineIRef.current;
-    if (!tl || !lineI) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-    const items = tl.querySelectorAll<HTMLDivElement>(".tl__item");
-
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle("in", e.isIntersecting)),
-      { threshold: 0.4 }
-    );
-    items.forEach((el) => io.observe(el));
-
-    const onScroll = () => {
-      const rect = tl.getBoundingClientRect();
-      const h = tl.offsetHeight;
-      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (h + window.innerHeight)));
-      lineI.style.transform = `scaleY(${progress})`;
+    const calc = () => {
+      const rect = wrapper.getBoundingClientRect();
+      const scrollable = wrapper.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      setProgress(Math.max(0, Math.min(1, -rect.top / scrollable)));
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
+    window.addEventListener("scroll", calc, { passive: true });
+    calc();
+    return () => window.removeEventListener("scroll", calc);
   }, []);
 
   return (
-    <section className="timeline section-pad" id="career">
-      <div className="wrap">
-        <div className="section-head">
-          <span className="section-num">04 — CAREER</span>
-          <h2 className="section-title">경력</h2>
-          <p className="lead">다양한 제품에서 프론트엔드 개발 경험을 쌓고 있습니다.</p>
-        </div>
-        <div className="tl" ref={tlRef}>
-          <div className="tl__line">
-            <i ref={lineIRef} />
+    <div
+      className="career-scroll"
+      id="career"
+      ref={wrapperRef}
+      style={{ height: `${SCROLL_PAGES * 100}vh` }}
+    >
+      <div className="career-sticky">
+        <div className="wrap">
+          <div className="section-head">
+            <span className="section-num">04 — CAREER</span>
+            <h2 className="section-title">경력</h2>
+            <p className="lead">다양한 제품에서 프론트엔드 개발 경험을 쌓고 있습니다.</p>
           </div>
-          {career.map((item, i) => (
-            <div className="tl__item" key={i}>
-              <div className="tl__dot" />
-              <div className="tl__date">{item.date}</div>
-              <div className="tl__role">{item.role}</div>
-              <div className="tl__org">{item.org}</div>
-              <div className="tl__desc">{item.desc}</div>
+
+          <div className="tl-s">
+            {/* 세로 트랙 라인 — 아래서 위로 채워짐 */}
+            <div className="tl-s__track">
+              <div
+                className="tl-s__fill"
+                style={{ transform: `scaleY(${progress})` }}
+              />
             </div>
-          ))}
+
+            {career.map((item, i) => {
+              /* 맨 아래(oldest, 마지막 인덱스)가 threshold=0, 맨 위(newest, 0)가 가장 늦게 */
+              const threshold = (career.length - 1 - i) / career.length;
+              const isActive = progress >= threshold;
+              const itemPct = isActive
+                ? Math.min(1, (progress - threshold) * career.length)
+                : 0;
+
+              return (
+                <div
+                  key={i}
+                  className={`tl-s__item${isActive ? " active" : ""}`}
+                  style={{
+                    opacity: 0.12 + itemPct * 0.88,
+                    transform: `translateY(${(1 - itemPct) * 14}px)`,
+                  }}
+                >
+                  <div className="tl-s__dot" />
+                  <div className="tl-s__date">{item.date}</div>
+                  <div className="tl-s__role">{item.role}</div>
+                  <div className="tl-s__org">{item.org}</div>
+                  <div className="tl-s__desc">{item.desc}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

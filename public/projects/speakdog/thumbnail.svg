@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070b14"/>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="#0a1020" stroke="#06b6d4" stroke-width="1.5"/>
+
+  <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#0d1829" stroke-width="0.5"/>
+  </pattern>
+  <rect x="48" y="48" width="704" height="404" rx="24" fill="url(#g)"/>
+
+  <!-- Speaker wave decoration -->
+  <circle cx="400" cy="160" r="34" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="400" cy="160" r="52" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.2"/>
+  <circle cx="400" cy="160" r="20" fill="#0a2030" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="400" y="165" fill="#22d3ee" font-family="system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle">♪</text>
+
+  <text x="400" y="250" fill="#f1f5f9" font-family="system-ui,sans-serif" font-size="52" font-weight="800" text-anchor="middle">스픽독</text>
+  <text x="400" y="292" fill="#22d3ee" font-family="system-ui,sans-serif" font-size="14" font-weight="400" text-anchor="middle" letter-spacing="3">S P E A K D O G</text>
+  <text x="400" y="326" fill="#475569" font-family="system-ui,sans-serif" font-size="13" text-anchor="middle">시각장애인을 위한 PDF 리더</text>
+
+  <!-- Badge -->
+  <rect x="290" y="350" width="220" height="32" rx="16" fill="#0a2030" stroke="#06b6d4" stroke-width="1"/>
+  <text x="400" y="370" fill="#22d3ee" font-family="system-ui,sans-serif" font-size="12" font-weight="600" text-anchor="middle">TTS · React Native · AWS</text>
+</svg>

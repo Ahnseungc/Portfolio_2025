@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { Project } from "@/data/portfolio";
-import PhoneMockup from "@/components/PhoneMockup";
 import ProjectImage from "@/components/ProjectImage";
 import { getProjectSteps } from "@/lib/projects";
 
@@ -36,6 +35,11 @@ function stepStyle(index: number, progress: number, axis: "y" | "x" = "y"): CSSP
     pointerEvents: blend > 0.4 ? "auto" : "none",
     zIndex: Math.round(blend * 100),
   };
+}
+
+function getYouTubeId(src: string): string | null {
+  const match = src.match(/img\.youtube\.com\/vi\/([^/]+)\//);
+  return match ? match[1] : null;
 }
 
 export default function ProjectDetailScroller({ project }: ProjectDetailScrollerProps) {
@@ -139,6 +143,14 @@ export default function ProjectDetailScroller({ project }: ProjectDetailScroller
               </a>
             </>
           )}
+          {project.demoUrl && (
+            <>
+              {" · "}
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="pd-header__link">
+                시연 영상
+              </a>
+            </>
+          )}
         </p>
       </header>
 
@@ -217,33 +229,48 @@ export default function ProjectDetailScroller({ project }: ProjectDetailScroller
           </div>
         </div>
 
-        <div className="pd-device">
-          <PhoneMockup>
-            {steps.map((step, index) => (
+        {/* 폰 목업 제거 → 와이드 비주얼 패널 */}
+        <div className="pd-visual">
+          {steps.map((step, index) => {
+            const blend = stepBlend(index, displayProgress);
+            const ytId = step.image ? getYouTubeId(step.image.src) : null;
+
+            return (
               <div
-                key={`screen-${step.eyebrow}-${index}`}
-                className="pd-screen__layer"
+                key={`visual-${step.eyebrow}-${index}`}
+                className="pd-visual__layer"
                 style={stepStyle(index, displayProgress, "x")}
-                aria-hidden={stepBlend(index, displayProgress) < 0.1}
+                aria-hidden={blend < 0.1}
               >
-                {step.image ? (
+                {ytId ? (
+                  <div className="pd-visual__iframe-wrap">
+                    <iframe
+                      className="pd-visual__iframe"
+                      src={`https://www.youtube.com/embed/${ytId}`}
+                      title={step.image!.alt}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : step.image ? (
                   <ProjectImage
                     src={step.image.src}
                     alt={step.image.alt}
                     priority={index === 0}
-                    sizes="480px"
-                    className="pd-screen__image"
+                    sizes="(max-width: 900px) 100vw, 560px"
+                    className="pd-visual__image"
                   />
                 ) : (
-                  <div className="pd-screen__fallback">
+                  <div className="pd-visual__fallback">
                     <span>{project.placeholder}</span>
                   </div>
                 )}
               </div>
-            ))}
-          </PhoneMockup>
+            );
+          })}
 
-          <div className="pd-device__caption">
+          {/* 캡션 */}
+          <div className="pd-visual__caption">
             {steps.map((step, index) =>
               step.image?.caption ? (
                 <p

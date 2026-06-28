@@ -5,77 +5,89 @@ import { stats } from "@/data/portfolio";
 
 const lines = [
   ["기술의", "사용법보다"],
-  ["‘왜", "필요한가’를", "먼저", "이해하며,"],
+  ["'왜", "필요한가'를", "먼저", "이해하며,"],
   ["문제", "해결", "중심으로", "기술을", "선택하는", "개발자입니다."],
 ] as const;
 
-const keyWords = new Set(["‘왜", "필요한가’를", "개발자입니다."]);
+const keyWords = new Set(["'왜", "필요한가'를", "개발자입니다."]);
 
 export default function About() {
-  const sceneRef = useRef<HTMLDivElement>(null);
-  const copyRef = useRef<HTMLDivElement>(null);
-  const visualRef = useRef<HTMLDivElement>(null);
-  const statRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
+  const statRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const scrollDir = useRef<"down" | "up">("down");
+  const prevY = useRef(0);
 
-  const visualFrameRef = useRef<HTMLDivElement>(null);
-  const maxProgress = useRef(0);
-  const maxSpread = useRef(0);
-
-  // Sticky statement word reveal + visual spread — 단방향 (아래 스크롤에서만 진행)
+  // 스크롤 방향 추적
   useEffect(() => {
-    const scene = sceneRef.current;
-    const copy = copyRef.current;
-    const visual = visualRef.current;
-    const frame = visualFrameRef.current;
-    if (!scene) return;
-    const wordEls = scene.querySelectorAll<HTMLSpanElement>("[data-word]");
-
-    const applyVisual = (spread: number) => {
-      const t = 1 - Math.pow(1 - spread, 1.5);
-      const inset = Math.max(0, (1 - t) * 40);
-      const copyShift = t * -8;
-
-      if (frame) {
-        frame.style.opacity = String(0.5 + t * 0.5);
-        frame.style.clipPath =
-          inset < 0.5
-            ? "inset(0 0 0 0 round 24px)"
-            : `inset(0 ${inset}% 0 ${inset}% round 24px)`;
-      }
-      if (copy) copy.style.transform = `translateX(${copyShift}px)`;
-      if (visual) visual.style.transform = "none";
+    prevY.current = window.scrollY;
+    const track = () => {
+      scrollDir.current = window.scrollY > prevY.current ? "down" : "up";
+      prevY.current = window.scrollY;
     };
+    window.addEventListener("scroll", track, { passive: true });
+    return () => window.removeEventListener("scroll", track);
+  }, []);
 
-    const onScroll = () => {
-      const rect = scene.getBoundingClientRect();
-      const h = Math.max(scene.offsetHeight - window.innerHeight, 1);
-      const rawProgress = Math.max(0, Math.min(1, -rect.top / h));
+  // 문구 단어 reveal — IO 기반, 방향 따라 순서 변경
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const wordEls = Array.from(section.querySelectorAll<HTMLSpanElement>("[data-word]"));
+    let timers: ReturnType<typeof setTimeout>[] = [];
 
-      // 아래 방향에서만 진행 — 위로 올라가도 역방향 없음
-      maxProgress.current = Math.max(maxProgress.current, rawProgress);
-      const progress = maxProgress.current;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          timers.forEach(clearTimeout);
+          timers = [];
+          if (e.isIntersecting) {
+            const ordered = scrollDir.current === "up" ? [...wordEls].reverse() : wordEls;
+            ordered.forEach((el, i) => {
+              timers.push(
+                setTimeout(() => {
+                  el.classList.add("lit");
+                }, i * 55)
+              );
+            });
+          } else {
+            wordEls.forEach((el) => el.classList.remove("lit"));
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
 
-      const threshold = progress * wordEls.length * 1.2;
-
-      // 단어는 한 번 켜지면 유지 (toggle → add only)
-      wordEls.forEach((el, i) => {
-        if (i < threshold) el.classList.add("lit");
-      });
-
-      const wordSpread = wordEls.length ? threshold / wordEls.length : 0;
-      const spread = Math.min(1, Math.max(wordSpread, progress * 0.2));
-      maxSpread.current = Math.max(maxSpread.current, spread);
-      applyVisual(maxSpread.current);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    const stmt = section.querySelector(".statement");
+    if (stmt) io.observe(stmt);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      io.disconnect();
+      timers.forEach(clearTimeout);
     };
+  }, []);
+
+  // [data-reveal] 요소 — 위아래 방향 애니메이션
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const reveals = section.querySelectorAll<HTMLElement>("[data-reveal]");
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          const el = e.target as HTMLElement;
+          if (e.isIntersecting) {
+            el.dataset.from = scrollDir.current;
+            el.classList.add("in");
+          } else {
+            el.classList.remove("in");
+            delete el.dataset.from;
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    reveals.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   // Stats counter
@@ -104,55 +116,32 @@ export default function About() {
     return () => io.disconnect();
   }, []);
 
-  // Scroll reveal for bio section
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const els = section.querySelectorAll<HTMLElement>("[data-reveal]");
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
-      { threshold: 0.1 }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
   return (
     <section className="about" id="about" ref={sectionRef}>
-      {/* Pinned statement */}
-      <div className="scene scene--about" ref={sceneRef}>
-        <div className="scene__sticky">
-          <div className="wrap scene__inner">
-            <div className="scene__copy" ref={copyRef}>
-              <span className="section-num">01 — ABOUT</span>
-              <p className="statement">
-                {lines.map((line, lineIndex) => (
-                  <span className="statement__line" key={lineIndex}>
-                    {line.map((w, wordIndex) => (
-                      <span
-                        key={`${lineIndex}-${wordIndex}`}
-                        data-word=""
-                        className={keyWords.has(w) ? "key" : ""}
-                      >
-                        {w}{" "}
-                      </span>
-                    ))}
+      {/* 문구 */}
+      <div className="about__statement section-pad" style={{ paddingBottom: 0 }}>
+        <div className="wrap">
+          <span className="section-num">01 — ABOUT</span>
+          <p className="statement">
+            {lines.map((line, li) => (
+              <span className="statement__line" key={li}>
+                {line.map((w, wi) => (
+                  <span
+                    key={`${li}-${wi}`}
+                    data-word=""
+                    className={keyWords.has(w) ? "key" : ""}
+                  >
+                    {w}{" "}
                   </span>
                 ))}
-              </p>
-            </div>
-            <div className="scene__visual" ref={visualRef} aria-hidden="true">
-              <div className="scene__visual-frame" ref={visualFrameRef}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/about-profile.svg" alt="" width={900} height={1125} />
-              </div>
-            </div>
-          </div>
+              </span>
+            ))}
+          </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="wrap section-pad" style={{ paddingTop: 0 }}>
+      <div className="wrap section-pad" style={{ paddingTop: "clamp(40px,6vh,64px)", paddingBottom: "clamp(40px,6vh,64px)" }}>
         <div className="stats">
           {stats.map((s, i) => (
             <div key={i} data-reveal="">
@@ -185,9 +174,7 @@ export default function About() {
             </div>
           </div>
           <div>
-            <h2 className="section-title" data-reveal="">
-              소개
-            </h2>
+            <h2 className="section-title" data-reveal="">소개</h2>
             <p className="about__lead" data-reveal="" style={{ "--d": ".04s" } as React.CSSProperties}>
               성능과 구조를 함께 봅니다.
             </p>

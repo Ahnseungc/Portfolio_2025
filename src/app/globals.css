@@ -128,7 +128,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; letter-spacing
 .mono { font-family: var(--font-mono); }
 .accent { color: var(--primary); }
 
-/* ── 스크롤 리빌 ── */
+/* ── 스크롤 리빌 — 위아래 방향 지원 ── */
 [data-reveal] {
   opacity: 0;
   transform: translateY(var(--reveal-dist));
@@ -136,7 +136,10 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; letter-spacing
   transition-delay: var(--d, 0s);
   will-change: opacity, transform;
 }
-[data-reveal="fade"]  { transform: none; }
+/* 위로 스크롤 시 위에서 들어옴 */
+[data-reveal][data-from="up"] { transform: translateY(calc(var(--reveal-dist) * -1)); }
+[data-reveal="fade"]           { transform: none; }
+[data-reveal="fade"][data-from="up"] { transform: none; }
 [data-reveal="left"]  { transform: translateX(calc(var(--reveal-dist) * -1)); }
 [data-reveal="right"] { transform: translateX(var(--reveal-dist)); }
 [data-reveal="scale"] { transform: scale(0.94); }
@@ -341,8 +344,11 @@ html.intro-locked {
    ============================================================ */
 .about { background: var(--bg); }
 .scene { position: relative; --spread: 0; }
-.scene--about { height: 260vh; }
-.scene__sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: visible; }
+.scene--about { height: auto; }
+.scene__sticky { display: flex; align-items: center; overflow: visible; padding-block: clamp(48px, 8vh, 96px); }
+/* about__statement: 문구 섹션 */
+.about__statement { }
+.about__statement .section-num { display: block; margin-bottom: 24px; }
 .scene__inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
@@ -729,26 +735,7 @@ html.intro-locked {
 .tl__org { color: var(--text-3); font-size: 15px; margin-top: 2px; }
 .tl__desc { color: var(--text-2); margin-top: 12px; max-width: 560px; }
 
-/* ============================================================
-   경력 — 스크롤 고정 (sticky) + 아래서 위로 진행
-   ============================================================ */
-.career-scroll {
-  position: relative;
-}
-.career-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  background: var(--bg-soft);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  padding-block: clamp(32px, 5vh, 52px);
-  box-sizing: border-box;
-}
-[data-theme="dark"] .career-sticky { background: rgba(20,23,29,0.70); }
-.career-sticky .section-head { margin-bottom: clamp(20px, 3vh, 36px); }
+/* career-scroll / career-sticky — 더 이상 사용하지 않음 (sticky 제거) */
 
 .tl-s { position: relative; max-width: 800px; margin-inline: auto; }
 .tl-s__track {
@@ -762,16 +749,24 @@ html.intro-locked {
   position: absolute;
   inset: 0;
   background: var(--primary);
-  transform-origin: bottom;
+  transform-origin: top;
   transform: scaleY(0);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
 }
+.tl-s__track.visible .tl-s__fill { transform: scaleY(1); }
 .tl-s__item {
   position: relative;
   padding-left: 56px;
   padding-block: clamp(16px, 2.5vh, 30px);
-  will-change: opacity, transform;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  /* 기본: 아래에서 들어옴 */
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
+/* 위로 스크롤 시: 위에서 들어옴 */
+.tl-s__item[data-from="up"] { transform: translateY(-28px); }
+.tl-s__item.in { opacity: 1; transform: translateY(0); }
+
 .tl-s__dot {
   position: absolute;
   left: 0;
@@ -782,7 +777,7 @@ html.intro-locked {
   border: 2px solid var(--line-2);
   transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
 }
-.tl-s__item.active .tl-s__dot {
+.tl-s__item.in .tl-s__dot {
   border-color: var(--primary);
   background: var(--primary);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--primary) 16%, transparent);

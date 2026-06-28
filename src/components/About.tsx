@@ -19,13 +19,18 @@ export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
 
   const visualFrameRef = useRef<HTMLDivElement>(null);
+  const sceneStickyRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
+  const maxProgress = useRef(0);
+  const maxSpread = useRef(0);
 
-  // Sticky statement word reveal + visual spread
+  // Sticky statement word reveal + visual spread — 단방향 (아래 스크롤에서만 진행)
   useEffect(() => {
     const scene = sceneRef.current;
     const copy = copyRef.current;
     const visual = visualRef.current;
     const frame = visualFrameRef.current;
+    const stickyEl = sceneStickyRef.current;
     if (!scene) return;
     const wordEls = scene.querySelectorAll<HTMLSpanElement>("[data-word]");
 
@@ -45,20 +50,42 @@ export default function About() {
       if (visual) visual.style.transform = "none";
     };
 
+    lastScrollY.current = window.scrollY;
+
     const onScroll = () => {
+      const currentY = window.scrollY;
+      const scrollingUp = currentY < lastScrollY.current;
+      lastScrollY.current = currentY;
+
       const rect = scene.getBoundingClientRect();
       const h = Math.max(scene.offsetHeight - window.innerHeight, 1);
-      const progress = Math.max(0, Math.min(1, -rect.top / h));
+      const rawProgress = Math.max(0, Math.min(1, -rect.top / h));
+
+      // 아래 방향에서만 진행 — 위로 올라가도 역방향 없음
+      maxProgress.current = Math.max(maxProgress.current, rawProgress);
+      const progress = maxProgress.current;
+
       const threshold = progress * wordEls.length * 1.2;
 
+      // 단어는 한 번 켜지면 유지
       wordEls.forEach((el, i) => {
-        el.classList.toggle("lit", i < threshold);
+        if (i < threshold) el.classList.add("lit");
       });
 
       const wordSpread = wordEls.length ? threshold / wordEls.length : 0;
       const spread = Math.min(1, Math.max(wordSpread, progress * 0.2));
+      maxSpread.current = Math.max(maxSpread.current, spread);
+      applyVisual(maxSpread.current);
 
-      applyVisual(spread);
+      // 위로 스크롤 시 sticky 해제
+      if (stickyEl) {
+        const insideScene = rect.top < -20 && rect.bottom > window.innerHeight;
+        if (scrollingUp && insideScene) {
+          stickyEl.style.position = "relative";
+        } else if (!scrollingUp) {
+          stickyEl.style.position = "sticky";
+        }
+      }
     };
 
     onScroll();
@@ -113,7 +140,7 @@ export default function About() {
     <section className="about" id="about" ref={sectionRef}>
       {/* Pinned statement */}
       <div className="scene scene--about" ref={sceneRef}>
-        <div className="scene__sticky">
+        <div className="scene__sticky" ref={sceneStickyRef}>
           <div className="wrap scene__inner">
             <div className="scene__copy" ref={copyRef}>
               <span className="section-num">01 — ABOUT</span>

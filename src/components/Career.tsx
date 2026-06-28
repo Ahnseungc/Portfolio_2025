@@ -7,19 +7,37 @@ const SCROLL_PAGES = career.length + 1;
 
 export default function Career() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
-    if (!wrapper) return;
+    const sticky = stickyRef.current;
+    if (!wrapper || !sticky) return;
+
+    lastScrollY.current = window.scrollY;
 
     const calc = () => {
+      const currentY = window.scrollY;
+      const scrollingUp = currentY < lastScrollY.current;
+      lastScrollY.current = currentY;
+
       const rect = wrapper.getBoundingClientRect();
       const scrollable = wrapper.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
+
       const p = Math.max(0, Math.min(1, -rect.top / scrollable));
-      // 아래로 스크롤할 때만 진행 — 위로 올라가도 역방향 안 됨
+      // 아래 방향에서만 진행
       setProgress((prev) => Math.max(prev, p));
+
+      // 위로 스크롤하고 wrapper 안쪽(20px 이상 진입)이면 sticky 해제
+      const insideWrapper = rect.top < -20 && rect.bottom > window.innerHeight;
+      if (scrollingUp && insideWrapper) {
+        sticky.style.position = "relative";
+      } else if (!scrollingUp) {
+        sticky.style.position = "sticky";
+      }
     };
 
     window.addEventListener("scroll", calc, { passive: true });
@@ -34,7 +52,7 @@ export default function Career() {
       ref={wrapperRef}
       style={{ height: `${SCROLL_PAGES * 100}vh` }}
     >
-      <div className="career-sticky">
+      <div className="career-sticky" ref={stickyRef}>
         <div className="wrap">
           <div className="section-head">
             <span className="section-num">04 — CAREER</span>
@@ -43,7 +61,6 @@ export default function Career() {
           </div>
 
           <div className="tl-s">
-            {/* 세로 트랙 라인 — 아래서 위로 채워짐 */}
             <div className="tl-s__track">
               <div
                 className="tl-s__fill"
@@ -52,7 +69,6 @@ export default function Career() {
             </div>
 
             {career.map((item, i) => {
-              /* 맨 아래(oldest, 마지막 인덱스)가 threshold=0, 맨 위(newest, 0)가 가장 늦게 */
               const threshold = (career.length - 1 - i) / career.length;
               const isActive = progress >= threshold;
               const itemPct = isActive

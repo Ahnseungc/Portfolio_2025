@@ -854,23 +854,27 @@ html.intro-locked {
 }
 
 /* ============================================================
-   연락처 / 푸터 — 라이트: 다크 반전, 다크: 진한 다크 유지
+   연락처 / 푸터
+   라이트: 원래 반전 유지 (var(--text) 배경)
+   다크: 흰 배경 방지 — 진한 다크 고정
    ============================================================ */
 .contact {
-  --contact-bg: #0d0f12;
-  --contact-fg: #f0f2f5;
-  --contact-muted: color-mix(in srgb, var(--contact-fg) 52%, transparent);
-  --contact-line: color-mix(in srgb, var(--contact-fg) 12%, transparent);
-  --contact-chip: color-mix(in srgb, var(--contact-fg) 8%, transparent);
-  --contact-chip-hover: color-mix(in srgb, var(--contact-fg) 16%, transparent);
+  --contact-fg: var(--bg);
+  --contact-muted: color-mix(in srgb, var(--contact-fg) 58%, transparent);
+  --contact-line: color-mix(in srgb, var(--contact-fg) 14%, transparent);
+  --contact-chip: color-mix(in srgb, var(--contact-fg) 10%, transparent);
+  --contact-chip-hover: color-mix(in srgb, var(--contact-fg) 18%, transparent);
 
-  background: var(--contact-bg);
+  background: var(--text);
   color: var(--contact-fg);
   padding-block: clamp(72px, 12vh, 128px);
   position: relative;
   overflow: hidden;
 }
-/* 라이트 모드도 동일하게 진한 다크 배경 유지 */
+[data-theme="dark"] .contact {
+  --contact-fg: #f0f2f5;
+  background: #0a0c12;
+}
 
 .contact__title {
   font-size: clamp(1.75rem, 3.2vw, 2.35rem);

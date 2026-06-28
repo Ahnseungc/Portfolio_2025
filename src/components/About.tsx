@@ -37,7 +37,7 @@ export default function About() {
     if (!scene) return;
 
     const wordEls = Array.from(scene.querySelectorAll<HTMLSpanElement>("[data-word]"));
-    let timers: ReturnType<typeof setTimeout>[] = [];
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     const io = new IntersectionObserver(
       (entries) => {

@@ -5,10 +5,9 @@ import { career } from "@/data/portfolio";
 
 export default function Career() {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollDir = useRef<"down" | "up">("down");
-  const prevY = useRef(0);
+  const scrollDir  = useRef<"down" | "up">("down");
+  const prevY      = useRef(0);
 
-  // 스크롤 방향 추적
   useEffect(() => {
     prevY.current = window.scrollY;
     const track = () => {
@@ -19,67 +18,47 @@ export default function Career() {
     return () => window.removeEventListener("scroll", track);
   }, []);
 
-  // 아이템 + 섹션 헤드 — 위아래 방향 애니메이션
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const items = section.querySelectorAll<HTMLElement>(".tl-s__item");
+    const items   = section.querySelectorAll<HTMLElement>(".tl-s__item");
     const reveals = section.querySelectorAll<HTMLElement>("[data-reveal]");
-    const track = section.querySelector<HTMLElement>(".tl-s__track");
+    const track   = section.querySelector<HTMLElement>(".tl-s__track");
 
-    // 타임라인 라인: 섹션 진입 시 채워짐
+    /* 타임라인 라인 */
     const lineIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (track) track.classList.toggle("visible", e.isIntersecting);
-        });
-      },
+      (entries) => entries.forEach((e) => track?.classList.toggle("visible", e.isIntersecting)),
       { threshold: 0.1 }
     );
     lineIO.observe(section);
 
-    // 아이템: 위아래 방향에 따라 아래·위서 들어옴
-    const itemIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          const el = e.target as HTMLElement;
-          if (e.isIntersecting) {
+    const makeIO = (threshold: number) =>
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            const el = e.target as HTMLElement;
+            /* 진입·퇴장 모두 현재 스크롤 방향을 data-from에 기록
+               → 진입: 그 방향에서 들어옴
+               → 퇴장: 같은 방향으로 나감 (역재생) */
             el.dataset.from = scrollDir.current;
-            el.classList.add("in");
-          } else {
-            el.classList.remove("in");
-            delete el.dataset.from;
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    items.forEach((el) => itemIO.observe(el));
+            if (e.isIntersecting) {
+              el.classList.add("in");
+            } else {
+              el.classList.remove("in");
+            }
+          });
+        },
+        { threshold }
+      );
 
-    // 섹션 헤드 reveals
-    const revealIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          const el = e.target as HTMLElement;
-          if (e.isIntersecting) {
-            el.dataset.from = scrollDir.current;
-            el.classList.add("in");
-          } else {
-            el.classList.remove("in");
-            delete el.dataset.from;
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
+    const itemIO   = makeIO(0.25);
+    const revealIO = makeIO(0.3);
+
+    items.forEach((el)   => itemIO.observe(el));
     reveals.forEach((el) => revealIO.observe(el));
 
-    return () => {
-      lineIO.disconnect();
-      itemIO.disconnect();
-      revealIO.disconnect();
-    };
+    return () => { lineIO.disconnect(); itemIO.disconnect(); revealIO.disconnect(); };
   }, []);
 
   return (

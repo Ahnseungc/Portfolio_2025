@@ -12,12 +12,14 @@ const lines = [
 const keyWords = new Set(["'왜", "필요한가'를", "개발자입니다."]);
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const statRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const scrollDir = useRef<"down" | "up">("down");
-  const prevY = useRef(0);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const sceneRef     = useRef<HTMLDivElement>(null);
+  const frameRef     = useRef<HTMLDivElement>(null);
+  const statRefs     = useRef<(HTMLSpanElement | null)[]>([]);
+  const scrollDir    = useRef<"down" | "up">("down");
+  const prevY        = useRef(0);
 
-  // 스크롤 방향 추적
+  /* 스크롤 방향 추적 */
   useEffect(() => {
     prevY.current = window.scrollY;
     const track = () => {
@@ -28,44 +30,49 @@ export default function About() {
     return () => window.removeEventListener("scroll", track);
   }, []);
 
-  // 문구 단어 reveal — IO 기반, 방향 따라 순서 변경
+  /* 비주얼 펼침 + 단어 reveal — 뷰포트 진입 시 1회 트리거 */
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const wordEls = Array.from(section.querySelectorAll<HTMLSpanElement>("[data-word]"));
+    const scene = sceneRef.current;
+    const frame = frameRef.current;
+    if (!scene) return;
+
+    const wordEls = Array.from(scene.querySelectorAll<HTMLSpanElement>("[data-word]"));
     let timers: ReturnType<typeof setTimeout>[] = [];
 
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          timers.forEach(clearTimeout);
-          timers = [];
-          if (e.isIntersecting) {
-            const ordered = scrollDir.current === "up" ? [...wordEls].reverse() : wordEls;
-            ordered.forEach((el, i) => {
-              timers.push(
-                setTimeout(() => {
-                  el.classList.add("lit");
-                }, i * 55)
-              );
-            });
-          } else {
-            wordEls.forEach((el) => el.classList.remove("lit"));
+          if (!e.isIntersecting) return;
+
+          /* 이미지 clip-path 펼침 */
+          if (frame) {
+            frame.style.transition =
+              "clip-path 1.3s cubic-bezier(0.16,1,0.3,1), opacity 0.9s cubic-bezier(0.16,1,0.3,1)";
+            frame.style.clipPath = "inset(0 0% 0 0% round 24px)";
+            frame.style.opacity = "1";
           }
+
+          /* 단어 stagger */
+          timers.forEach(clearTimeout);
+          const ordered = scrollDir.current === "up" ? [...wordEls].reverse() : wordEls;
+          ordered.forEach((el, i) => {
+            timers.push(setTimeout(() => el.classList.add("lit"), i * 55));
+          });
+
+          io.unobserve(e.target);
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.3 }
     );
 
-    const stmt = section.querySelector(".statement");
-    if (stmt) io.observe(stmt);
+    io.observe(scene);
     return () => {
       io.disconnect();
       timers.forEach(clearTimeout);
     };
   }, []);
 
-  // [data-reveal] 요소 — 위아래 방향 애니메이션
+  /* [data-reveal] — 위아래 방향 */
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -90,7 +97,7 @@ export default function About() {
     return () => io.disconnect();
   }, []);
 
-  // Stats counter
+  /* Stats 카운터 */
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -102,8 +109,7 @@ export default function About() {
           const start = performance.now();
           const tick = (now: number) => {
             const t = Math.min((now - start) / dur, 1);
-            const ease = 1 - Math.pow(1 - t, 3);
-            el.textContent = String(Math.round(ease * target));
+            el.textContent = String(Math.round((1 - Math.pow(1 - t, 3)) * target));
             if (t < 1) requestAnimationFrame(tick);
           };
           requestAnimationFrame(tick);
@@ -118,40 +124,49 @@ export default function About() {
 
   return (
     <section className="about" id="about" ref={sectionRef}>
-      {/* 문구 */}
-      <div className="about__statement section-pad" style={{ paddingBottom: 0 }}>
-        <div className="wrap">
-          <span className="section-num">01 — ABOUT</span>
-          <p className="statement">
-            {lines.map((line, li) => (
-              <span className="statement__line" key={li}>
-                {line.map((w, wi) => (
-                  <span
-                    key={`${li}-${wi}`}
-                    data-word=""
-                    className={keyWords.has(w) ? "key" : ""}
-                  >
-                    {w}{" "}
+
+      {/* 문구 + 프로필 이미지 (sticky 없이, IO 펼침) */}
+      <div className="scene scene--about" ref={sceneRef}>
+        <div className="scene__sticky">
+          <div className="wrap scene__inner">
+            <div className="scene__copy">
+              <span className="section-num">01 — ABOUT</span>
+              <p className="statement">
+                {lines.map((line, li) => (
+                  <span className="statement__line" key={li}>
+                    {line.map((w, wi) => (
+                      <span
+                        key={`${li}-${wi}`}
+                        data-word=""
+                        className={keyWords.has(w) ? "key" : ""}
+                      >
+                        {w}{" "}
+                      </span>
+                    ))}
                   </span>
                 ))}
-              </span>
-            ))}
-          </p>
+              </p>
+            </div>
+            <div className="scene__visual" aria-hidden="true">
+              <div className="scene__visual-frame" ref={frameRef}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/about-profile.svg" alt="" width={900} height={1125} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="wrap section-pad" style={{ paddingTop: "clamp(40px,6vh,64px)", paddingBottom: "clamp(40px,6vh,64px)" }}>
+      <div
+        className="wrap section-pad"
+        style={{ paddingTop: "clamp(40px,6vh,64px)", paddingBottom: "clamp(40px,6vh,64px)" }}
+      >
         <div className="stats">
           {stats.map((s, i) => (
             <div key={i} data-reveal="">
               <div className="stat__num">
-                <span
-                  ref={(el) => { statRefs.current[i] = el; }}
-                  data-count={s.num}
-                >
-                  0
-                </span>
+                <span ref={(el) => { statRefs.current[i] = el; }} data-count={s.num}>0</span>
                 <span className="suf">{s.suf}</span>
               </div>
               <div className="stat__label">{s.label}</div>
@@ -161,7 +176,7 @@ export default function About() {
       </div>
 
       {/* Bio */}
-      <div className="wrap" style={{ paddingBottom: "clamp(80px, 14vh, 180px)" }}>
+      <div className="wrap" style={{ paddingBottom: "clamp(80px,14vh,180px)" }}>
         <div className="about__bio">
           <div data-reveal="scale">
             <div className="portrait" style={{ padding: 0 }}>

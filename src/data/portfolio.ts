@@ -379,6 +379,70 @@ export const awards = [
   { year: "2022", title: "KBSC ESG 공모전 — 장려상", org: "국민은행", kind: "AWARD", isTalk: false },
 ];
 
+export type StackItem = { n: string; s: string };
+export type StackCategory = { title: string; en: string; items: StackItem[] };
+
+export const stack: StackCategory[] = [
+  {
+    title: "언어",
+    en: "LANGUAGES",
+    items: [
+      { n: "TypeScript", s: "typescript" },
+      { n: "JavaScript", s: "javascript" },
+      { n: "HTML5", s: "html5" },
+      { n: "CSS3", s: "css3" },
+      { n: "Python", s: "python" },
+    ],
+  },
+  {
+    title: "프론트엔드",
+    en: "FRONTEND",
+    items: [
+      { n: "React", s: "react" },
+      { n: "Next.js", s: "nextdotjs" },
+      { n: "React Native", s: "react" },
+      { n: "Electron", s: "electron" },
+      { n: "Vite", s: "vite" },
+      { n: "React Query", s: "reactquery" },
+      { n: "Zustand", s: "zustand" },
+      { n: "Recoil", s: "recoil" },
+      { n: "SWR", s: "swr" },
+      { n: "Zod", s: "zod" },
+      { n: "Tailwind CSS", s: "tailwindcss" },
+      { n: "Storybook", s: "storybook" },
+      { n: "Styled Comp.", s: "styledcomponents" },
+      { n: "Flutter", s: "flutter" },
+    ],
+  },
+  {
+    title: "테스트",
+    en: "TESTING",
+    items: [
+      { n: "Jest", s: "jest" },
+      { n: "Vitest", s: "vitest" },
+      { n: "Cypress", s: "cypress" },
+      { n: "Playwright", s: "playwright" },
+    ],
+  },
+  {
+    title: "인프라·도구",
+    en: "INFRA & TOOLS",
+    items: [
+      { n: "GitHub Actions", s: "githubactions" },
+      { n: "AWS", s: "amazonaws" },
+      { n: "Docker", s: "docker" },
+      { n: "Jenkins", s: "jenkins" },
+      { n: "PM2", s: "pm2" },
+      { n: "Figma", s: "figma" },
+      { n: "Cursor", s: "cursor" },
+      { n: "Claude Code", s: "anthropic" },
+      { n: "Jira", s: "jira" },
+      { n: "Notion", s: "notion" },
+    ],
+  },
+];
+
+/* 기존 skills (하위 호환) */
 export const skills = [
   { ico: "FE", label: "Frontend", chips: ["React", "Next.js", "React Native", "TypeScript", "Electron"] },
   { ico: "ST", label: "State · Data", chips: ["React Query", "Zustand", "Recoil", "SWR", "Zod"] },

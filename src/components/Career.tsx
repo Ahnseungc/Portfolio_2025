@@ -17,7 +17,9 @@ export default function Career() {
       const rect = wrapper.getBoundingClientRect();
       const scrollable = wrapper.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
-      setProgress(Math.max(0, Math.min(1, -rect.top / scrollable)));
+      const p = Math.max(0, Math.min(1, -rect.top / scrollable));
+      // 아래로 스크롤할 때만 진행 — 위로 올라가도 역방향 안 됨
+      setProgress((prev) => Math.max(prev, p));
     };
 
     window.addEventListener("scroll", calc, { passive: true });

@@ -3,6 +3,50 @@
 import { useEffect, useRef } from "react";
 import { skills } from "@/data/portfolio";
 
+const ICON_SLUG: Record<string, string> = {
+  // Frontend
+  React: "react",
+  "Next.js": "nextdotjs",
+  "React Native": "react",
+  TypeScript: "typescript",
+  Electron: "electron",
+  // State · Data
+  "React Query": "reactquery",
+  Zustand: "zustand",
+  Recoil: "recoil",
+  SWR: "swr",
+  Zod: "zod",
+  // Styling
+  "Tailwind CSS": "tailwindcss",
+  Storybook: "storybook",
+  "CSS Modules": "css3",
+  "Styled Components": "styledcomponents",
+  // Testing
+  Jest: "jest",
+  Vitest: "vitest",
+  Cypress: "cypress",
+  Playwright: "playwright",
+  // Infra · CI/CD
+  "GitHub Actions": "githubactions",
+  Jenkins: "jenkins",
+  AWS: "amazonaws",
+  Docker: "docker",
+  PM2: "pm2",
+  // Tools
+  Figma: "figma",
+  Cursor: "cursor",
+  "Claude Code": "anthropic",
+  Jira: "jira",
+  Notion: "notion",
+};
+
+const DARK_INVERT = new Set([
+  "nextdotjs", "cursor", "notion", "zustand", "swr",
+  "styledcomponents", "pm2", "recoil",
+]);
+
+const CDN = "https://cdn.simpleicons.org";
+
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -39,9 +83,26 @@ export default function Skills() {
                 <h3>{s.label}</h3>
               </div>
               <div className="skill-tags">
-                {s.chips.map((c) => (
-                  <span className="chip" key={c}>{c}</span>
-                ))}
+                {s.chips.map((c) => {
+                  const slug = ICON_SLUG[c];
+                  return (
+                    <span className="skill-chip" key={c}>
+                      {slug && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={`${CDN}/${slug}`}
+                          alt=""
+                          aria-hidden="true"
+                          width={14}
+                          height={14}
+                          className={`skill-chip__ico${DARK_INVERT.has(slug) ? " dark-invert" : ""}`}
+                          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                        />
+                      )}
+                      {c}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           ))}

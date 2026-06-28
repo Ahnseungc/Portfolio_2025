@@ -826,22 +826,51 @@ html.intro-locked {
 .skill-card h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s;
+}
+.skill-chip:hover { border-color: var(--primary); background: var(--primary-soft); color: var(--text); }
+.skill-chip__ico {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+[data-theme="dark"] .skill-chip__ico.dark-invert {
+  filter: brightness(0) invert(0.85);
+}
+
 /* ============================================================
-   연락처 / 푸터 — 라이트·다크 반전 (--text 배경 / --bg 전경)
+   연락처 / 푸터 — 라이트: 다크 반전, 다크: 진한 다크 유지
    ============================================================ */
 .contact {
-  --contact-fg: var(--bg);
-  --contact-muted: color-mix(in srgb, var(--contact-fg) 58%, transparent);
-  --contact-line: color-mix(in srgb, var(--contact-fg) 14%, transparent);
-  --contact-chip: color-mix(in srgb, var(--contact-fg) 10%, transparent);
-  --contact-chip-hover: color-mix(in srgb, var(--contact-fg) 18%, transparent);
+  --contact-bg: #0d0f12;
+  --contact-fg: #f0f2f5;
+  --contact-muted: color-mix(in srgb, var(--contact-fg) 52%, transparent);
+  --contact-line: color-mix(in srgb, var(--contact-fg) 12%, transparent);
+  --contact-chip: color-mix(in srgb, var(--contact-fg) 8%, transparent);
+  --contact-chip-hover: color-mix(in srgb, var(--contact-fg) 16%, transparent);
 
-  background: var(--text);
+  background: var(--contact-bg);
   color: var(--contact-fg);
   padding-block: clamp(72px, 12vh, 128px);
   position: relative;
   overflow: hidden;
 }
+/* 라이트 모드도 동일하게 진한 다크 배경 유지 */
 
 .contact__title {
   font-size: clamp(1.75rem, 3.2vw, 2.35rem);
@@ -993,7 +1022,8 @@ html.intro-locked {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: clamp(40px, 5.5vh, 52px) clamp(24px, 3.5vw, 40px) clamp(16px, 2vh, 24px);
+  /* 오른쪽 padding 제거 — 비주얼이 패널 가장자리까지 채움 */
+  padding: clamp(40px, 5.5vh, 52px) 0 clamp(16px, 2vh, 24px) clamp(24px, 3.5vw, 40px);
   overflow: hidden;
 }
 
@@ -1029,20 +1059,23 @@ html.intro-locked {
 .pd-layout {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 560px);
-  gap: clamp(24px, 3.5vw, 48px);
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 52%);
+  gap: 0;
   align-items: stretch;
   min-height: 0;
   overflow: hidden;
 }
+.pd-story { padding-right: clamp(20px, 3vw, 40px); }
 @media (max-width: 900px) {
   .pd-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) minmax(0, auto);
-    gap: 16px;
+    grid-template-rows: minmax(0, 220px) minmax(0, 1fr);
+    gap: 0;
     overflow-y: auto;
     overflow-x: hidden;
   }
+  .pd-stage { padding: clamp(20px, 3vh, 32px) clamp(16px, 4vw, 24px) 16px; }
+  .pd-story { padding-right: 0; }
 }
 
 .pd-story {
@@ -1197,25 +1230,20 @@ html.intro-locked {
   font-variant-numeric: tabular-nums;
 }
 
-/* pd-visual: 구조도·영상 와이드 패널 (폰 목업 대체) */
+/* pd-visual: 구조도·영상 패널 — 테두리 없이 패널 가장자리까지 */
 .pd-visual {
   position: relative;
   min-height: 0;
   height: 100%;
-  max-height: calc(100vh - 200px);
-  border-radius: 14px;
   overflow: hidden;
   background: #111;
-  border: 1px solid var(--line-2);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  /* 오른쪽·위아래를 모달 패널 끝까지 채움 */
 }
 @media (max-width: 900px) {
   .pd-visual {
     order: -1;
-    height: min(60vw, 420px);
-    max-height: 420px;
     width: 100%;
-    border-radius: 10px;
+    height: 100%;
   }
 }
 

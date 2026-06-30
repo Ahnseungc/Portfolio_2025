@@ -395,23 +395,35 @@ export const stack: StackCategory[] = [
     ],
   },
   {
-    title: "프론트엔드",
-    en: "FRONTEND",
+    title: "프레임워크",
+    en: "FRAMEWORKS",
     items: [
       { n: "React", s: "react" },
       { n: "Next.js", s: "nextdotjs" },
       { n: "React Native", s: "react" },
       { n: "Electron", s: "electron" },
       { n: "Vite", s: "vite" },
+      { n: "Flutter", s: "flutter" },
+    ],
+  },
+  {
+    title: "상태관리",
+    en: "STATE MGMT",
+    items: [
       { n: "React Query", s: "reactquery" },
       { n: "Zustand", s: "zustand" },
       { n: "Recoil", s: "recoil" },
       { n: "SWR", s: "swr" },
       { n: "Zod", s: "zod" },
+    ],
+  },
+  {
+    title: "스타일",
+    en: "STYLING",
+    items: [
       { n: "Tailwind CSS", s: "tailwindcss" },
       { n: "Storybook", s: "storybook" },
       { n: "Styled Comp.", s: "styledcomponents" },
-      { n: "Flutter", s: "flutter" },
     ],
   },
   {

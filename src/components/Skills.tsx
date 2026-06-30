@@ -76,7 +76,7 @@ export default function Skills() {
           </span>
           <h2 className="ts-h1">다뤄온 기술 스택</h2>
           <p className="ts-lead">
-            언어부터 프론트엔드·인프라·도구까지, 제품을 만들며 실제로 사용한 도구들입니다.
+            언어부터 프레임워크·상태관리·스타일·인프라까지, 제품을 만들며 실제로 사용한 도구들입니다.
           </p>
           <div className="ts-total">
             <span>총</span>
